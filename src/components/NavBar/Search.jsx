@@ -3,11 +3,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { GiCartwheel } from "react-icons/gi";
 import { PiShoppingCartThin } from "react-icons/pi";
 import { FaSearch } from "react-icons/fa";
-import { IoHomeOutline } from "react-icons/io5";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import { CiShop } from "react-icons/ci";
-import { MdNotificationsActive } from "react-icons/md";
-import { FaRegNewspaper } from "react-icons/fa6";
+import { Outlet, Link } from "react-router-dom";
+
 const Search = () => {
     return (
         <div class=" flex flex-row bg-red-600 p-2 gap-3 text-white ">
@@ -19,15 +16,17 @@ const Search = () => {
                 <input style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
             </div>
             <div className='bg-red-500 hover:bg-red-400 flex justify-center items-center p-3 rounded-md basis-2/12'>
-                <a href="/cart">
+
+                <Link to="/cart">
                     <PiShoppingCartThin size={20} />
-                </a>
+                </Link>
             </div>
             <div className='bg-red-500  hover:bg-red-400 flex justify-center items-center p-3 rounded-md basis-2/12'>
-                <a href="">
+                <Link to="/cart">
                     <FaUserCircle size={20} />
-                </a>
+                </Link>
             </div>
+
         </div>
     )
 }

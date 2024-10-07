@@ -144,7 +144,7 @@ const Detail = () => {
             </div> 
             <div className='flex grid grid-cols-2 gap-4  pb-4 border-b border-gray-400'>
               <h4 className='font-bold'>Công nghệ</h4>
-              <h4> IP 16 Promax 512GB phiên bản giới hạn</h4>
+              <h4> Chip dragon 7563XTG</h4>
             </div> 
           </div>
 
