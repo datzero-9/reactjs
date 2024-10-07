@@ -1,21 +1,25 @@
 import { useState } from "react";
+import NavBar from './components/NavBar/NavBar';
+import Slide from "./components/Slide/Slide";
+import Home from "./components/Home/Home";
+import Search from "./components/NavBar/Search";
+import { Routes, Route, Outlet, } from "react-router-dom";
+import Category from "./components/Category/Category";
+import Cart from "./components/Cart/Cart";
+import Layout from "./components/Layout/Layout";
+
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-bold">My Website</div>
-        <div className={`md:flex ${isOpen ? 'block' : 'hidden'} md:block mt-4 md:mt-0`}>
-          <a href="#" className="text-white hover:text-gray-300">Đăng nhập</a>
-          <a href="#" className="text-white hover:text-gray-300">Đăng ký</a>
-          <a href="#" className="text-white hover:text-gray-300">Trang chủ</a>
-          <a href="#" className="text-white hover:text-gray-300">Liên hệ</a>
-          <a href="#" className="text-white hover:text-gray-300">Về chúng tôi</a>
-        </div>
-      </div>
-    </nav>
-  );
+    <div className="overflow-x-hidden  relative" >
+     
+      <Layout />
+
+    </div>
+  )
 }
+
 
 export default App;
