@@ -7,6 +7,7 @@ import Category from '../Category/Category';
 import Detail from '../Detail/Detail';
 import Cart from '../Cart/Cart';
 import Search from '../NavBar/Search';
+import Checkout from '../Checkout/Checkout';
 
 const Layout = () => {
   return (
@@ -18,6 +19,7 @@ const Layout = () => {
         <Route path="/category" element={<Category />} />
         <Route path="/notice" element={<Notice />} />
         <Route path="/detail" element={<Detail />} />       
+        <Route path="/checkout" element={<Checkout />} />       
       </Route>
       <Route path="/cart" element={<Cart />} />
 
