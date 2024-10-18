@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsNewspaper } from "react-icons/bs";
-import TextLimited from '../Helper/sliceText'
+import TextLimited from '../../../Helper/sliceText'
 import { MdNavigateNext } from "react-icons/md";
 const Notice = () => {
   const data = [

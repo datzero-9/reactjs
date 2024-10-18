@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { IoIosArrowBack } from "react-icons/io";
 import { FaStar } from "react-icons/fa";
-import formatPrice from '../Helper/formatPrice'
+import formatPrice from '../../../Helper/formatPrice'
 import { LiaCartPlusSolid } from "react-icons/lia";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import { Outlet, Link } from "react-router-dom";
+import api from '../../../Helper/api'
+
 
 const Detail = () => {
   // lấy cái id từ params 
@@ -58,7 +60,7 @@ const Detail = () => {
   }, [id]);
 
   const getProductDetail = (id) => {
-    axios.post('http://192.168.1.5:80/admin/detail?id=66f76cbefcefbdad2643292b', { id: id })
+    axios.post(`${api}/detail`, { id: id })
       .then((response) => {
         setProductDetail(response.data);
         console.log(response.data)
@@ -143,7 +145,7 @@ const Detail = () => {
 
         <div className='pb-3 flex  gap-3'>
           <div className='text-center text-white bg-red-600 border border-gray-400 w-[75%] p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
-            <Link to="/cart">
+            <Link to="/user/cart">
               <h3 className='text-[20px] font-bold'>Mua ngay</h3>
               <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
             </Link>

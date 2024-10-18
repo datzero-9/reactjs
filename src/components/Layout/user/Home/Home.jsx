@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Items from '../Items/Items'
 import SlideProduct from '../Slide/SlideProduct';
-import Search from '../NavBar/Search';
 import axios from 'axios';
+import api from '../../../Helper/api'
 const Home = () => {
     const [product, setProduct] = useState([]);
     useEffect(() => {
         getApi();
     }, []);
     const getApi = () => {
-        axios.get(' http://192.168.1.5:80/admin')
+
+        axios.get(api)
             .then((response) => {
                 setProduct(response.data)
             })

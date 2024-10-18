@@ -7,7 +7,7 @@ import { CiShoppingBasket } from "react-icons/ci";
 import { MdCancel } from "react-icons/md";
 import { Outlet, Link } from "react-router-dom";
 import ItemCart from '../ItemCart/ItemCart';
-import formatPrice from '../Helper/formatPrice'
+import formatPrice from '../../../Helper/formatPrice'
 
 // Itemcart.forEach(item => {
 //   total += item.price;
@@ -60,7 +60,7 @@ const Cart = () => {
           (
             <div className='p-3 justify-center '>
               <p className='text-center font-bold text-[18px]'>Giỏ hàng hiện tại chưa có sản phẩm nào </p>
-              <Link to="/home">
+              <Link to="home">
                 <div className='text-center m-3'>
                   <button href="" className=' bg-blue-500 hover:bg-yellow-300 p-3 px-5 rounded-xl'>
                     <CiShoppingBasket className='text-[20px] ' />
@@ -104,12 +104,13 @@ const Cart = () => {
                     <p className='font-semibold text-red-500'> đ{formatPrice(total)}</p>
                   </div>
                 </div>
-                <Link to="/checkout">
+                <Link to="/user/checkout">
                   <div className='bg-red-500 p-3 hover:bg-red-400'>
                     <p className='text-white font-semibold '>Mua hàng ({numberOfItems})</p>
                   </div>
                 </Link>
               </div>
+              <div className='pb-[70px]'></div>
             </div>
 
           )

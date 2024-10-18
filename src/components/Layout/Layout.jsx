@@ -1,28 +1,39 @@
 import React from 'react'
-import { Routes, Route, Outlet, } from "react-router-dom";
-import NavBar from '../NavBar/NavBar';
-import Home from '../Home/Home';
-import Notice from '../Notice/Notice';
-import Category from '../Category/Category';
-import Detail from '../Detail/Detail';
-import Cart from '../Cart/Cart';
-import Search from '../NavBar/Search';
-import Checkout from '../Checkout/Checkout';
-
+import NavBar from './user/NavBar/NavBar';
+import Home from './user/Home/Home';
+import Notice from './user/Notice/Notice';
+import Category from '../Layout/admin/Category/Category';
+import Detail from './user/Detail/Detail';
+import Cart from './user/Cart/Cart';
+import Checkout from './user/Checkout/Checkout';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Adminpage from './admin/AdminPage/Adminpage';
+import Create from '../Layout/admin/CRUDProducts/Create'
+import Read from '../Layout/admin/CRUDProducts/Read'
 const Layout = () => {
-  return (
-    
-    <Routes>
-      <Route path="/" element={<NavBar />}>
-        <Route index element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/detail" element={<Detail />} />       
-        <Route path="/checkout" element={<Checkout />} />       
-      </Route>
-      <Route path="/cart" element={<Cart />} />
 
+  const isAdmin = 1;
+  return (
+
+    <Routes>
+      <Route path="/" element={isAdmin ? (<Navigate to="/admin" />) : (<Navigate to="/user" />)} />
+
+      <Route path="/admin" element={<Adminpage />}>
+        <Route index element={<Read />} />
+        <Route path="products" element={<Read />} />
+        <Route path="category" element={<Category />} />
+        <Route path="create" element={<Create />} />
+      </Route>
+
+      <Route path="/user" element={<NavBar />}>
+        <Route index element={<Home />} />
+        <Route path="home" element={<Home />} />
+        <Route path="category" element={<Category />} />
+        <Route path="notice" element={<Notice />} />
+        <Route path="detail" element={<Detail />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="cart" element={<Cart />} />
+      </Route>
 
     </Routes>
   )

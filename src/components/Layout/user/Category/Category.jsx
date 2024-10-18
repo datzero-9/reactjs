@@ -1,6 +1,4 @@
 import React from 'react'
-import Search from '../NavBar/Search'
-import Items from '../Items/Items'
 
 const Category = () => {
     return (

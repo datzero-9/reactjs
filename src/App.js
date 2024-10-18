@@ -1,19 +1,13 @@
 import { useState } from "react";
-import NavBar from './components/NavBar/NavBar';
-import Slide from "./components/Slide/Slide";
-import Home from "./components/Home/Home";
-import Search from "./components/NavBar/Search";
-import { Routes, Route, Outlet, } from "react-router-dom";
-import Category from "./components/Category/Category";
-import Cart from "./components/Cart/Cart";
-import Layout from "./components/Layout/Layout";
 
+import Layout from "./components/Layout/Layout";
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const isAdmin = true; // Giả sử role = 1 là admin
   return (
-    <div className="overflow-x-hidden  relative" >
+    <div className="overflow-x-hidden relative" >
      
       <Layout />
 

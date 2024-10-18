@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import TextLimited from '../Helper/sliceText'
-import formatNumberWithCommas from '../Helper/formatPrice'
+import TextLimited from '../../../Helper/sliceText'
+import formatNumberWithCommas from '../../../Helper/formatPrice'
 const Items = (props) => {
   const { product } = props;
   return (
-    <Link to={`/detail?id=${product._id}`}>
+    <Link to={`detail?id=${product._id}`}>
       <div href='' className='border border-gray-200  p-1 h-auto rounded bg-slate-100 relative cursor-pointer'>
         <div className='absolute top-1 bg-red-500 left-0 p-1 rounded-r-lg'>
           <p className='font-bold'>Giảm 0%</p>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CiShop } from "react-icons/ci";
 import { AiTwotoneDelete } from "react-icons/ai";
-import formatPrice from '../Helper/formatPrice'
+import formatPrice from '../../../Helper/formatPrice'
 
 const ItemCart = (props) => {
   const { data } = props;
