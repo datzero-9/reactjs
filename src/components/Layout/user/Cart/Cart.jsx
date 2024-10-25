@@ -33,7 +33,7 @@ const Cart = () => {
       {/* trờ lại trang home  */}
       <div className='flex bg-gray-200 p-2 justify-between'>
         <div className='flex  items-center'>
-          <Link to="/">
+          <Link to="/user">
             <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
           </Link>
 

@@ -10,9 +10,9 @@ const Home = () => {
     }, []);
     const getApi = () => {
 
-        axios.get(api)
-            .then((response) => {
-                setProduct(response.data)
+        axios.get(`${api}`)
+            .then((res) => {
+                setProduct(res.data)
             })
             .catch((error) => {
                 console.log('lỗiii', error)
@@ -20,12 +20,13 @@ const Home = () => {
 
     }
     return (
-        <div className='m-2 pb-20'>
+        <div className='m-2 '>
 
             <SlideProduct />
+            <hr />
             <h3 className='text-[20px] font-bold'>Sản phẩm nổi bật</h3>
             <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4'>
-            {product.map((product) => (
+                {product.map((product) => (
                     <Items key={product._id} product={product} />
                 ))}
             </div>

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { CiBoxList } from "react-icons/ci";
-import { Outlet, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import api from '../../../Helper/api';
+
 const Create = () => {
-    const [imageUrl, setImageUrl] = useState('https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/woman-on-a-football-field.jpg');
+    const navigate = useNavigate()
+    const [imageUrl, setImageUrl] = useState('');
     const [productName, setProductName] = useState('');
     const [productPrice, setproductPrice] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -57,7 +59,7 @@ const Create = () => {
     // lấy thông tin từ form
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert('Sản phẩm thêm thành công')
+
         const productData = {
             name: productName,
             price: productPrice,
@@ -65,13 +67,16 @@ const Create = () => {
             description: productDescription,
             image: imageUrl ? imageUrl : 'https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/logo.png'
         };
-        console.log(productData)
+        axios.post(`${api}/createProduct`, productData)
+            .then((res) => {
+                alert('Thêm sản phẩm thành công')
+                navigate('/admin')
+            })
+            .catch((error) => {
+                console.log('lỗiii', error)
+            })
     }
     return (
-        // <div>
-        //     <input type="file" accept="image/*" onChange={handleImageChange} />
-        //     {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />}
-        // </div>
         <div className='p-1 m-1 '>
             <div className='flex justify-end  text-21 text-green-400'>
                 <Link to="/admin">
@@ -155,11 +160,13 @@ const Create = () => {
                             </div>
                             {/* submit  */}
                             <div className='m-7 gap-2 '>
+
                                 <button
                                     type='submit'
                                     className='border-2 border-green-400 text-green-400 p-3 rounded-md hover:bg-gray-200 flex items-center'>
                                     Thêm sản phẩm <MdOutlineDownloadDone size={30} />
                                 </button>
+
                             </div>
                         </div>
                     </div>

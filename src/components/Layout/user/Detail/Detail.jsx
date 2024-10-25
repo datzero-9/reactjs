@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { IoIosArrowBack } from "react-icons/io";
 import { FaStar } from "react-icons/fa";
 import formatPrice from '../../../Helper/formatPrice'
 import { LiaCartPlusSolid } from "react-icons/lia";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
-import { Outlet, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from '../../../Helper/api'
 
 
@@ -18,7 +17,7 @@ const Detail = () => {
   const id = searchParams.get('id');
 
   // thay đôi trạng thái 
-  const [select, setSelect] = useState(null)
+
   const [productDetail, setProductDetail] = useState([]);
   const [quantity, setQuantity] = useState(1)
   //sử lý số lượng sản phẩm 
@@ -34,8 +33,14 @@ const Detail = () => {
     }
   }
   // sử lý lựa chọn phiên bản
+  const [select, setSelect] = useState(null)
   const handleSelect = (id) => {
     setSelect(id)
+  }
+  //sử lý lựa chọn màu
+  const [selectColor, setSelectColor] = useState(null)
+  const handleSelectColor = (id) => {
+    setSelectColor(id)
   }
   //fake data
   const data = [
@@ -73,90 +78,102 @@ const Detail = () => {
   return (
     <div href='' className='border border-gray-200  h-auto rounded relative cursor-pointer'>
 
-      <div className='p-2'>
-        {/* <IoIosArrowBack className='bg-gray-200 rounded-full p-1 text-[30px] absolute top-2 left-2' /> */}
-        <img src={productDetail.image} alt="" className='w-full rounded-lg' />
-      </div>
-      <div className='p-2 flex justify-normal '>
-        <img src={productDetail.image} alt="" className='w-12 h-12 mr-1 rounded-xl' />
-        <img src={productDetail.image} alt="" className='w-12 h-12 mr-1 rounded-xl' />
-        <img src={productDetail.image} alt="" className='w-12 h-12 mr-1 rounded-xl' />
-      </div>
-      <div className='p-2'>
-        <h3 className='font-semibold pb-3'>{productDetail.name}</h3>
-        <div className='flex items-center pb-3'>
-          <FaStar className='text-[12px] mr-1 text-yellow-500' />
-          <FaStar className='text-[12px] mr-1 text-yellow-500' />
-          <FaStar className='text-[12px] mr-1 text-yellow-500' />
-          <FaStar className='text-[12px] mr-1 text-yellow-500' />
-          <FaStar className='text-[12px] mr-1 text-yellow-500' />
-          <p className='text-[12px]'>20 đánh giá</p>
-        </div>
-
-        {/* giá sản phẩm  */}
-        <div className='pb-3 flex items-center'>
-          <h3 className='text-red-600 font-bold mr-2'>{formatPrice(productDetail.price)}đ</h3>
-          <h3 className='text-gray-400 font-medium mr-2 text-13'><del>{formatPrice(productDetail.price)}đ</del></h3>
-        </div>
-
-        {/* số lượng sản phẩm ? */}
-        <div className='flex  items-center'>
-          <CiCircleMinus size={25} onClick={handleMinus} />
-          <input type="" value={quantity} className='text-center text-19 w-[50px] px-3' />
-          <CiCirclePlus size={25} onClick={handlePlus} />
-        </div>
-        {/* lựa chọn phiên bản */}
-        <div>
-          <h1 className='font-bold mb-1'>Lựa chọn phiên bản</h1>
-          <div className='pb-3 gap-3 grid grid-cols-3'>
-
+      <div className='p-2 lg:flex gap-4'>
+        {/* list ảnh của sản phẩm  */}
+        <div className='lg:w-[50%] lg:p-2  '>
+          <div className='p-4 flex justify-center md:bg-gray-100 rounded-md'>
+            <img src={productDetail.image} alt="" className='w-full rounded-lg md:w-[70%]  lg:w-full' />
+          </div>
+          <div className='p-2 flex justify-normal '>
             {
-              data.map((data) => {
-                return <div onClick={() => handleSelect(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-gray-300 ${select === data.id ? 'border-red-600' : ''}`}>
-                  <p className='font-medium text-15'>5G 256GB - {data.id}</p>
-                  <p><h3 className='text-gray-500 font-medium mr-2 text-13'>{formatPrice(productDetail.price)}đ</h3></p>
-
-                </div>
+              data.map((data, index) => {
+                return <img key={index} src={productDetail.image} alt="" className='w-[80px]  mr-3 rounded-md lg:w-[120px] border' />
               })
             }
 
-          </div>
 
-        </div>
-
-
-        {/* lựa chon màu  */}
-        <div>
-          <h1 className='font-bold mb-1'>Lựa chọn Màu</h1>
-          <div className='pb-3 gap-3 grid grid-cols-3'>
-
-            {
-              data.map((data) => {
-                return <div onClick={() => handleSelect(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-gray-300 ${select === data.id ? 'border-red-600' : ''}`}>
-                  <p className='font-medium text-15'>{data.color}</p>
-                </div>
-              })
-            }
-
-          </div>
-
-        </div>
-        {/* mua hàng, thêm vào giỏ hàng */}
-
-        <div className='pb-3 flex  gap-3'>
-          <div className='text-center text-white bg-red-600 border border-gray-400 w-[75%] p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
-            <Link to="/user/cart">
-              <h3 className='text-[20px] font-bold'>Mua ngay</h3>
-              <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
-            </Link>
-          </div>
-          <div onClick={() => alert('Thêm vào giỏ hàng thành công')} className=' text-red-600 w-[25%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
-            <LiaCartPlusSolid className='text-[30px]' />
-            <p className='text-[10px]'>Thêm vào giỏ</p>
           </div>
         </div>
 
-        {/* thông tin của sản phẩm  */}
+        {/* Thông tin của sản phẩm  */}
+        <div className='lg:w-[50%] lg:p-2 '>
+          <h3 className='font-semibold pb-3 md:text-[20px] '>{productDetail.name}</h3>
+          <div className='flex items-center pb-3 text-[12px] md:text-[14px] lg:text-[18px]'>
+            <FaStar className=' mr-1 text-yellow-500' />
+            <FaStar className=' mr-1 text-yellow-500' />
+            <FaStar className=' mr-1 text-yellow-500' />
+            <FaStar className=' mr-1 text-yellow-500' />
+            <FaStar className=' mr-1 text-yellow-500' />
+            <p className=''>20 đánh giá</p>
+          </div>
+
+          {/* giá sản phẩm  */}
+          <div className='pb-3 flex items-center'>
+            <h3 className='text-red-600 font-bold mr-2'>{formatPrice(productDetail.price)}đ</h3>
+            <h3 className='text-gray-400 font-medium mr-2 text-13'><del>{formatPrice(productDetail.price)}đ</del></h3>
+          </div>
+
+          {/* số lượng sản phẩm ? */}
+          <div className='flex  items-center my-2'>
+            <CiCircleMinus size={25} onClick={handleMinus} />
+            <input type="" value={quantity} className='text-center text-19 w-[50px] px-3' />
+            <CiCirclePlus size={25} onClick={handlePlus} />
+          </div>
+          {/* lựa chọn phiên bản */}
+          <div className='my-2'>
+            <h1 className='font-bold mb-1'>Lựa chọn phiên bản</h1>
+            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-4  lg:grid-cols-5 xl:grid-cols-6'>
+
+              {
+                data.map((data) => {
+                  return <div onClick={() => handleSelect(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-red-200 ${select === data.id ? 'border-red-600 bg-red-200' : ''}`}>
+                    <p className='font-medium text-13'>5G 256GB - {data.id}</p>
+                    <p><h3 className='text-gray-500 font-medium mr-2 text-13'>{formatPrice(productDetail.price)}đ</h3></p>
+
+                  </div>
+                })
+              }
+
+            </div>
+
+          </div>
+
+
+          {/* lựa chon màu  */}
+          <div className='my-2'>
+            <h1 className='font-bold mb-1'>Lựa chọn Màu</h1>
+            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+
+              {
+                data.map((data) => {
+                  return <div onClick={() => handleSelectColor(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-red-200 ${selectColor === data.id ? 'border-red-600 bg-red-200' : ''}`}>
+                    <p className='font-medium text-13'>{data.color}</p>
+                  </div>
+                })
+              }
+
+            </div>
+
+          </div>
+          {/* mua hàng, thêm vào giỏ hàng */}
+
+          <div className='pb-3 flex  gap-3'>
+            <div className='text-center text-white bg-red-600 border border-gray-400 w-[75%] md:w-[50%] lg:w-[60%]  p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
+              <Link to="/user/cart">
+                <h3 className='text-[18px] font-bold'>Mua ngay</h3>
+                <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
+              </Link>
+            </div>
+            <div onClick={() => alert('Thêm vào giỏ hàng thành công')} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
+              <LiaCartPlusSolid className='text-[30px]' />
+              <p className='text-[10px]'>Thêm vào giỏ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr className='m-2' />
+      <div className='p-2'>
+        {/* thông số  của sản phẩm  */}
         <div className=' '>
           <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
           <div className=' p-3 bg-red-100 rounded-xl'>
