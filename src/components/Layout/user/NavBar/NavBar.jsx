@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { CiShop } from "react-icons/ci";
@@ -18,11 +18,12 @@ import { IoCall } from "react-icons/io5";
 import { CiDeliveryTruck } from "react-icons/ci";
 
 import { MdCancel } from "react-icons/md";
+import Footer from '../Footer/Footer';
 
 const NavBar = () => {
     // lấy thông tin đăng nhập từ loclstorage 
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user)
+
     const [inputValue, setInputValue] = useState('');
     const [item, setItem] = useState([])
     const handleInputChange = (event) => {
@@ -62,7 +63,13 @@ const NavBar = () => {
                 console.log('lỗiii', error)
             })
     }
-
+    // đăng xuất tài khoản 
+    const navigate = useNavigate()
+    const logout = () => {
+        alert("Bạn đã đăng xuất tài khoản")
+        localStorage.removeItem('user');
+        navigate('/');
+    }
     return (
         <>
             <div class=" flex  bg-red-600 p-2 gap-3 text-white  ">
@@ -152,13 +159,11 @@ const NavBar = () => {
                 </div>
 
                 {/* Tài khoản  */}
-                <div className='bg-red-500  hover:bg-red-400  rounded-md p-1 basis-2/12 md:basis-1/12'>
-                    <Link to="cart">
-                        <div className='flex flex-col justify-center items-center h-full'>
-                            <h6 className='xl:text-[20px] text-[15px]'><FaUserCircle /></h6>
-                            <h6 className='text-[10px]'>{user.username}</h6>
-                        </div>
-                    </Link>
+                <div className='bg-red-500  hover:bg-red-400  rounded-md p-1 basis-2/12 md:basis-1/12 cursor-pointer' onClick={logout}>
+                    <div className='flex flex-col justify-center items-center h-full'>
+                        <h6 className='xl:text-[20px] text-[15px]'><FaUserCircle /></h6>
+                        <h6 className='text-[10px]'>{user.name}</h6>
+                    </div>
                 </div>
 
 
@@ -204,9 +209,11 @@ const NavBar = () => {
 
             </ul>
 
-            <div className="overflow-y-auto " style={{ height: 'calc(100vh - 100px)' }}>
+            <div className="overflow-y-auto pb-[80px] md:pb-0  " style={{ height: 'calc(100vh - 50px)' }}>
                 <Outlet context={{ category }} />
+                <Footer />
             </div>
+
 
         </>
 

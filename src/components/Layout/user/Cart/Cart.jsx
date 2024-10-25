@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { LiaFacebookMessenger } from "react-icons/lia";
 import { AiFillContainer } from "react-icons/ai";
@@ -8,20 +8,33 @@ import { MdCancel } from "react-icons/md";
 import { Outlet, Link } from "react-router-dom";
 import ItemCart from '../ItemCart/ItemCart';
 import formatPrice from '../../../Helper/formatPrice'
+import api from '../../../Helper/api';
+import axios from 'axios';
 
 // Itemcart.forEach(item => {
 //   total += item.price;
 // });
 const Cart = () => {
 
-  const Itemcart = [
-    { name: 'Điện thoại ip x', price: 200000, quantity: 1, img: 'https://onewaymobile.vn/images/products/2023/06/14/large/14-1-5_1662619052_1686739057.webp' },
-    { name: 'Laptop 3x d', price: 3278463, quantity: 1, img: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_d_i_5__2.png' },
-    { name: 'Laptop 3x d', price: 3278463, quantity: 1, img: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_d_i_5__2.png' },
-  ]
 
-  const total = Itemcart.reduce((acc, item) => acc + item.price, 0);
-  const numberOfItems = Itemcart.length;
+  // lấy ra danh sách sản phẩm
+  const [listCart, setListCart] = useState([])
+  useEffect(() => {
+    getListCart()
+  }, [])
+  const getListCart = () => {
+    try {
+      axios.get(`${api}/getCart`)
+        .then((res) => {
+          setListCart(res.data)
+          console.log(res.data)
+        })
+    } catch (error) {
+
+    }
+  }
+  const total = listCart.reduce((acc, item) => acc + ( item.quantity*item.price), 0);
+  const numberOfItems = listCart.length;
 
   const [handle, setHandle] = useState(false)
   const handleVoucher = () => {
@@ -47,8 +60,12 @@ const Cart = () => {
       {/* items cart  */}
       <div>
         {
-          Itemcart.map((data)=>{
-           return <ItemCart data={data}/>
+          listCart.map((data, index) => {
+            return (
+              <div key={index}>
+                <ItemCart data={data} getListCart={getListCart}/>
+              </div>
+            )
           })
         }
 
@@ -60,7 +77,7 @@ const Cart = () => {
           (
             <div className='p-3 justify-center '>
               <p className='text-center font-bold text-[18px]'>Giỏ hàng hiện tại chưa có sản phẩm nào </p>
-              <Link to="home">
+              <Link to="/user">
                 <div className='text-center m-3'>
                   <button href="" className=' bg-blue-500 hover:bg-yellow-300 p-3 px-5 rounded-xl'>
                     <CiShoppingBasket className='text-[20px] ' />
@@ -110,7 +127,7 @@ const Cart = () => {
                   </div>
                 </Link>
               </div>
-              <div className='pb-[70px]'></div>
+
             </div>
 
           )

@@ -1,0 +1,15 @@
+.dynamic-height {
+    height: calc(100vh - 0px); /* Cố định phần lề trên hoặc dưới */
+}
+
+@media (min-width: 768px) { /* Màn hình nhỏ hơn */
+    .dynamic-height {
+        height: calc(100vh - 50px); /* Điều chỉnh kích thước theo độ phân giải */
+    }
+}
+
+@media (min-width: 480px) { /* Màn hình nhỏ hơn nữa */
+    .dynamic-height {
+        height: calc(100vh - 150px);
+    }
+}

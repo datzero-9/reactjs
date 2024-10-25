@@ -13,7 +13,8 @@ const Login = () => {
     const handleForget = () => {
         setForgetPassword(!forgetPassword);
     };
-
+    //handle đăng nhập
+    const [acc, setAcc] = useState(null)
     const handleLogin = async (e) => {
         e.preventDefault();
         // Thực hiện yêu cầu đăng nhập
@@ -21,13 +22,18 @@ const Login = () => {
             axios.post(`${api}/login`, { username, password })
                 .then((res) => {
                     // Lưu thông tin vào localStorage
-                    const userData = {id:res.data._id, username: res.data.username, role: res.data.role };
-                    localStorage.setItem('user', JSON.stringify(userData));
+                    if (res.data) {
 
-                    if (res.data.role === 'admin') {
-                        navigate('/admin');
+                        const userData = { id: res.data._id, name: res.data.name, role: res.data.role };
+                        localStorage.setItem('user', JSON.stringify(userData));
+
+                        if (res.data.role === 'admin') {
+                            navigate('/admin');
+                        } else {
+                            navigate('/user');
+                        }
                     } else {
-                        navigate('/user');
+                        setAcc("Tài khoản hoặc mật khẩu không chính xác");
                     }
                 })
         } catch (error) {
@@ -37,10 +43,14 @@ const Login = () => {
     return (
         <div className="border p-3 bg-[rgba(255,255,255,0.8)] w-[250px] flex flex-col items-center rounded-md">
             <h6 className="font-bold text-[22px]">Đăng nhập</h6>
+            {acc && (
+                <h6 className=" text-[11px] text-red-500">{acc}</h6>
+            )}
             <form onSubmit={handleLogin} className="w-full">
                 <div className="my-3 text-[12px] w-full">
                     <h6 className="font-bold">Tài khoản:</h6>
                     <input
+                        required
                         type="text"
                         placeholder="Nhập tài khoản của bạn"
                         className="outline-none p-1 border rounded-md bg-[rgba(255,255,255,0.5)] w-full"
@@ -51,6 +61,7 @@ const Login = () => {
                 <div className="my-3 text-[12px] w-full">
                     <h6 className="font-bold">Mật khẩu:</h6>
                     <input
+                        required
                         type="password"
                         placeholder="Nhập mật khẩu của bạn"
                         className="outline-none p-1 border rounded-md bg-[rgba(255,255,255,0.5)] w-full"

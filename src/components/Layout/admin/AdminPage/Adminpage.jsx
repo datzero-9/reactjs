@@ -38,7 +38,7 @@ const Adminpage = () => {
                 <div className='flex items-center p-2 gap-3'>
                     <img src={avt} alt="" className='w-[70px] h-[70px] rounded-full border p-1' />
                     <div className='text-17'>
-                        <h2 className='font-semibold text-23'>{user.username} (admin)</h2>
+                        <h2 className='font-semibold text-23'>{user.name} (admin)</h2>
                         <h2 className='flex items-center gap-1 cursor-pointer hover:bg-gray-200 rounded-xl p-1' onClick={handleLogout}><BiLogOut />Đăng xuất</h2>
                     </div>
                 </div>

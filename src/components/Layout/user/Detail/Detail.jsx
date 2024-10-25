@@ -11,6 +11,9 @@ import api from '../../../Helper/api'
 
 
 const Detail = () => {
+  // lấy thông tin đăng nhập từ loclstorage 
+  const user = JSON.parse(localStorage.getItem('user'));
+
   // lấy cái id từ params 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -68,13 +71,38 @@ const Detail = () => {
     axios.post(`${api}/detail`, { id: id })
       .then((response) => {
         setProductDetail(response.data);
-        console.log(response.data)
+
       })
       .catch((error) => {
         console.log('lỗi', error);
       });
   };
+  const addCart = () => {
+    const cart = {
+      idUser: user.id,
+      idProduct: productDetail._id,
+      name: productDetail.name,
+      image: productDetail.image,
+      quantity: quantity,
+      price: productDetail.price,
+      salePrice: productDetail.price,
+    }
+    try {
+      axios.post(`${api}/addCart`, cart)
+        .then((res) => {
+          if (res.data.status) {
+            alert("Sản phẩm đã được thêm vào giỏ hàng")
+            return;
+          }
+          else{
+            alert("Sản phẩm đã Có trong giỏ hàng");
+          }
 
+        })
+    } catch (error) {
+      console.log("lỗi:" + error)
+    }
+  }
   return (
     <div href='' className='border border-gray-200  h-auto rounded relative cursor-pointer'>
 
@@ -82,7 +110,7 @@ const Detail = () => {
         {/* list ảnh của sản phẩm  */}
         <div className='lg:w-[50%] lg:p-2  '>
           <div className='p-4 flex justify-center md:bg-gray-100 rounded-md'>
-            <img src={productDetail.image} alt="" className='w-full rounded-lg md:w-[70%]  lg:w-full' />
+            <img src={productDetail.image} alt="" className='w-full rounded-lg md:w-[60%]  lg:w-full' />
           </div>
           <div className='p-2 flex justify-normal '>
             {
@@ -98,6 +126,7 @@ const Detail = () => {
         {/* Thông tin của sản phẩm  */}
         <div className='lg:w-[50%] lg:p-2 '>
           <h3 className='font-semibold pb-3 md:text-[20px] '>{productDetail.name}</h3>
+
           <div className='flex items-center pb-3 text-[12px] md:text-[14px] lg:text-[18px]'>
             <FaStar className=' mr-1 text-yellow-500' />
             <FaStar className=' mr-1 text-yellow-500' />
@@ -122,7 +151,7 @@ const Detail = () => {
           {/* lựa chọn phiên bản */}
           <div className='my-2'>
             <h1 className='font-bold mb-1'>Lựa chọn phiên bản</h1>
-            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-4  lg:grid-cols-5 xl:grid-cols-6'>
+            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-5 xl:grid-cols-6'>
 
               {
                 data.map((data) => {
@@ -142,7 +171,7 @@ const Detail = () => {
           {/* lựa chon màu  */}
           <div className='my-2'>
             <h1 className='font-bold mb-1'>Lựa chọn Màu</h1>
-            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+            <div className='pb-3 gap-3 grid grid-cols-3 md:grid-cols-5  xl:grid-cols-6'>
 
               {
                 data.map((data) => {
@@ -164,7 +193,7 @@ const Detail = () => {
                 <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
               </Link>
             </div>
-            <div onClick={() => alert('Thêm vào giỏ hàng thành công')} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
+            <div onClick={() => addCart()} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
               <LiaCartPlusSolid className='text-[30px]' />
               <p className='text-[10px]'>Thêm vào giỏ</p>
             </div>
@@ -192,10 +221,11 @@ const Detail = () => {
           </div>
 
         </div>
-        <div className='pb-[75px]'></div>
 
       </div>
+      <hr className='m-2' />
     </div>
+    
   );
 }
 export default Detail

@@ -21,9 +21,9 @@ const Items = (props) => {
           <p className='font-bold'>Giảm 0%</p>
         </div>
         <div className='flex justify-center items-center'>
-          <img src={product.image} alt="" className=' w-[90%] m-2' />
+          <img src={product.image} alt="" className=' w-[90%] h-[100px] m-2' />
         </div>
-        <div className='font-medium text-16'>
+        <div className='font-medium text-13'>
           <TextLimited text={product.name.length > 45 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
         </div>
         <div className=''>
