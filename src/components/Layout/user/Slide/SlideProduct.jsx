@@ -90,7 +90,7 @@ const SlideProduct = () => {
                     product.slice(0, 2).map((data, index) => {
                         return (
                             <div key={index} className='m-2 p-2 flex justify-center hover:bg-gray-100 rounded-md cursor-pointer'>
-                                <img src={data.image} alt="Ảnh bị lỗi" className='w-[70%]  rounded-md bg-red-200' />
+                                <img src={data.image} alt="Ảnh bị lỗi" className='w-[70%] h-[100px] rounded-md bg-red-200' />
                             </div>)
                     })
                 }

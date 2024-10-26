@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FaStar } from "react-icons/fa";
 import formatPrice from '../../../Helper/formatPrice'
@@ -77,6 +77,7 @@ const Detail = () => {
         console.log('lỗi', error);
       });
   };
+  // thêm sản phẩm vào giỏ hàng
   const addCart = () => {
     const cart = {
       idUser: user.id,
@@ -94,10 +95,31 @@ const Detail = () => {
             alert("Sản phẩm đã được thêm vào giỏ hàng")
             return;
           }
-          else{
+          else {
             alert("Sản phẩm đã Có trong giỏ hàng");
           }
 
+        })
+    } catch (error) {
+      console.log("lỗi:" + error)
+    }
+  }
+  //mua ngay sản phẩm
+  const navigate = useNavigate()
+  const buyProduct = () => {
+    const cart = {
+      idUser: user.id,
+      idProduct: productDetail._id,
+      name: productDetail.name,
+      image: productDetail.image,
+      quantity: quantity,
+      price: productDetail.price,
+      salePrice: productDetail.price,
+    }
+    try {
+      axios.post(`${api}/addCart`, cart)
+        .then((res) => {
+          navigate('/user/cart')
         })
     } catch (error) {
       console.log("lỗi:" + error)
@@ -125,7 +147,7 @@ const Detail = () => {
 
         {/* Thông tin của sản phẩm  */}
         <div className='lg:w-[50%] lg:p-2 '>
-          <h3 className='font-semibold pb-3 md:text-[20px] '>{productDetail.name}</h3>
+          <h3 className='font-semibold pb-3 md:text-[18px] '>{productDetail.name}</h3>
 
           <div className='flex items-center pb-3 text-[12px] md:text-[14px] lg:text-[18px]'>
             <FaStar className=' mr-1 text-yellow-500' />
@@ -187,11 +209,9 @@ const Detail = () => {
           {/* mua hàng, thêm vào giỏ hàng */}
 
           <div className='pb-3 flex  gap-3'>
-            <div className='text-center text-white bg-red-600 border border-gray-400 w-[75%] md:w-[50%] lg:w-[60%]  p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
-              <Link to="/user/cart">
-                <h3 className='text-[18px] font-bold'>Mua ngay</h3>
-                <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
-              </Link>
+            <div onClick={buyProduct} className='text-center text-white bg-red-600 border border-gray-400 w-[75%] md:w-[50%] lg:w-[60%]  p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
+              <h3 className='text-[18px] font-bold'>Mua ngay</h3>
+              <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
             </div>
             <div onClick={() => addCart()} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
               <LiaCartPlusSolid className='text-[30px]' />
@@ -225,7 +245,7 @@ const Detail = () => {
       </div>
       <hr className='m-2' />
     </div>
-    
+
   );
 }
 export default Detail

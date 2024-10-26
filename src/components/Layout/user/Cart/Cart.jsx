@@ -51,14 +51,14 @@ const Cart = () => {
           </Link>
 
 
-          <p className=' pl-3 font-medium text-[19px]'>Giỏ hàng (34)</p>
+          <p className=' pl-3 font-medium text-[16px]'>Giỏ hàng (34)</p>
         </div>
         <div className='flex items-center'>
           <LiaFacebookMessenger size={30} className='text-red-500' />
         </div>
       </div>
       {/* items cart  */}
-      <div>
+      <div className='flex flex-col items-center'>
         {
           listCart.map((data, index) => {
             return (
@@ -132,7 +132,7 @@ const Cart = () => {
 
           )
       }
-
+<hr className='my-2' />
     </div>
   )
 }
