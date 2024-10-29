@@ -3,14 +3,14 @@ import NavBar from './user/NavBar/NavBar';
 import CategoryUser from './user/Category/Category';
 import Home from './user/Home/Home';
 import Notice from './user/Notice/Notice';
-import Category from '../Layout/admin/Category/Category';
+import Category from './admin/Category/Category';
 import Detail from './user/Detail/Detail';
 import Cart from './user/Cart/Cart';
 import Checkout from './user/Checkout/Checkout';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Adminpage from './admin/AdminPage/Adminpage';
-import Create from '../Layout/admin/CRUDProducts/Create'
-import Read from '../Layout/admin/CRUDProducts/Read'
+import Create from './admin/CRUDProducts/Create'
+import Read from './admin/CRUDProducts/Read'
 import Update from './admin/CRUDProducts/Update';
 import Login from './user/Accounts/Login';
 import Register from './user/Accounts/Register';

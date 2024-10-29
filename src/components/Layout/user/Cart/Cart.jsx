@@ -16,24 +16,25 @@ import axios from 'axios';
 // });
 const Cart = () => {
 
+  // lấy thông tin tuwf localstorage
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  // lấy ra danh sách sản phẩm
+  // lấy ra danh sách giỏ hàng bằng id của người dùng
   const [listCart, setListCart] = useState([])
   useEffect(() => {
     getListCart()
   }, [])
   const getListCart = () => {
     try {
-      axios.get(`${api}/getCart`)
+      axios.post(`${api}/getCart`, { idUser: user.id })
         .then((res) => {
           setListCart(res.data)
-          console.log(res.data)
         })
     } catch (error) {
 
     }
   }
-  const total = listCart.reduce((acc, item) => acc + ( item.quantity*item.price), 0);
+  const total = listCart.reduce((acc, item) => acc + (item.quantity * item.price), 0);
   const numberOfItems = listCart.length;
 
   const [handle, setHandle] = useState(false)
@@ -51,7 +52,7 @@ const Cart = () => {
           </Link>
 
 
-          <p className=' pl-3 font-medium text-[16px]'>Giỏ hàng (34)</p>
+          <p className=' pl-3 font-medium text-[16px]'>Giỏ hàng ({numberOfItems})</p>
         </div>
         <div className='flex items-center'>
           <LiaFacebookMessenger size={30} className='text-red-500' />
@@ -63,7 +64,7 @@ const Cart = () => {
           listCart.map((data, index) => {
             return (
               <div key={index}>
-                <ItemCart data={data} getListCart={getListCart}/>
+                <ItemCart data={data} getListCart={getListCart} />
               </div>
             )
           })
@@ -121,7 +122,10 @@ const Cart = () => {
                     <p className='font-semibold text-red-500'> đ{formatPrice(total)}</p>
                   </div>
                 </div>
-                <Link to="/user/checkout">
+                <Link
+                  to="/user/checkout"
+                  state={{ listCart,total }} // Truyền các dữ liệu bạn muốn qua `state`
+                >
                   <div className='bg-red-500 p-3 hover:bg-red-400'>
                     <p className='text-white font-semibold '>Mua hàng ({numberOfItems})</p>
                   </div>
@@ -132,8 +136,8 @@ const Cart = () => {
 
           )
       }
-<hr className='my-2' />
-    </div>
+      <hr className='my-2' />
+    </div >
   )
 }
 

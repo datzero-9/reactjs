@@ -1,16 +1,46 @@
-import React from 'react'
-import ItemCart from '../ItemCart/ItemCart'
-import Items from '../Items/Items'
-
+import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { CiShop } from "react-icons/ci";
+import { AiTwotoneDelete } from "react-icons/ai";
+import formatPrice from '../../../Helper/formatPrice'
+import api from '../../../Helper/api';
+import axios from 'axios';
+import BeatLoader from "react-spinners/BeatLoader";
 const Checkout = () => {
-    const Itemcart = [
-        { name: 'Điện thoại ip x', price: 200000, quantity: 1, img: 'https://onewaymobile.vn/images/products/2023/06/14/large/14-1-5_1662619052_1686739057.webp' },
-        { name: 'Laptop 3x d', price: 3278463, quantity: 1, img: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_d_i_5__2.png' },
-        { name: 'Laptop 3x d', price: 3278463, quantity: 1, img: 'https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_d_i_5__2.png' },
-    ]
-    const items = Itemcart.length;
+    // dữ liệu được lấy từ component Cart
+    const location = useLocation();
+    const { listCart, total } = location.state || {};
+    //format ngày
+  
+    const items = listCart.length;
+    // xác nhận mua hàng
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
+    const handleBuyProduct = () => {
+        setLoading(true)
+        setTimeout(() => {
+            alert("Đặt hàng thành công")
+            setLoading(false)
+            navigate('/user/cart')
+        }, 3000)
+    }
+    const getListCart = () => {
+        alert("xóa thành công vui lòng refresh lại trang ");
+    }
     return (
         <div className='p-3'>
+            {
+                loading &&
+                <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+                    <BeatLoader
+                        color={'#DB142C'}
+                        loading={loading}
+                        size={10}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            }
 
             <h3 className='text-23 font-bold text-center '>Thông tin đặt hàng</h3>
             <div className='border border-gray-300 rounded-xl p-5'>
@@ -25,20 +55,46 @@ const Checkout = () => {
                 </div>
 
                 <div className='p-2'>
-                    <h5 className='text-17 font-semibold pb-2'>Sản phẩm sẽ mua:</h5>
-                    {
-                        Itemcart.map((data) => {
-                            return <ItemCart data={data} />
-                        })
-                    }
+                    <h5 className='text-17 font-semibold pb-2 '>Sản phẩm sẽ mua:</h5>
+                    <div className='flex flex-col items-center'>
+                        {
+                            listCart.map((data, index) => {
+                                return (
+                                    <div key={index} className='w-full sm:w-[550px] md:w-[700px]  xl:w-[1024px] '>
+                                        <div className='p-1'>
+                                            <div className='border border-gray-400 p-2 m-1 rounded-xl'>
+                                                <div className='flex items-center justify-between p-1 border-b border-gray-300'>
+                                                    <div className='flex items-center gap-2'>
+                                                        <CiShop size={19} className='text-red-500' />
+                                                        <p className='font-bold text-red-500'> LSHOP-TECH  </p>
+                                                    </div>
+                                                </div>
+                                                <div className='flex  p-1'>
+                                                    <img src={data.image} alt="" className=' h-[60px] border border-gray-400 rounded-md p-1' />
+                                                    <div className='pl-3'>
+                                                        <h3 className='text-[12px] font-medium'>{data.name}</h3>
+                                                        <div className='flex gap-2'>
+                                                            <h3 className='text-red-600 text-[12px]'>{formatPrice(data.price)} đ</h3>
+                                                            <h3 className='text-[12px]'>x {data.quantity}   </h3>
+                                                            <h3 className='text-[12px] text-red-600 '>= {formatPrice(data.price * data.quantity)} đ</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-                <div className='flex justify-end p-2' onClick={()=>alert('Mua hàng thành công')}>
+            {/* mua sản phẩm  */}
+                <div className='flex justify-end p-2' onClick={handleBuyProduct}>
                     {
-                        items < 1 ? <div>Không có sản phẩm</div> : <button className='rounded-md p-2 text-17 font-semibold bg-red-500 hover:bg-red-400 text-white'>Xác nhận</button>
+                        items < 1 ? <div>Không có sản phẩm</div> : <button className='rounded-md p-2 text-15 font-semibold bg-red-500 hover:bg-red-400 text-white'>{formatPrice(total)} đ - Xác nhận</button>
                     }
                 </div>
             </div>
-            <div className='pb-[75px]'></div>
 
         </div>
     )

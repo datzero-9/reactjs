@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../../../Helper/api';
 import axios from 'axios';
+import BeatLoader from "react-spinners/BeatLoader";
 
 const Login = () => {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [forgetPassword, setForgetPassword] = useState(false);
@@ -15,33 +17,57 @@ const Login = () => {
     };
     //handle đăng nhập
     const [acc, setAcc] = useState(null)
+    // waiting login
+    const [loading, setLoading] = useState(false)
     const handleLogin = async (e) => {
         e.preventDefault();
         // Thực hiện yêu cầu đăng nhập
         try {
+            setLoading(true)
             axios.post(`${api}/login`, { username, password })
                 .then((res) => {
                     // Lưu thông tin vào localStorage
                     if (res.data) {
+                        setTimeout(() => {
+                            setLoading(false)
+                            const userData = { id: res.data._id, name: res.data.name, role: res.data.role };
+                            localStorage.setItem('user', JSON.stringify(userData));
 
-                        const userData = { id: res.data._id, name: res.data.name, role: res.data.role };
-                        localStorage.setItem('user', JSON.stringify(userData));
-
-                        if (res.data.role === 'admin') {
-                            navigate('/admin');
-                        } else {
-                            navigate('/user');
-                        }
+                            if (res.data.role === 'admin') {
+                                navigate('/admin');
+                            } else {
+                                navigate('/user');
+                            }
+                        }, 3000)
                     } else {
-                        setAcc("Tài khoản hoặc mật khẩu không chính xác");
+                        setTimeout(() => {
+                            setLoading(false)
+                            setAcc("Tài khoản hoặc mật khẩu không chính xác");
+                        }, 3000)
                     }
                 })
         } catch (error) {
             console.log('lỗi: ' + error)
         }
     };
+
+
+
+
     return (
         <div className="border p-3 bg-[rgba(255,255,255,0.8)] w-[250px] flex flex-col items-center rounded-md">
+            {
+                loading &&
+                <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+                    <BeatLoader
+                        color={'#DB142C'}
+                        loading={loading}
+                        size={10}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            }
             <h6 className="font-bold text-[22px]">Đăng nhập</h6>
             {acc && (
                 <h6 className=" text-[11px] text-red-500">{acc}</h6>

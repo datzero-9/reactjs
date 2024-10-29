@@ -16,7 +16,7 @@ import api from '../../../Helper/api';
 import { TbCategory } from "react-icons/tb";
 import { IoCall } from "react-icons/io5";
 import { CiDeliveryTruck } from "react-icons/ci";
-
+import ClipLoader from "react-spinners/ClipLoader";
 import { MdCancel } from "react-icons/md";
 import Footer from '../Footer/Footer';
 
@@ -44,6 +44,16 @@ const NavBar = () => {
                 console.log('lỗiii', error)
             })
     }
+    //chọn sản phẩm sau khi tìm kiếm 
+    const [loading, setLoading] = useState(false)
+    const handleSearch = (id) => {
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            setInputValue('')
+            navigate(`/user/detail?id=${id}`)
+        }, 3000)
+    }
     // hiển thị danh mục
     const [category, setCategory] = useState(false)
     const handleCategory = () => {
@@ -70,8 +80,24 @@ const NavBar = () => {
         localStorage.removeItem('user');
         navigate('/');
     }
+
+
     return (
         <>
+            {
+                loading &&
+                <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+                    <ClipLoader
+
+                        color={'#DB142C'}
+                        loading={loading}
+                        size={20}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            }
+
             <div class=" flex  bg-red-600 p-2 gap-3 text-white  ">
                 {/* logo  */}
                 <div className=' basis-1/12 md:basis-3/12 xl:basis-2/12 '>
@@ -119,13 +145,12 @@ const NavBar = () => {
                             (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[350px] rounded-xl'>
                                 {
                                     item.slice(0, 5).map((data, index) => {
-                                        return <>
-                                            <div key={index} className='flex gap-2 m-1 bg-gray-200 rounded-xl hover:bg-gray-300' onClick={() => { console.log(data._id) }}>
+                                        return (
+                                            <div key={index} className='flex gap-2 m-1 bg-gray-200 rounded-xl hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
                                                 <img src={data.image} alt="" className='w-[50px] h-[50px]' />
-
-                                                <TextLimited text={data.name} max={40} />
+                                                <TextLimited text={data.name} max={70} />
                                             </div>
-                                        </>
+                                        )
                                     })
                                 }
                             </div>)

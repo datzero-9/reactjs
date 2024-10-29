@@ -8,7 +8,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import api from '../../../Helper/api'
-
+import BeatLoader from "react-spinners/BeatLoader";
 
 const Detail = () => {
   // lấy thông tin đăng nhập từ loclstorage 
@@ -105,8 +105,10 @@ const Detail = () => {
     }
   }
   //mua ngay sản phẩm
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const buyProduct = () => {
+    setLoading(true)
     const cart = {
       idUser: user.id,
       idProduct: productDetail._id,
@@ -119,7 +121,10 @@ const Detail = () => {
     try {
       axios.post(`${api}/addCart`, cart)
         .then((res) => {
-          navigate('/user/cart')
+          setTimeout(() => {
+            setLoading(false)
+            navigate('/user/cart')
+          },3000)
         })
     } catch (error) {
       console.log("lỗi:" + error)
@@ -127,6 +132,18 @@ const Detail = () => {
   }
   return (
     <div href='' className='border border-gray-200  h-auto rounded relative cursor-pointer'>
+      {
+        loading &&
+        <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+          <BeatLoader
+            color={'#DB142C'}
+            loading={loading}
+            size={10}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      }
 
       <div className='p-2 lg:flex gap-4'>
         {/* list ảnh của sản phẩm  */}

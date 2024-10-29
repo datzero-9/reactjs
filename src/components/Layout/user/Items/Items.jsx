@@ -16,7 +16,7 @@ const Items = (props) => {
   }, []);
   return (
     <Link to={`/user/detail?id=${product._id}`}>
-      <div href='' className='border border-gray-200  p-1 h-auto rounded bg-slate-100 relative cursor-pointer'>
+      <div  className='border border-gray-200  p-1 h-auto rounded bg-slate-100 relative cursor-pointer hover:bg-slate-200 hover:border-red-400'>
         <div className='absolute top-1 bg-red-500 left-0 p-1 rounded-r-lg'>
           <p className='font-bold'>Giảm 0%</p>
         </div>
@@ -27,7 +27,7 @@ const Items = (props) => {
           <TextLimited text={product.name.length > 45 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
         </div>
         <div className=''>
-          <del><p className=''> {formatNumberWithCommas(product.price)} đ</p></del>
+          <del><p className='text-[10px]'> {formatNumberWithCommas(product.price)} đ</p></del>
         </div>
         <div className='mb-2'>
           <p className='text-red-400 text-13'>Giá: {formatNumberWithCommas(product.price)} đ</p>
