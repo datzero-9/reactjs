@@ -166,10 +166,12 @@ const NavBar = () => {
                 </div>
                 {/* tra cứu thông tin đơn hàng  */}
                 <div className='hidden bg-red-500 hover:bg-red-400 rounded-md md:block basis-1/12 cursor-pointer '>
-                    <div className='flex flex-col justify-center items-center h-full'>
-                        <h6 className='xl:text-[20px] text-[15px]'><CiDeliveryTruck /></h6>
-                        <h6 className='text-[10px] '>Đơn hàng </h6>
-                    </div>
+                    <Link to="histories">
+                        <div className='flex flex-col justify-center items-center h-full'>
+                            <h6 className='xl:text-[20px] text-[15px]'><CiDeliveryTruck /></h6>
+                            <h6 className='text-[10px] '>Đơn hàng </h6>
+                        </div>
+                    </Link>
                 </div>
 
                 {/* Giỏ hàng  */}

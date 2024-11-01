@@ -15,6 +15,7 @@ import Update from './admin/CRUDProducts/Update';
 import Login from './user/Accounts/Login';
 import Register from './user/Accounts/Register';
 import Account from './user/Accounts/Account';
+import Histories from "./user/Histories/Histories";
 const Layout = () => {
 
   const isAdmin = 0;
@@ -52,6 +53,7 @@ const Layout = () => {
         <Route path="detail" element={<Detail />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="histories" element={<Histories />} />
       </Route>
     </Routes>
 

@@ -18,6 +18,21 @@ const Cart = () => {
 
   // lấy thông tin tuwf localstorage
   const user = JSON.parse(localStorage.getItem('user'));
+  //xóa tất cả sản phẩm trong giỏ hàng
+  const deleteAllCart = () => {
+    // console.log('đã óa tất cả:' + user.id)
+    try {
+      axios.delete(`${api}/deleteAllCart/${user.id}`)
+        .then((res) => {
+          console.log(res.data)
+          alert('Đã xóa tất cả sản phẩm trong giỏ hàng')
+          getListCart()
+        })
+    } catch (error) {
+      console.log('có lỗi xảy ra, vui lòng kiểm tra lại')
+    }
+  }
+
 
   // lấy ra danh sách giỏ hàng bằng id của người dùng
   const [listCart, setListCart] = useState([])
@@ -122,14 +137,20 @@ const Cart = () => {
                     <p className='font-semibold text-red-500'> đ{formatPrice(total)}</p>
                   </div>
                 </div>
-                <Link
-                  to="/user/checkout"
-                  state={{ listCart,total }} // Truyền các dữ liệu bạn muốn qua `state`
-                >
-                  <div className='bg-red-500 p-3 hover:bg-red-400'>
-                    <p className='text-white font-semibold '>Mua hàng ({numberOfItems})</p>
+                <div className='flex gap-2'>
+                  <div className='bg-yellow-500 p-3 hover:bg-yellow-400  cursor-pointer' onClick={deleteAllCart}>
+                    <p className='text-white font-semibold '>Xóa tất cả ({numberOfItems})</p>
                   </div>
-                </Link>
+                  <Link
+                    to="/user/checkout"
+                    state={{ listCart, total }} // Truyền các dữ liệu bạn muốn qua `state`
+                  >
+                    <div className='bg-red-500 p-3 hover:bg-red-400'>
+                      <p className='text-white font-semibold '>Mua hàng ({numberOfItems})</p>
+                    </div>
+                  </Link>
+
+                </div>
               </div>
 
             </div>
