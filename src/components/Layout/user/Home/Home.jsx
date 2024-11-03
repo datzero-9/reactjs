@@ -20,15 +20,17 @@ const Home = () => {
 
     }
     return (
-        <div className='m-2 '>
+        <div className='m-2  flex justify-center  '>
 
-            <SlideProduct />
-            <hr />
-            <h3 className='text-[20px] font-bold'>Sản phẩm nổi bật</h3>
-            <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
-                {product.map((product) => (
-                    <Items key={product._id} product={product} />
-                ))}
+            <div className='container'>
+                <SlideProduct />
+                <hr />
+                <h3 className='text-[20px] font-bold'>Sản phẩm nổi bật</h3>
+                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 bg-gray-50 p-2 rounded-md'>
+                    {product.map((product) => (
+                        <Items key={product._id} product={product} />
+                    ))}
+                </div>
             </div>
         </div >
     )

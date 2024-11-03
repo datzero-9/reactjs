@@ -21,7 +21,7 @@ const Items = (props) => {
           <p className='font-bold'>Giảm 0%</p>
         </div>
         <div className='flex justify-center items-center'>
-          <img src={product.image} alt="" className=' w-[90%] h-[100px] m-2' />
+          <img src={product.image} alt="" className='  h-[100px] m-2' />
         </div>
         <div className='font-medium text-13'>
           <TextLimited text={product.name.length > 45 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
@@ -33,7 +33,7 @@ const Items = (props) => {
           <p className='text-red-400 text-13'>Giá: {formatNumberWithCommas(product.price)} đ</p>
         </div>
         <div className='bg-gray-200 rouneded m-2 p-1 text-[11px] '>
-          <TextLimited text={product.description.length > 45 ? product.description : product.description + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
+          <TextLimited text={product.description.length > 45 ? product.description : product.description + ' - Sản phẩm đang được bày bán với giá tốt..................'} max={45} />
         </div>
 
       </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './user/NavBar/NavBar';
 import CategoryUser from './user/Category/Category';
+import CategoryMobile from './user/Category/CategoryMobile';
 import Home from './user/Home/Home';
 import Notice from './user/Notice/Notice';
 import Category from './admin/Category/Category';
@@ -49,6 +50,7 @@ const Layout = () => {
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
         <Route path="category" element={<CategoryUser />} />
+        <Route path="categorymobile" element={<CategoryMobile />} />
         <Route path="notice" element={<Notice />} />
         <Route path="detail" element={<Detail />} />
         <Route path="checkout" element={<Checkout />} />

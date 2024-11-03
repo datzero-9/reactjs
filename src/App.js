@@ -7,7 +7,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const isAdmin = true; // Giả sử role = 1 là admin
   return (
-    <div className="overflow-x-hidden relative" >
+    <div className="overflow-x-hidden relative " >
      
       <Layout />
 

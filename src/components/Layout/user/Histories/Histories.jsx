@@ -23,8 +23,9 @@ const Histories = () => {
         }
     }
     return (
-        <div className='p-2'>
-            <div className='border border-black rounded-md p-2'>
+        <div className='flex flex-col items-center p-2 '>
+
+            <div className='border border-black rounded-md p-2 container'>
                 <h1 className='font-bold'>Lịch sử đơn hàng</h1>
                 {
                     listOrder.map((data, index) => {

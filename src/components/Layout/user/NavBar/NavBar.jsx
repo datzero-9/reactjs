@@ -81,7 +81,22 @@ const NavBar = () => {
         navigate('/');
     }
 
-
+    // lấy danh mục sản phẩm được click 
+    const getItemCate = (name) => {
+        try {
+            setLoading(true)
+            axios.get(`${api}/listProductCategory/${name}`)
+                .then((res) => {
+                    setTimeout(() => {
+                        setCategory(!category);
+                        setLoading(false)
+                        navigate('/user/category', { state: { listProduct: res.data, name } });
+                    }, 2000)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <>
             {
@@ -98,98 +113,100 @@ const NavBar = () => {
                 </div>
             }
 
-            <div class=" flex  bg-red-600 p-2 gap-3 text-white  ">
-                {/* logo  */}
-                <div className=' basis-1/12 md:basis-3/12 xl:basis-2/12 '>
-                    <Link to="home">
-                        <div className='flex justify-center items-center gap-1 h-full'>
-                            <h6 className='text-[20px] font-bold hidden md:block'>LSHOP-TECH </h6>
-                            <h6 className=''><GiCartwheel size={30} /></h6>
-                        </div>
-                    </Link>
-                </div>
-                {/* danh mục  */}
-                <div className='bg-red-500 hover:bg-red-400 rounded-md hidden lg:block lg:basis-1/12 cursor-pointer relative'>
-                    <div className='h-full flex-col justify-center items-center flex ' onClick={handleCategory}>
-                        <h6 className='xl:text-[20px] text-[15px]'><TbCategory /></h6>
-                        <h6 className='text-[10px] '>Danh mục</h6>
-                    </div>
-                    {
-                        category &&
-                        <div>
-                            {/* Danh mục xuất hiện */}
-                            <div className='absolute z-30 top-[40px] right-[0px] bg-gray-200 w-[250px] text-black p-2 rounded-md'>
-                                {
-                                    listCategory.map((data, index) => (
-                                        <div key={index} onClick={() => { console.log(data._id) }} className='flex justify-between items-center bg-gray-100 hover:bg-gray-200 cursor-pointer p-2 m-1 rounded-md'>
-                                            <h1 className='font-semibold text-[14px]'>{data.name}</h1>
-                                            <MdNavigateNext size={20} />
-                                        </div>
-                                    ))
-                                }
+            <div class="  bg-red-600 flex flex-col items-center  ">
+                <div className='flex  bg-red-600 p-2 gap-3 text-white  container'>
+                    {/* logo  */}
+                    <div className=' basis-1/12 md:basis-3/12 xl:basis-2/12 '>
+                        <Link to="home">
+                            <div className='flex justify-center items-center gap-1 h-full'>
+                                <h6 className='text-[20px] font-bold hidden md:block'>LSHOP-TECH </h6>
+                                <h6 className=''><GiCartwheel size={30} /></h6>
                             </div>
-
-                            {/* Nền mờ */}
-                            <div onClick={handleCategory} className="w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0"></div>
-                        </div>
-                    }
-                </div>
-
-                {/* Tìm kiếm sản phảma  */}
-                <div className='flex justify-center items-center basis-7/12 md:basis-6/12 lg:basis-5/12  relative text-black'>
-                    <FaSearch className='absolute  left-1 text-gray-400' size={20} />
-                    {inputValue.length > 0 ? <MdCancel className='absolute  right-1 text-gray-400 cursor-pointer' size={20} onClick={() => { setInputValue('') }} /> : ''}
-                    <input value={inputValue} onChange={handleInputChange} style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
-                    {
-                        items < 1 ? '' :
-                            (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[350px] rounded-xl'>
-                                {
-                                    item.slice(0, 5).map((data, index) => {
-                                        return (
-                                            <div key={index} className='flex gap-2 m-1 bg-gray-200 rounded-xl hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
-                                                <img src={data.image} alt="" className='w-[50px] h-[50px]' />
-                                                <TextLimited text={data.name} max={70} />
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>)
-                    }
-
-                </div>
-                {/* Liên hệ mua hàng  */}
-                <div className='bg-red-500 hover:bg-red-400 rounded-md hidden lg:block lg:basis-1/12  cursor-pointer '>
-                    <div className=' h-full flex-col justify-center items-center flex'>
-                        <h6 className='xl:text-[20px] text-[15px]'><IoCall /></h6>
-                        <h6 className='text-[10px]  '>0356.031.160 </h6>
+                        </Link>
                     </div>
-                </div>
-                {/* tra cứu thông tin đơn hàng  */}
-                <div className='hidden bg-red-500 hover:bg-red-400 rounded-md md:block basis-1/12 cursor-pointer '>
-                    <Link to="histories">
-                        <div className='flex flex-col justify-center items-center h-full'>
-                            <h6 className='xl:text-[20px] text-[15px]'><CiDeliveryTruck /></h6>
-                            <h6 className='text-[10px] '>Đơn hàng </h6>
+                    {/* danh mục  */}
+                    <div className='bg-red-500 hover:bg-red-400 rounded-md hidden lg:block lg:basis-1/12 cursor-pointer relative'>
+                        <div className='h-full flex-col justify-center items-center flex ' onClick={handleCategory}>
+                            <h6 className='xl:text-[20px] text-[15px]'><TbCategory /></h6>
+                            <h6 className='text-[10px] '>Danh mục</h6>
                         </div>
-                    </Link>
-                </div>
+                        {
+                            category &&
+                            <div>
+                                {/* Danh mục xuất hiện */}
+                                <div className='absolute z-30 top-[40px] right-[0px] bg-gray-200 w-[250px] text-black p-2 rounded-md'>
+                                    {
+                                        listCategory.map((data, index) => (
+                                            <div key={index} onClick={() => { getItemCate(data.name) }} className='flex justify-between items-center bg-gray-100 hover:bg-gray-200 cursor-pointer p-2 m-1 rounded-md'>
+                                                <h1 className='font-semibold text-[14px]'>{data.name}</h1>
+                                                <MdNavigateNext size={20} />
+                                            </div>
+                                        ))
+                                    }
+                                </div>
 
-                {/* Giỏ hàng  */}
-                <div className='bg-red-500 hover:bg-red-400 p-1 rounded-md basis-2/12 md:basis-1/12'>
+                                {/* Nền mờ */}
+                                <div onClick={handleCategory} className="w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0"></div>
+                            </div>
+                        }
+                    </div>
 
-                    <Link to="cart">
-                        <div className='flex flex-col justify-center items-center h-full'>
-                            <h6 className='xl:text-[20px] text-[15px]'><PiShoppingCartThin /></h6>
-                            <h6 className='text-[10px] '>Giỏ hàng </h6>
+                    {/* Tìm kiếm sản phảma  */}
+                    <div className='flex justify-center items-center basis-7/12 md:basis-6/12 lg:basis-5/12  relative text-black'>
+                        <FaSearch className='absolute  left-1 text-gray-400' size={20} />
+                        {inputValue.length > 0 ? <MdCancel className='absolute  right-1 text-gray-400 cursor-pointer' size={20} onClick={() => { setInputValue('') }} /> : ''}
+                        <input value={inputValue} onChange={handleInputChange} style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
+                        {
+                            items < 1 ? '' :
+                                (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[350px] rounded-xl'>
+                                    {
+                                        item.slice(0, 5).map((data, index) => {
+                                            return (
+                                                <div key={index} className='flex gap-2 m-1 bg-gray-200 rounded-xl hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
+                                                    <img src={data.image} alt="" className='w-[50px] h-[50px]' />
+                                                    <TextLimited text={data.name} max={70} />
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>)
+                        }
+
+                    </div>
+                    {/* Liên hệ mua hàng  */}
+                    <div className='bg-red-500 hover:bg-red-400 rounded-md hidden lg:block lg:basis-1/12  cursor-pointer '>
+                        <div className=' h-full flex-col justify-center items-center flex'>
+                            <h6 className='xl:text-[20px] text-[15px]'><IoCall /></h6>
+                            <h6 className='text-[10px]  '>0356.031.160 </h6>
                         </div>
-                    </Link>
-                </div>
+                    </div>
+                    {/* tra cứu thông tin đơn hàng  */}
+                    <div className='hidden bg-red-500 hover:bg-red-400 rounded-md md:block basis-1/12 cursor-pointer '>
+                        <Link to="histories">
+                            <div className='flex flex-col justify-center items-center h-full'>
+                                <h6 className='xl:text-[20px] text-[15px]'><CiDeliveryTruck /></h6>
+                                <h6 className='text-[10px] '>Đơn hàng </h6>
+                            </div>
+                        </Link>
+                    </div>
 
-                {/* Tài khoản  */}
-                <div className='bg-red-500  hover:bg-red-400  rounded-md p-1 basis-2/12 md:basis-1/12 cursor-pointer' onClick={logout}>
-                    <div className='flex flex-col justify-center items-center h-full'>
-                        <h6 className='xl:text-[20px] text-[15px]'><FaUserCircle /></h6>
-                        <h6 className='text-[10px]'>{user.name}</h6>
+                    {/* Giỏ hàng  */}
+                    <div className='bg-red-500 hover:bg-red-400 p-1 rounded-md basis-2/12 md:basis-1/12'>
+
+                        <Link to="cart">
+                            <div className='flex flex-col justify-center items-center h-full'>
+                                <h6 className='xl:text-[20px] text-[15px]'><PiShoppingCartThin /></h6>
+                                <h6 className='text-[10px] '>Giỏ hàng </h6>
+                            </div>
+                        </Link>
+                    </div>
+
+                    {/* Tài khoản  */}
+                    <div className='bg-red-500  hover:bg-red-400  rounded-md p-1 basis-2/12 md:basis-1/12 cursor-pointer' onClick={logout}>
+                        <div className='flex flex-col justify-center items-center h-full'>
+                            <h6 className='xl:text-[20px] text-[15px]'><FaUserCircle /></h6>
+                            <h6 className='text-[10px]'>{user.name}</h6>
+                        </div>
                     </div>
                 </div>
 
@@ -207,7 +224,7 @@ const NavBar = () => {
 
                 </li>
                 <li className='basis-1/5 flex flex-col items-center py-2'>
-                    <Link to="category">
+                    <Link to="categorymobile" state={{ listCategory }}>
                         <BiSolidCategoryAlt size={25} />
                     </Link>
                     <p className=' font-bold'>Danh mục</p>
@@ -221,7 +238,7 @@ const NavBar = () => {
                 </li>
                 <li className='basis-1/5 flex flex-col items-center py-2'>
 
-                    <Link to="/">
+                    <Link to="histories">
                         <CiDeliveryTruck size={25} />
                     </Link>
                     <p className=' font-bold'>Đơn hàng</p>
@@ -240,7 +257,7 @@ const NavBar = () => {
                 <Outlet context={{ category }} />
                 <Footer />
             </div>
-
+            
 
         </>
 
