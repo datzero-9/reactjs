@@ -49,14 +49,14 @@ const Read = () => {
 
     };
     return (
-        <div className='p-2 text-[16px] '>
-            <div className='flex items-center justify-end gap-4'>
+        <div className='p-2  '>
+            <div className='flex items-center justify-end gap-4 text-[14px]'>
                 <Link to="/admin/create">
-                    <div className='hover:bg-gray-100 cursor-pointer flex items-center border border-green-300 p-2 rounded-md gap-2 text-green-500'>Thêm <IoIosAddCircle /> </div>
+                    <div className='hover:bg-gray-100 cursor-pointer flex items-center border border-green-300 p-1 rounded-md gap-2 text-green-500'>Thêm <IoIosAddCircle /> </div>
                 </Link>
-                <div className='hover:bg-gray-100 cursor-pointer flex items-center border border-red-300 p-2 rounded-md gap-2 text-red-500'> Thùng rác <PiRecycleBold /></div>
+                <div className='hover:bg-gray-100 cursor-pointer flex items-center border border-red-300 p-1 rounded-md gap-2 text-red-500'> Thùng rác <PiRecycleBold /></div>
             </div>
-            <div className='my-2'>
+            <div className='my-2 text-13'>
                 <table className='w-full border-collapse'>
                     <thead className='border'>
                         <tr>
@@ -75,13 +75,15 @@ const Read = () => {
                                 return (
                                     <tr className='' key={index}>
                                         <th className='border text-center w-[5%] p-1'>{index + 1}</th>
-                                        <td className='border w-[20%] p-1 '>{data.name}</td>
-                                        <td className='border w-[10%] text-center p-1 font-medium'>{data.category}</td>
-                                        <td className='border w-[10%] text-center p-1 font-medium'>{formatPrice(data.price)}đ</td>
-                                        <td className='border p-1 w-[15%]'>
-                                            <img src={data.image} alt="" className='w-[90%] rounded-xl text-center' />
+                                        <td className='border w-[20%] p-1 text-[11px]'>{data.name}</td>
+                                        <td className='border text-[11px] w-[10%] text-center p-1 font-medium'>{data.category}</td>
+                                        <td className='border text-[11px] w-[10%] text-center p-1 font-medium'>{formatPrice(data.price)}đ</td>
+                                        <td className='border p-1 w-[15%] '>
+                                            <div className='flex justify-center items-center'>
+                                                <img src={data.image} alt="" className='h-[50px] rounded-md ' />
+                                            </div>
                                         </td>
-                                        <td className='border p-2 text-13 w-[30%]'>{data.description}</td>
+                                        <td className='border p-2  text-[11px] w-[30%]'>{data.description}</td>
                                         <td className='border p-1'>
                                             <div className='flex justify-center gap-6 '>
                                                 <Link to={`/admin/updateProduct/?id=${data._id}`}>

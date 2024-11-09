@@ -78,7 +78,7 @@ const Create = () => {
     }
     return (
         <div className='p-1 m-1 '>
-            <div className='flex justify-end  text-21 text-green-400'>
+            <div className='flex justify-end  text-[16px] text-green-400'>
                 <Link to="/admin">
                     <div className='border border-green-400 p-2 flex items-center gap-2 font-semibold rounded-md hover:bg-gray-100 cursor-pointer'>
                         <p>Danh sách sản phẩm</p><CiBoxList size={25} />
@@ -86,12 +86,12 @@ const Create = () => {
                 </Link>
             </div>
             <div className='flex items-center gap-2'>
-                <h1 className='font-semibold text-25 '>Thêm sản phẩm</h1>
+                <h1 className='font-semibold text-[16px] '>Thêm sản phẩm</h1>
                 <hr className='border border-black w-[85%]' />
             </div>
-            <div className='p-3 text-21 font-medium'>
+            <div className='p-3 text-[16px] font-medium'>
                 <form onSubmit={handleSubmit}>
-                    <div className='gap-5 flex'>
+                    <div className='gap-5 flex '>
                         <div className='w-[50%]'>
                             {/* Tên sản phẩm  */}
                             <div className='m-7 gap-2 '>
@@ -144,8 +144,7 @@ const Create = () => {
                             </div>
                         </div>
                         <div className='w-[50%]'>
-                            {/* Lựa Chọn hình ảnh  */}
-                            <div className='m-7 gap-2'>
+                           <div className='m-7 gap-2'>
                                 <h6 className=''>Hình ảnh sản phẩm:</h6>
                                 <input
                                     type="file"
@@ -163,7 +162,7 @@ const Create = () => {
 
                                 <button
                                     type='submit'
-                                    className='border-2 border-green-400 text-green-400 p-3 rounded-md hover:bg-gray-200 flex items-center'>
+                                    className='border-2 text-[16px] border-green-400 text-green-400 p-2 rounded-md hover:bg-gray-200 flex items-center'>
                                     Thêm sản phẩm <MdOutlineDownloadDone size={30} />
                                 </button>
 

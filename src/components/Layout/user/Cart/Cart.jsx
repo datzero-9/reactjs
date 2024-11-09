@@ -79,7 +79,7 @@ const Cart = () => {
           {
             listCart.map((data, index) => {
               return (
-                <div key={index}>
+                <div key={index} className='w-full flex justify-center'>
                   <ItemCart data={data} getListCart={getListCart} />
                 </div>
               )

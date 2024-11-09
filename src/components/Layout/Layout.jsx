@@ -17,6 +17,7 @@ import Login from './user/Accounts/Login';
 import Register from './user/Accounts/Register';
 import Account from './user/Accounts/Account';
 import Histories from "./user/Histories/Histories";
+import Notification from './admin/Notification/Notification';
 const Layout = () => {
 
   const isAdmin = 0;
@@ -38,11 +39,12 @@ const Layout = () => {
 
       {/* Admin Routes */}
       <Route path="/admin" element={<Adminpage />}>
-        <Route index element={<Read />} />
+        <Route index element={<Notification />} />
         <Route path="products" element={<Read />} />
         <Route path="category" element={<Category />} />
         <Route path="create" element={<Create />} />
         <Route path="updateProduct" element={<Update />} />
+        <Route path="notification" element={<Notification />} />
       </Route>
 
       {/* User Routes */}

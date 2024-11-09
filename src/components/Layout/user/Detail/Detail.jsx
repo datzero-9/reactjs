@@ -19,7 +19,7 @@ const Detail = () => {
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
 
-  // thay đôi trạng thái 
+  // thay đổi trạng thái 
   const [quantity, setQuantity] = useState(1)
   //sử lý số lượng sản phẩm 
   const handlePlus = () => {
@@ -62,9 +62,11 @@ const Detail = () => {
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBSmEOVnXQMwqa9TCOAlbXUejDj95aMOXoXg&s',
     }
   ]
+  // thực hiện ngày khi gọi tới trang này 
   useEffect(() => {
     if (id) {
       getProductDetail(id);
+      getComment(id)
     }
   }, [id]);
   const [productDetail, setProductDetail] = useState([]);
@@ -73,6 +75,19 @@ const Detail = () => {
       .then((response) => {
         setProductDetail(response.data);
 
+      })
+      .catch((error) => {
+        console.log('lỗi', error);
+      });
+  };
+
+  //lấy ra tất cả các bình luận về sản phẩm
+  const [listFeedback, setListFeedback] = useState([]);
+  const getComment = (id) => {
+    axios.post(`${api}/getComment`, { id: id })
+      .then((response) => {
+        setListFeedback(response.data);
+        // console.log(response.data)
       })
       .catch((error) => {
         console.log('lỗi', error);
@@ -133,13 +148,83 @@ const Detail = () => {
   }
 
   // thay đổi hình ảnh hiển thị
-  console.log(productDetail.image)
   const [imageAvt, setImageAvt] = useState('')
   const loadImg = (img) => {
     setImageAvt(img)
   }
+  //Lấy lấy dữ liệu của user khi comment sau đó thêm vào database
+  const [feedback, setFeedback] = useState('')
+  const handleComment = (e) => {
+    e.preventDefault();
+    const comment = {
+      text: feedback,
+      name: user.name,
+      image: imageUrl,
+      idUser: user.id,
+      idProduct: productDetail._id,
+    }
+    // console.log(comment)
+    setLoading(true)
+    try {
+      axios.post(`${api}/comment`, comment)
+        .then((res) => {
+          setTimeout(() => {
+            alert('Đánh giá của bạn đã được ghi nhận')
+            setLoading(false)
+            setFeedback('')
+            setImageUrl('')
+            getComment(comment.idProduct)
+          }, 3000)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  //chọn hình ảnh
+  const [imageUrl, setImageUrl] = useState('');
+  const uploadImg = (selectedImage) => {
+    const formData = new FormData();
+    formData.append('file', selectedImage);
+    formData.append('upload_preset', 'nxl7uozr');
+    axios.post("https://api.cloudinary.com/v1_1/dfv0n3vas/image/upload", formData)
+      .then((res) => {
+        const uploadedImageUrl = res.data.secure_url;
+        setImageUrl(uploadedImageUrl);
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+      });
+  };
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    if (selectedImage) {
+      uploadImg(selectedImage);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000)
+    }
+
+  };
+
+
+
+  //phóng to hình anhr của đánh giá
+  const [zoomComment, setZoomComment] = useState(false)
+  const [imageZoom, setImageZoom] = useState('')
+
+  const zoom = (image) => {
+    if(image !==''){
+      setImageZoom(image)
+      setZoomComment(!zoomComment)
+    }else{
+      alert('Click cái gì ?')
+    }
+    
+  }
   return (
-    <div className='flex justify-center '>
+    <div className='flex flex-col items-center px-2'>
+      {/* Load khi có sự kiện xảy ra  */}
       {
         loading &&
         <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
@@ -153,8 +238,10 @@ const Detail = () => {
         </div>
       }
 
-      <div className='container bg-gray-50 m-2 rounded-md'>
-        <div className='p-2 lg:flex gap-4'>
+      <div className='container bg-gray-50 mt-2 rounded-md p-3'>
+        <div className=' lg:flex gap-4'>
+
+
           {/* list ảnh của sản phẩm  */}
           <div className='lg:w-[50%] lg:p-2  '>
             <div className='p-4 flex justify-center items-center bg-gray-100 rounded-md h-[200px] sm:h-[300px] xl:h-[350px]'>
@@ -177,6 +264,8 @@ const Detail = () => {
 
             </div>
           </div>
+
+
 
           {/* Thông tin của sản phẩm  */}
           <div className='lg:w-[50%] lg:p-2 '>
@@ -221,8 +310,6 @@ const Detail = () => {
               </div>
 
             </div>
-
-
             {/* lựa chon màu  */}
             <div className='my-2'>
               <h1 className='font-bold mb-1'>Lựa chọn Màu</h1>
@@ -240,7 +327,6 @@ const Detail = () => {
 
             </div>
             {/* mua hàng, thêm vào giỏ hàng */}
-
             <div className='pb-3 flex  gap-3'>
               <div onClick={buyProduct} className='text-center text-white bg-red-600 border border-gray-400 w-[75%] md:w-[50%] lg:w-[60%]  p-2 rounded-xl hover:bg-red-500 cursor-pointer'>
                 <h3 className='text-[18px] font-bold'>Mua ngay</h3>
@@ -254,8 +340,11 @@ const Detail = () => {
           </div>
         </div>
         <hr className='m-2' />
+
+
+        {/* thông số  của sản phẩm  */}
         <div className='p-2'>
-          {/* thông số  của sản phẩm  */}
+
           <div className=' '>
             <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
             <div className=' p-3 bg-red-100 rounded-xl'>
@@ -276,9 +365,106 @@ const Detail = () => {
           </div>
 
         </div>
+        <hr className='m-2' />
+
+
+
+        {/* Đánh giá sản phẩm  */}
+        <div className='p-2 bg-white'>
+          <div className=' '>
+            <h1 className='font-bold mb-1'>Đánh giá sản phẩm</h1>
+            <div className='p-3'>
+
+              <form onSubmit={(e) => handleComment(e)}>
+                {/* text  */}
+                <div className=''>
+                  <textarea
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                    style={{ outline: 'none' }}
+                    className='border w-full p-2'
+                    placeholder='Nhập đánh giá của bạn tại đây...'
+                    required>
+
+                  </textarea>
+                </div>
+                {/* hình ảnh  */}
+                <div className=''>
+                  <h6 className='font-bold'>Hình ảnh sản phẩm:</h6>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className=' my-2'
+                  />
+                  <div className='w-[40%]'>
+                    {imageUrl && <img src={imageUrl} alt="Uploaded" className='h-[100px]' />}
+                  </div>
+                </div>
+                <div className='flex justify-end'>
+                  <button type="submit" className='p-2 bg-red-400 rounded-md font-bold'>Bình luận</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr className='m-2 ' />
+
+
+
+        {/* Tất cả các đánh giá về sản phẩm  */}
+        <div className='p-2 bg-white'>
+          <div className=' '>
+            <h1 className='font-bold mb-1'>Tất cả đánh giá về sản phẩm</h1>
+            <div className={listFeedback.length ===0 ? '':'p-2'}>
+              {
+                listFeedback.map((data, index) => {
+                  return (
+                    <div key={index} className=' m-2 bg-red-100 p-2'>
+                      <div className='flex items-center gap-2'>
+                        <img
+                          className='h-[40px] w-[40px] rounded-full cursor-pointer'
+                          src="https://techvccloud.mediacdn.vn/2020/7/4/photo-1-1593836540937553143466-crop-1593836942409133544446.jpg"
+                          alt="" />
+                        <div className='text-13'>
+                          <h6>{data.name}</h6>
+                          <h6>{new Date(data.createdAt).toLocaleString('vi-VN', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          })}</h6>
+                        </div>
+                      </div>
+                      <hr className='border-black m-2' />
+                      <div className='px-4'>
+                        <h6 className='text-13'>{data.text}</h6>
+                        <img
+                          onClick={()=>zoom(data.image)}
+                          src={data.image} alt="" className='h-[40px] cursor-pointer' />
+                        {
+                          zoomComment &&
+                          <div onClick={zoom} className='flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0'>
+                            <img src={imageZoom} alt="" className='h-[500px] ' />
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  )
+                })
+              }
+
+            </div>            
+              {               
+                listFeedback.length === 0 ?(<div>Hiện tại chưa có đánh giá nào về sản phẩm này</div>) : ''
+              }
+          </div>
+        </div>
       </div>
       <hr className='m-2' />
-    </div>
+    </div >
 
   );
 }

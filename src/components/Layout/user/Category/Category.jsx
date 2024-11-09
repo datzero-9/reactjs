@@ -18,7 +18,6 @@ const Category = () => {
                             <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
                         </Link>
 
-
                         <p className=' pl-3 font-medium text-[16px]'>Quay lại </p>
                     </div>
                     <div className='flex items-center'>

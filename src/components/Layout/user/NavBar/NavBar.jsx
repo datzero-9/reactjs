@@ -33,6 +33,7 @@ const NavBar = () => {
     useEffect(() => {
         getListCategory()
         getItemSearch()
+        
     }, [inputValue])
     // lấy ra sản phẩm timf kiếm bằng keyword
     const getItemSearch = () => {
@@ -44,6 +45,7 @@ const NavBar = () => {
                 console.log('lỗiii', error)
             })
     }
+  
     //chọn sản phẩm sau khi tìm kiếm 
     const [loading, setLoading] = useState(false)
     const handleSearch = (id) => {
@@ -195,7 +197,8 @@ const NavBar = () => {
 
                         <Link to="cart">
                             <div className='flex flex-col justify-center items-center h-full'>
-                                <h6 className='xl:text-[20px] text-[15px]'><PiShoppingCartThin /></h6>
+                                <h6 className='xl:text-[20px] text-[15px] relative'><PiShoppingCartThin />
+                                </h6>
                                 <h6 className='text-[10px] '>Giỏ hàng </h6>
                             </div>
                         </Link>
@@ -257,7 +260,7 @@ const NavBar = () => {
                 <Outlet context={{ category }} />
                 <Footer />
             </div>
-            
+
 
         </>
 

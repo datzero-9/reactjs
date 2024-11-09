@@ -14,7 +14,7 @@ const Adminpage = () => {
         { id: 1, title: 'Sản phẩm', path: 'products' },
         { id: 2, title: 'Danh mục', path: 'category' },
         { id: 3, title: 'Báo cáo doanh thu', path: 'doanhthu' },
-        { id: 4, title: 'Thông báo', path: 'notice' },
+        { id: 4, title: 'Thông báo', path: 'notification' },
         { id: 5, title: 'Người dùng', path: 'user' },
 
     ]
@@ -36,9 +36,9 @@ const Adminpage = () => {
         <div className='m-1 flex border border-gray-500 '>
             <div className='w-[25%] border border-gray-500 bg-gray-400 h-[100vh] '>
                 <div className='flex items-center p-2 gap-3'>
-                    <img src={avt} alt="" className='w-[70px] h-[70px] rounded-full border p-1' />
-                    <div className='text-17'>
-                        <h2 className='font-semibold text-23'>{user.name} (admin)</h2>
+                    <img src={avt} alt="" className='w-[50px] h-[50px] rounded-full border p-1' />
+                    <div className='text-15'>
+                        <h2 className='font-semibold text-17'>{user.name} (admin)</h2>
                         <h2 className='flex items-center gap-1 cursor-pointer hover:bg-gray-200 rounded-xl p-1' onClick={handleLogout}><BiLogOut />Đăng xuất</h2>
                     </div>
                 </div>
@@ -47,9 +47,11 @@ const Adminpage = () => {
 
                         return (
                             <Link to={data.path}>
-                                <div className='border-t border-gray-300 p-4 gap-2 text-21 flex items-center cursor-pointer hover:bg-gray-300' onClick={() => handle(data.id)}>
+                                <div
+                                    className='border-t border-gray-300 p-4 gap-2 flex items-center cursor-pointer hover:bg-gray-300'
+                                    onClick={() => handle(data.id)}>
                                     <FaRegDotCircle className={`${selected === data.id ? 'text-white' : ''}`} />
-                                    <div className='text-21 font-semibold'>{data.title}</div>
+                                    <div className='text-[16px] font-semibold'>{data.title}</div>
                                 </div>
                             </Link>
                         )
@@ -60,10 +62,14 @@ const Adminpage = () => {
             <div className='w-[75%] '>
                 {/* Tìm kiếm sản phẩm  */}
                 <div className='m-2 relative flex items-center gap-4'>
-                    <IoSearch className='absolute text-[35px] cursor-pointer top-[15px] left-[5px]' />
-                    <input style={{ outline: 'none' }} type="text" placeholder='Bạn muốn tìm gì ?' className=' pl-[45px] border border-gray-400 rounded-md w-full h-[70px] text-21' />
-                    <MdOutlineAdminPanelSettings className='text-[35px] cursor-pointer hover:text-red-500' />
-                    <PiPhoneCallFill className='text-[35px] cursor-pointer hover:text-red-500' />
+                    <IoSearch className='absolute text-[25px] cursor-pointer top-[10px] left-[5px]' />
+                    <input 
+                    style={{ outline: 'none' }} 
+                    type="text" 
+                    placeholder='Bạn muốn tìm gì ?' 
+                    className=' pl-[30px] border border-gray-400 rounded-md w-full h-[40px] text-[16px]' />
+                    <MdOutlineAdminPanelSettings className='text-[25px] cursor-pointer hover:text-red-500' />
+                    <PiPhoneCallFill className='text-[25px] cursor-pointer hover:text-red-500' />
                 </div>
                 {/* Trang thay đối khi click vào  */}
                 <div className="overflow-y-auto " style={{ height: 'calc(100vh - 100px)' }} >

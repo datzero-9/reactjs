@@ -77,13 +77,14 @@ const Category = () => {
                 .then((res) => {
                     setItemCategory(res.data.name)
                     setIdItemCategory(id)
-                    console.log(res.data)
                 })
         } catch (error) {
             console.log('Lỗi', error);
         }
 
     }
+
+    // chỉnh sửa danh mục
     const [state, setState] = useState('')
     const updateCategory = (id = '', event) => {
         if (id !== '') {
@@ -133,13 +134,13 @@ const Category = () => {
             }
 
             <div className='flex items-center gap-2'>
-                <h1 className='font-semibold text-25 '>Danh mục sản phẩm</h1>
+                <h1 className='font-semibold text-[16px] '>Danh mục sản phẩm</h1>
                 <hr className='border border-black w-[80%]' />
             </div>
             {/* Danh sách sản phẩm  */}
             <div className='flex gap-4'>
                 <div className='w-[50%]'>
-                    <table className='w-full m-2 text-19'>
+                    <table className='w-full m-2 text-13'>
                         <thead className=''>
                             <tr>
                                 <th className='border'>STT</th>
@@ -156,7 +157,7 @@ const Category = () => {
                                             <td className='border font-bold'>{index + 1}</td>
                                             <td className='border'>{data.name}</td>
                                             <td className='border'>
-                                                <div className='flex justify-center gap-10 text-25'>
+                                                <div className='flex justify-center gap-10 text-20'>
                                                     <FaEdit className='text-yellow-200 cursor-pointer' onClick={() => { getItem(data._id) }} />
                                                     <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => { confirmDelete(data._id) }} />
                                                 </div>
@@ -174,17 +175,17 @@ const Category = () => {
                     <div>
                         <form onSubmit={createCategory}>
                             <div className='mb-4'>
-                                <h6 className='text-21 font-semibold'>Tên danh mục:</h6>
+                                <h6 className='text-[16px] font-semibold'>Tên danh mục:</h6>
                                 <input
                                     value={nameCategory}
                                     onChange={(e) => setNameCategory(e.target.value)}
                                     type="text"
                                     required
-                                    className='border-2 w-full p-2 text-21 rounded-md'
+                                    className='border-2 w-full p-1 text-[16px] rounded-md'
                                     placeholder='Nhập tên danh mục' />
                             </div>
                             <div className='my-4'>
-                                <button type='submit' className='border p-2 px-4 border-green-400 text-21 text-green-400 rounded-md font-semibold hover:bg-gray-100'>Thêm</button>
+                                <button type='submit' className='border p-1 px-4 border-green-400 text-[16px] text-green-400 rounded-md font-semibold hover:bg-gray-100'>Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -194,21 +195,21 @@ const Category = () => {
                     <div>
                         <form onSubmit={(event) => { updateCategory(idItemCategory, event) }}>
                             <div className='my-4'>
-                                <h6 className='text-21 font-semibold'>Nhập lại Tên danh mục:</h6>
+                                <h6 className='text-[16px] font-semibold'>Nhập lại Tên danh mục:</h6>
                                 <input
                                     value={ItemCategory}
                                     onChange={(e) => setItemCategory(e.target.value)}
                                     type="text"
                                     required
-                                    className='border-2 w-full p-2 text-21 rounded-md'
+                                    className='border-2 w-full p-1 text-[16px] rounded-md'
                                     placeholder='Nhập lại tên danh mục' />
                             </div>
                             <div>
-                                {state !== '' ? <h6 className='font-bold text-21 text-green-400'>{state}</h6> : ''}
+                                {state !== '' ? <h6 className='font-bold text-[16px] text-green-400'>{state}</h6> : ''}
                             </div>
                             <div className='my-4'>
 
-                                <button type='submit' className='border p-2 px-4 border-yellow-300 text-21 text-yellow-300 rounded-md font-semibold hover:bg-gray-100'>Xác nhận thay đổi</button>
+                                <button type='submit' className='border p-1 px-4 border-yellow-300 text-[16px] text-yellow-300 rounded-md font-semibold hover:bg-gray-100'>Xác nhận thay đổi</button>
                             </div>
                         </form>
                     </div>

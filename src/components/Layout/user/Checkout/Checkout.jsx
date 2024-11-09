@@ -30,9 +30,8 @@ const Checkout = () => {
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
     const [note, setNote] = useState('Không có ghi chú')
-
+    // xóa hết tất cả sản phẩm trong giỏ hàng saui khi đătj hàng 
     const deleteAllCart = () => {
-        // console.log('đã óa tất cả:' + user.id)
         try {
             axios.delete(`${api}/deleteAllCart/${user.id}`)
                 .then((res) => {
@@ -52,7 +51,10 @@ const Checkout = () => {
             note: note,
             payment: paymentMethod,
             listCart: listCart,
+            total: total,
+            state: false
         }
+        console.log(checkout)
         try {
             axios.post(`${api}/checkout`, checkout)
                 .then((res) => {
