@@ -18,6 +18,7 @@ import Register from './user/Accounts/Register';
 import Account from './user/Accounts/Account';
 import Histories from "./user/Histories/Histories";
 import Notification from './admin/Notification/Notification';
+import PaymentResult from './user/Payment/PaymentResult';
 const Layout = () => {
 
   const isAdmin = 0;
@@ -58,6 +59,7 @@ const Layout = () => {
         <Route path="checkout" element={<Checkout />} />
         <Route path="cart" element={<Cart />} />
         <Route path="histories" element={<Histories />} />
+        <Route path="payment" element={<PaymentResult />} />
       </Route>
     </Routes>
 

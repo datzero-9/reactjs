@@ -22,7 +22,7 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const [paymentMethod, setPaymentMethod] = useState('cod');
+    const [paymentMethod, setPaymentMethod] = useState('bank');
 
     const handleChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -54,22 +54,40 @@ const Checkout = () => {
             total: total,
             state: false
         }
-        console.log(checkout)
+        //thanh toán sau khi nhận hàng
+
         try {
             axios.post(`${api}/checkout`, checkout)
                 .then((res) => {
-                    setTimeout(() => {
-                        setLoading(false)
-                        deleteAllCart();
-                        alert('Đặt hàng thành công, theo dõi sdt để nhận được thông báo mới nhất')
-                        navigate('/user/cart')
-                    }, 3000)
+                    if (checkout.payment === 'cod') {
+                        setTimeout(() => {
+                            setLoading(false)
 
+                            alert('Đặt hàng thành công, theo dõi sdt để nhận được thông báo mới nhất')
+                            deleteAllCart();
+                            navigate('/user/cart')
+
+                        }, 3000)
+                    } else {
+                        axios.post(`${api}/payment`, checkout)
+                            .then((res) => {
+                                setTimeout(() => {
+                                    setLoading(false)
+                                    deleteAllCart();
+                                    alert('Chuyển đến trang thanh toán ');
+                                    window.location.href = res.data.order_url;
+                                }, 3000)
+                            })
+                    }
                 })
         } catch (error) {
             console.log("lỗi:" + error)
         }
+
+
     }
+
+
     return (
         <div className='p-3 flex justify-center'>
             {

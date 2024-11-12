@@ -17,7 +17,7 @@ const Notification = () => {
             axios.get(`${api}/getAllHistories`)
                 .then((res) => {
                     setListOrder(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
         } catch (error) {
             console.log("có lỗi xảy ra vui lòng kiểm tra: " + error)
@@ -89,11 +89,12 @@ const Notification = () => {
                                             <h6>Điện thoại: {data.phone}</h6>
                                             <h6>Ghi chú: {data.note}</h6>
                                             <h6>Tổng tiền: {formatNumberWithCommas(data.total)} VND</h6>
+                                            <h6 className='flex gap-2'>Phương thức thanh toán: <h6 className='font-bold text-red-400'>{data.payment === 'cod' ? 'Trả tiền khi nhận hàng':'Thanh toán online ( Kiểm tra trước khi xác nhận ) '}</h6> </h6>
                                         </div>
                                         <div className='flex flex-col gap-2'>
                                             <div onClick={() => handleComfirmOrder(data._id)}>
                                                 {
-                                                    data.state == false
+                                                    data.state === false
                                                         ?
                                                         <button className='bg-yellow-300 p-2 rounded-md font-bold text-13'>Chưa xác nhận</button>
                                                         :
