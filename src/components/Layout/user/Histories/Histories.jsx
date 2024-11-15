@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../Helper/api';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { LiaFacebookMessenger } from "react-icons/lia";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TiTickOutline } from "react-icons/ti";
 import formatNumberWithCommas from '../../../Helper/formatPrice';
+import BeatLoader from "react-spinners/BeatLoader";
 const Histories = () => {
     // lấy thông tin tuwf localstorage
     const user = JSON.parse(localStorage.getItem('user'));
@@ -20,19 +21,43 @@ const Histories = () => {
             axios.post(`${api}/getHistories`, { id: user.id })
                 .then((res) => {
                     setListOrder(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
         } catch (error) {
             console.log("có lỗi xảy ra vui lòng kiểm tra: " + error)
         }
     }
-
+    // chuyển qua trang order detail đồng thời truyền dữu liệu qua 
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
     const getOrderDetail = (id) => {
-        alert(id)
+        setLoading(true)
+        try {
+            axios.post(`${api}/orderdetail`, { id })
+                .then((res) => {
+                    setTimeout(() => {
+                        navigate('/user/orderdetailuser', { state: res.data });
+                    }, 3000)
+                })
+        } catch (error) {
+            console.log('Lỗi: ' + error)
+        }
     }
+
     return (
         <div className='flex flex-col items-center p-2 '>
-
+            {
+                loading &&
+                <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+                    <BeatLoader
+                        color={'#DB142C'}
+                        loading={loading}
+                        size={10}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            }
             <div className='border border-black rounded-md p-2 container'>
                 {/* trờ lại trang home  */}
                 <div className='flex bg-gray-100 p-2 justify-between rounded-md'>

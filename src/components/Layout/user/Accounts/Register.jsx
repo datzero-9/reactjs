@@ -7,44 +7,61 @@ const Register = () => {
 
   //xử lí đăng ký tài khoản
   const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordAgain, setPasswordAgain] = useState('')
   //điều hướng bằng navigate
   const navigate = useNavigate()
-  //waiting
   const [loading, setLoading] = useState(false)
+
+  // đăng ký tài khoản
   const handleRegister = (e) => {
     e.preventDefault();
     setLoading(true)
     const register = {
       name: name,
-      username: username,
+      username: email,
       password: password
     }
-    if (password === passwordAgain) {
-      
-      try {
-        axios.post(`${api}/register`, register)
-          .then((res) => {
+    // validate email 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailRegex.test(email);
+    if (isValidEmail) {
+      if (password.length < 6) {
+        alert('Mật khẩu bé hơn 8 ký tự');
+        setLoading(false)
+        return;
+      }
+      else {
+        if (password === passwordAgain) {
+          try {
+            axios.post(`${api}/register`, register)
+              .then((res) => {
+                setLoading(false)
+                console.log(res.data.status)
+                if (res.data.status) {
+                  alert('Tạo tài khoản thành công')
+                  navigate('/')
+                } else {
+                  alert('Tài khoản đã tồn tại trên hệ thống')
+                }
+              })
+          } catch (error) {
+            console.log(error)
+          }
+        } else {
+          setTimeout(() => {
             setLoading(false)
-            console.log(res.data.status)
-            if (res.data.status) {
-              alert('Tạo tài khoản thành công')
-              navigate('/')
-            } else {
-              alert('Tài khoản đã tồn tại trên hệ thống')
-            }
-          })
-      } catch (error) {
-
+            alert('Xác thực mật khẩu sai')
+          }, 3000)
+        }
       }
     } else {
-      setTimeout(() => {
-        setLoading(false)
-        alert('Xác thực mật khẩu sai')
-      }, 3000)
+      alert('Sai định dạng email');
+      setLoading(false)
+      return
     }
+
   }
   return (
 
@@ -76,14 +93,14 @@ const Register = () => {
           />
         </div>
         <div className='my-3 text-[12px] w-full'>
-          <h6 className='font-bold'>Tài khoản:</h6>
+          <h6 className='font-bold'>Tài khoản email:</h6>
           <input
             required
             type="text"
-            placeholder='Tài khoản'
+            placeholder='Tài khoản email'
             className='outline-none p-1 border rounded-md bg-[rgba(255,255,255,0.5)]  w-full'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className='my-3 text-[12px] w-full'>

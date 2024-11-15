@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../Helper/api';
 import formatNumberWithCommas from '../../../Helper/formatPrice';
 import BeatLoader from "react-spinners/BeatLoader";
+import { useNavigate } from 'react-router-dom';
 const Notification = () => {
     // lấy thông tin tuwf localstorage
     const user = JSON.parse(localStorage.getItem('user'));
@@ -24,10 +25,6 @@ const Notification = () => {
         }
     }
 
-    const getOrderDetail = (id) => {
-        alert(id)
-    }
-
     // xác nhận đơn hàng
     const [loading, setLoading] = useState(false)
     const [state, setState] = useState(true)
@@ -42,6 +39,26 @@ const Notification = () => {
                     getHistories()
                 })
         }, 3000)
+    }
+
+    // chuyển qua trang order detail đồng thời truyền dữu liệu qua 
+
+    const navigate = useNavigate()
+    const getOrderDetail = (id) => {
+        setLoading(true)
+        try {
+            axios.post(`${api}/orderdetail`, { id })
+                .then((res) => {
+                    setTimeout(() => {
+                        setLoading(false)
+
+                        console.log(res.data)
+                        navigate('/admin/orderdetail', { state: res.data });
+                    }, 3000)
+                })
+        } catch (error) {
+            console.log('Lỗi: ' + error)
+        }
     }
     return (
         <div className='flex flex-col items-center p-2 '>
@@ -89,7 +106,7 @@ const Notification = () => {
                                             <h6>Điện thoại: {data.phone}</h6>
                                             <h6>Ghi chú: {data.note}</h6>
                                             <h6>Tổng tiền: {formatNumberWithCommas(data.total)} VND</h6>
-                                            <h6 className='flex gap-2'>Phương thức thanh toán: <h6 className='font-bold text-red-400'>{data.payment === 'cod' ? 'Trả tiền khi nhận hàng':'Thanh toán online ( Kiểm tra trước khi xác nhận ) '}</h6> </h6>
+                                            <h6 className='flex gap-2'>Phương thức thanh toán: <h6 className='font-bold text-red-400'>{data.payment === 'cod' ? 'Trả tiền khi nhận hàng' : 'Thanh toán online ( Kiểm tra trước khi xác nhận ) '}</h6> </h6>
                                         </div>
                                         <div className='flex flex-col gap-2'>
                                             <div onClick={() => handleComfirmOrder(data._id)}>

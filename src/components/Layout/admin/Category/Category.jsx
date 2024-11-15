@@ -72,7 +72,7 @@ const Category = () => {
     const [idItemCategory, setIdItemCategory] = useState('')
     const getItem = async (id) => {
         try {
-            console.log(id)
+            // console.log(id)
             await axios.post(`${api}/getItemCategory`, { id: id })
                 .then((res) => {
                     setItemCategory(res.data.name)

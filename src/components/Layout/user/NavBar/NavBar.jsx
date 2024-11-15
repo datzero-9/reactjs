@@ -78,9 +78,9 @@ const NavBar = () => {
     // đăng xuất tài khoản 
     const navigate = useNavigate()
     const logout = () => {
-        alert("Bạn đã đăng xuất tài khoản")
-        localStorage.removeItem('user');
-        navigate('/');
+        // localStorage.removeItem('user');
+   
+        navigate('/user/info',{state:user});
     }
 
     // lấy danh mục sản phẩm được click 

@@ -19,6 +19,10 @@ import Account from './user/Accounts/Account';
 import Histories from "./user/Histories/Histories";
 import Notification from './admin/Notification/Notification';
 import PaymentResult from './user/Payment/PaymentResult';
+import OrderDetailUser from './user/OrderDetailUser/OrderDetailUser';
+import OrderDetail from './admin/OrderDetail/OrderDetail';
+import InfoUser from './user/InfoUser/InfoUser';
+
 const Layout = () => {
 
   const isAdmin = 0;
@@ -46,12 +50,14 @@ const Layout = () => {
         <Route path="create" element={<Create />} />
         <Route path="updateProduct" element={<Update />} />
         <Route path="notification" element={<Notification />} />
+        <Route path="orderdetail" element={<OrderDetail />} />
       </Route>
 
       {/* User Routes */}
       <Route path="/user" element={<NavBar />}>
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
+        <Route path="info" element={<InfoUser />} />
         <Route path="category" element={<CategoryUser />} />
         <Route path="categorymobile" element={<CategoryMobile />} />
         <Route path="notice" element={<Notice />} />
@@ -59,6 +65,7 @@ const Layout = () => {
         <Route path="checkout" element={<Checkout />} />
         <Route path="cart" element={<Cart />} />
         <Route path="histories" element={<Histories />} />
+        <Route path="orderdetailuser" element={<OrderDetailUser />} />
         <Route path="payment" element={<PaymentResult />} />
       </Route>
     </Routes>

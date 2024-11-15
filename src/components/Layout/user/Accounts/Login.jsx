@@ -11,7 +11,6 @@ const Login = () => {
     const [forgetPassword, setForgetPassword] = useState(false);
     // Lưu thông tin người dùng vào context để dùng trong ứng dụng
     const navigate = useNavigate();
-
     const handleForget = () => {
         setForgetPassword(!forgetPassword);
     };
@@ -74,11 +73,11 @@ const Login = () => {
             )}
             <form onSubmit={handleLogin} className="w-full">
                 <div className="my-3 text-[12px] w-full">
-                    <h6 className="font-bold">Tài khoản:</h6>
+                    <h6 className="font-bold">Tài khoản email:</h6>
                     <input
                         required
                         type="text"
-                        placeholder="Nhập tài khoản của bạn"
+                        placeholder="Nhập tài khoản email của bạn"
                         className="outline-none p-1 border rounded-md bg-[rgba(255,255,255,0.5)] w-full"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}

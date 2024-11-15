@@ -40,14 +40,7 @@ const Read = () => {
             console.log('Lỗi', error);
         }
     }
-    // click trang
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected)
-        console.log(
-            `User requested page number ${event.selected}, which is offset`
-        );
 
-    };
     return (
         <div className='p-2  '>
             <div className='flex items-center justify-end gap-4 text-[14px]'>
@@ -83,7 +76,7 @@ const Read = () => {
                                                 <img src={data.image} alt="" className='h-[50px] rounded-md ' />
                                             </div>
                                         </td>
-                                        <td className='border p-2  text-[11px] w-[30%]'>{data.description}</td>
+                                        <td className='border p-2  text-[11px] w-[30%]'><div dangerouslySetInnerHTML={{ __html: data.description }} /></td>
                                         <td className='border p-1'>
                                             <div className='flex justify-center gap-6 '>
                                                 <Link to={`/admin/updateProduct/?id=${data._id}`}>
@@ -99,19 +92,6 @@ const Read = () => {
 
                     </tbody>
                 </table>
-                {/* <div className="flex justify-center items-center mt-4">
-                    <ReactPaginate
-                        breakLabel="..."
-                        nextLabel="next >"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={3}
-                        pageCount={25}
-                        previousLabel="< previous"
-                        renderOnZeroPageCount={null}
-                        containerClassName="pagination"
-                        activeClassName="active"
-                    />
-                </div> */}
             </div>
         </div>
     )

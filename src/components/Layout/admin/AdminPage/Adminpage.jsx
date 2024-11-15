@@ -72,7 +72,7 @@ const Adminpage = () => {
                     <PiPhoneCallFill className='text-[25px] cursor-pointer hover:text-red-500' />
                 </div>
                 {/* Trang thay đối khi click vào  */}
-                <div className="overflow-y-auto " style={{ height: 'calc(100vh - 100px)' }} >
+                <div className="overflow-y-auto " style={{ height: 'calc(100vh - 80px)' }} >
                     <Outlet />
                 </div>
             </div>

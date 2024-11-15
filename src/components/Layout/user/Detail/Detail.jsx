@@ -349,19 +349,9 @@ const Detail = () => {
             <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
             <div className=' p-3 bg-red-100 rounded-xl'>
               <div className='flex grid grid-cols-2 gap-4  pb-4 '>
-                <h4 className='font-bold'>Tên sản phẩm</h4>
-                <h4> IP 16 Promax 512GB phiên bản giới hạn</h4>
-              </div>
-              <div className='flex grid grid-cols-2 gap-4  pb-4 '>
-                <h4 className='font-bold'>Dung lượng</h4>
-                <h4> IP 16 Promax 512GB phiên bản giới hạn</h4>
-              </div>
-              <div className='flex grid grid-cols-2 gap-4  pb-4 '>
-                <h4 className='font-bold'>Công nghệ</h4>
-                <h4> Chip dragon 7563XTG</h4>
+                <div dangerouslySetInnerHTML={{ __html: productDetail.description }} />
               </div>
             </div>
-
           </div>
 
         </div>

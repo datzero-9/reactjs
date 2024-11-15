@@ -4,7 +4,8 @@ import { CiBoxList } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import api from '../../../Helper/api';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const Create = () => {
     const navigate = useNavigate()
     const [imageUrl, setImageUrl] = useState('');
@@ -70,31 +71,32 @@ const Create = () => {
         axios.post(`${api}/createProduct`, productData)
             .then((res) => {
                 alert('Thêm sản phẩm thành công')
-                navigate('/admin')
+                navigate('/admin/products')
             })
             .catch((error) => {
                 console.log('lỗiii', error)
             })
     }
+    const goBack = () => {
+        navigate(-1);  // Điều hướng trở lại trang trước đó
+    };
     return (
         <div className='p-1 m-1 '>
-            <div className='flex justify-end  text-[16px] text-green-400'>
-                <Link to="/admin">
-                    <div className='border border-green-400 p-2 flex items-center gap-2 font-semibold rounded-md hover:bg-gray-100 cursor-pointer'>
-                        <p>Danh sách sản phẩm</p><CiBoxList size={25} />
-                    </div>
-                </Link>
+            <div className='flex justify-end  text-[13px] text-green-400'>
+                <div onClick={goBack} className='border border-green-400 p-2 flex items-center gap-2 font-semibold rounded-md hover:bg-gray-100 cursor-pointer'>
+                    <p>Danh sách sản phẩm</p><CiBoxList size={16} />
+                </div>
             </div>
             <div className='flex items-center gap-2'>
                 <h1 className='font-semibold text-[16px] '>Thêm sản phẩm</h1>
-                <hr className='border border-black w-[85%]' />
+                <hr className='border border-black w-[80%]' />
             </div>
-            <div className='p-3 text-[16px] font-medium'>
+            <div className='p-3 text-[15px] font-medium'>
                 <form onSubmit={handleSubmit}>
                     <div className='gap-5 flex '>
-                        <div className='w-[50%]'>
+                        <div className='w-[70%]'>
                             {/* Tên sản phẩm  */}
-                            <div className='m-7 gap-2 '>
+                            <div className='m-2 gap-2 '>
                                 <h6 className=''>Tên sản phẩm :</h6>
                                 <input
                                     type="text"
@@ -106,7 +108,7 @@ const Create = () => {
                                 />
                             </div>
                             {/* Giá sản phẩm  */}
-                            <div className='m-7 gap-2 '>
+                            <div className='m-2 gap-2 '>
                                 <h6 className=''>Giá sản phẩm :</h6>
                                 <input
                                     type="number"
@@ -118,7 +120,7 @@ const Create = () => {
                                 />
                             </div>
                             {/* Danh mục sản phẩm  */}
-                            <div className='m-7 gap-2 '>
+                            <div className='m-2 gap-2 '>
                                 <h6 className=''>Danh mục sản phẩm</h6>
                                 <select
                                     value={selectedCategory}
@@ -133,18 +135,28 @@ const Create = () => {
                                 </select>
                             </div>
                             {/* Mô tả Sản phẩm  */}
-                            <div className='m-7 gap-2 '>
+                            <div className='m-2 gap-2 font-normal '>
                                 <h6 className=''>Mô tả sản phẩm:</h6>
-                                <textarea
+                                {/* <textarea
                                     placeholder='Nhập mô tả sản phẩm'
                                     value={productDescription}
                                     onChange={(e) => setProductDescription(e.target.value)}
                                     className='border-2 w-full rounded-md p-1'
-                                ></textarea>
+                                ></textarea> */}
+                                <CKEditor
+                                    editor={ClassicEditor}
+
+                                    data={productDescription}
+                                    onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        setProductDescription(data);
+                                    }}
+                                />
+                               <div dangerouslySetInnerHTML={{ __html: productDescription }} />
                             </div>
                         </div>
-                        <div className='w-[50%]'>
-                           <div className='m-7 gap-2'>
+                        <div className='w-[30%]'>
+                            <div className='m-2 gap-2'>
                                 <h6 className=''>Hình ảnh sản phẩm:</h6>
                                 <input
                                     type="file"
@@ -158,12 +170,12 @@ const Create = () => {
                                 </div>
                             </div>
                             {/* submit  */}
-                            <div className='m-7 gap-2 '>
+                            <div className='m-2 gap-2 '>
 
                                 <button
                                     type='submit'
-                                    className='border-2 text-[16px] border-green-400 text-green-400 p-2 rounded-md hover:bg-gray-200 flex items-center'>
-                                    Thêm sản phẩm <MdOutlineDownloadDone size={30} />
+                                    className='border-2 text-[13px] border-green-400 text-green-400 p-2 rounded-md hover:bg-gray-200 flex items-center'>
+                                    Thêm sản phẩm <MdOutlineDownloadDone size={16} />
                                 </button>
 
                             </div>

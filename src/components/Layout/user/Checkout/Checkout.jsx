@@ -6,6 +6,7 @@ import formatPrice from '../../../Helper/formatPrice'
 import api from '../../../Helper/api';
 import axios from 'axios';
 import BeatLoader from "react-spinners/BeatLoader";
+
 const Checkout = () => {
     // dữ liệu được lấy từ component Cart
     const location = useLocation();
@@ -22,7 +23,7 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const [paymentMethod, setPaymentMethod] = useState('bank');
+    const [paymentMethod, setPaymentMethod] = useState('cod');
 
     const handleChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -55,17 +56,16 @@ const Checkout = () => {
             state: false
         }
         //thanh toán sau khi nhận hàng
-
+      
         try {
             axios.post(`${api}/checkout`, checkout)
                 .then((res) => {
                     if (checkout.payment === 'cod') {
                         setTimeout(() => {
                             setLoading(false)
-
                             alert('Đặt hàng thành công, theo dõi sdt để nhận được thông báo mới nhất')
                             deleteAllCart();
-                            navigate('/user/cart')
+                            navigate('/user/histories')
 
                         }, 3000)
                     } else {
