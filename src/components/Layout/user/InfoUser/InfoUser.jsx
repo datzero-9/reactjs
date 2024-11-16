@@ -79,7 +79,7 @@ const InfoUser = () => {
         }
     }
     return (
-        <div className='flex flex-col justify-center items-center my-2'>
+        <div className='flex flex-col justify-center items-center m-2'>
             {
                 loading &&
                 <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
@@ -110,7 +110,7 @@ const InfoUser = () => {
                 </div>
                 {/* lịch sử đơn hàng  */}
                 <h1 className='font-bold'>Thông tin tài khoản </h1>
-                <div className='flex justify-between'>
+                <div className='sm:flex justify-between'>
                     <div>
                         <div className='flex gap-2 items-center m-2'>
                             <h6 className='font-bold'>Tên tài khoản: </h6>
