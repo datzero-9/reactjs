@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import api from '../../../Helper/api';
 import formatPrice from '../../../Helper/formatPrice';
-import ReactPaginate from 'react-paginate';
+
 import './Style.css'
 const Read = () => {
     //Lấy ra danh sách sản phẩm
@@ -40,7 +40,11 @@ const Read = () => {
             console.log('Lỗi', error);
         }
     }
+// ẩn mô tar
+const [ hiddenDescription, setHiddenDescription] = useState(false)
+const hidden = ()=>{
 
+}
     return (
         <div className='p-2  '>
             <div className='flex items-center justify-end gap-4 text-[14px]'>
@@ -73,10 +77,19 @@ const Read = () => {
                                         <td className='border text-[11px] w-[10%] text-center p-1 font-medium'>{formatPrice(data.price)}đ</td>
                                         <td className='border p-1 w-[15%] '>
                                             <div className='flex justify-center items-center'>
-                                                <img src={data.image} alt="" className='h-[50px] rounded-md ' />
+                                                <img src={data.image} alt="" className='h-[100px] rounded-md ' />
                                             </div>
                                         </td>
-                                        <td className='border p-2  text-[11px] w-[30%]'><div dangerouslySetInnerHTML={{ __html: data.description }} /></td>
+                                        <td className="border p-2 text-[11px] w-[30%]">
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html:
+                                                        data.description.length > 300
+                                                            ? `${data.description.slice(0, 300)}........`
+                                                            : data.description,
+                                                }}
+                                            />
+                                        </td>
                                         <td className='border p-1'>
                                             <div className='flex justify-center gap-6 '>
                                                 <Link to={`/admin/updateProduct/?id=${data._id}`}>

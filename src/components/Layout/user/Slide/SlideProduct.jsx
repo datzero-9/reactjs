@@ -135,13 +135,13 @@ const SlideProduct = () => {
                     </Slider>
                 </div>
                 <div className='lg:w-[25%] hidden lg:block gap-2'>
-                    <h6 className='font-bold pb-2 text-center'>Sản phẩm mới nhất</h6>
+                    <h6 className='font-bold  text-center'>Sản phẩm mới nhất</h6>
                     {
                         product.slice(0, 2).map((data, index) => {
                             return (
                                 <Link to={`/user/detail?id=${data._id}`}>
                                     <div key={index} className='m-2 p-2 flex justify-center hover:bg-gray-100 rounded-md cursor-pointer'>
-                                        <img src={data.image} alt="Ảnh bị lỗi" className='w-[70%] h-[80px] xl:h-[120px] rounded-md bg-red-200' />
+                                        <img src={data.image} alt="Ảnh bị lỗi" className='w-[70%] h-[80px] xl:h-[110px] rounded-md bg-red-200' />
                                     </div>
                                 </Link>
                             )

@@ -10,9 +10,10 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 
 const Histories = () => {
-   //lấy thông tin từ local storage
-   const user = JSON.parse(localStorage.getItem('user'));
-   console.log(user)
+    const [loading, setLoading] = useState(true)
+    //lấy thông tin từ local storage
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
 
     // lấy ra tất cá các  order tử iduser name
     useEffect(() => {
@@ -24,6 +25,7 @@ const Histories = () => {
             axios.post(`${api}/getHistories`, { id: user.id })
                 .then((res) => {
                     setListOrder(res.data)
+                    setLoading(false)
                     // console.log(res.data)
                 })
         } catch (error) {
@@ -31,22 +33,20 @@ const Histories = () => {
         }
     }
     // chuyển qua trang order detail đồng thời truyền dữu liệu qua 
-    const [loading, setLoading] = useState(false)
+
     const navigate = useNavigate()
     const getOrderDetail = (id) => {
-        setLoading(true)
         try {
             axios.post(`${api}/orderdetail`, { id })
                 .then((res) => {
-                    setTimeout(() => {
-                        navigate('/user/orderdetailuser', { state: res.data });
-                    }, 3000)
+                    navigate('/user/orderdetailuser', { state: res.data });
                 })
         } catch (error) {
             console.log('Lỗi: ' + error)
         }
     }
 
+    const goback = () => navigate(-1)
     return (
         <div className='flex flex-col items-center p-2 '>
             {
@@ -64,11 +64,8 @@ const Histories = () => {
             <div className='border border-black rounded-md p-2 container'>
                 {/* trờ lại trang home  */}
                 <div className='flex bg-gray-100 p-2 justify-between rounded-md'>
-                    <div className='flex  items-center'>
-                        <Link to="/user">
-                            <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
-                        </Link>
-
+                    <div className='flex  items-center' onClick={goback}>
+                        <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
                         <p className=' pl-3 font-medium text-[16px]'>Quay lại </p>
                     </div>
                     <div className='flex items-center'>

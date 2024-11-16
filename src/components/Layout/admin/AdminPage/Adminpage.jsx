@@ -17,7 +17,7 @@ const Adminpage = () => {
         { id: 2, title: 'Danh mục', path: 'category' },
         { id: 3, title: 'Báo cáo doanh thu', path: 'doanhthu' },
         { id: 4, title: 'Thông báo', path: 'notification' },
-        { id: 5, title: 'Người dùng', path: 'user' },
+        { id: 5, title: 'Người dùng', path: 'manageruser' },
 
     ]
     // lấy thông tin tuwf localstorage
@@ -26,6 +26,7 @@ const Adminpage = () => {
 
     
     const navigate = useNavigate();
+
     const handleLogout = () => {
         localStorage.removeItem('admin');
         navigate('/account/login');

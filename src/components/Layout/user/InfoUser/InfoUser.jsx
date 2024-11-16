@@ -113,7 +113,7 @@ const InfoUser = () => {
                 </div>
                 {/* lịch sử đơn hàng  */}
                 <h1 className='font-bold'>Thông tin tài khoản </h1>
-                <div className='sm:flex justify-between'>
+                <div className='sm:flex gap-2'>
                     <div>
                         <div className='flex gap-2 items-center m-2'>
                             <h6 className='font-bold'>Tên tài khoản: </h6>
@@ -133,7 +133,7 @@ const InfoUser = () => {
 
                     </div>
                     <div>
-                        <div className='flex gap-2 items-center '>
+                        <div className=''>
                             {
                                 changePass
                                     ?

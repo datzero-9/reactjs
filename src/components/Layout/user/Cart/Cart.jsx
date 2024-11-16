@@ -10,14 +10,12 @@ import ItemCart from '../ItemCart/ItemCart';
 import formatPrice from '../../../Helper/formatPrice'
 import api from '../../../Helper/api';
 import axios from 'axios';
-
-// Itemcart.forEach(item => {
-//   total += item.price;
-// });
+import BeatLoader from "react-spinners/BeatLoader";
 const Cart = () => {
+  const [loading, setLoading] = useState(true)
   //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user)
+
 
   const deleteAllCart = () => {
     try {
@@ -43,6 +41,9 @@ const Cart = () => {
       axios.post(`${api}/getCart`, { idUser: user.id })
         .then((res) => {
           setListCart(res.data)
+          if(res.data){
+            setLoading(false)
+          }
         })
     } catch (error) {
 
@@ -58,6 +59,19 @@ const Cart = () => {
 
   return (
     <div className='flex flex-col items-center'>
+      {
+        loading &&
+        <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
+          <BeatLoader
+            color={'#DB142C'}
+            loading={loading}
+            size={10}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      }
+
       <div className='container'>
         {/* trờ lại trang home  */}
         <div className='flex bg-gray-200 p-2 justify-between'>

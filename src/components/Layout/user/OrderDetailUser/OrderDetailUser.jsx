@@ -9,17 +9,14 @@ const OrderDetailUser = () => {
     const navigate = useNavigate();
     const data = location.state;
 
-
+    const goback = () => navigate(-1)
     return (
         <div className='flex flex-col justify-center items-center my-2'>
             <div className='border border-black rounded-md p-2 container'>
                 {/* trờ lại trang home  */}
                 <div className='flex bg-gray-100 p-2 justify-between rounded-md'>
-                    <div className='flex  items-center'>
-                        <Link to="/user">
-                            <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
-                        </Link>
-
+                    <div className='flex  items-center' onClick={goback}>
+                        <IoIosArrowRoundBack className='text-red-500 text-[35px]' />
                         <p className=' pl-3 font-medium text-[16px]'>Quay lại </p>
                     </div>
                     <div className='flex items-center'>

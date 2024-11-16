@@ -22,6 +22,7 @@ import PaymentResult from './user/Payment/PaymentResult';
 import OrderDetailUser from './user/OrderDetailUser/OrderDetailUser';
 import OrderDetail from './admin/OrderDetail/OrderDetail';
 import InfoUser from './user/InfoUser/InfoUser';
+import ManagerUser from './admin/ManagerUser/ManagerUser';
 
 const Layout = () => {
 
@@ -51,6 +52,7 @@ const Layout = () => {
         <Route path="updateProduct" element={<Update />} />
         <Route path="notification" element={<Notification />} />
         <Route path="orderdetail" element={<OrderDetail />} />
+        <Route path="manageruser" element={<ManagerUser />} />
       </Route>
 
       {/* User Routes */}

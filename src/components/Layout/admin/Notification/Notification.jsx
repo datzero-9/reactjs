@@ -21,7 +21,6 @@ const Notification = () => {
             axios.get(`${api}/getAllHistories`)
                 .then((res) => {
                     setListOrder(res.data)
-                    // console.log(res.data)
                 })
         } catch (error) {
             console.log("có lỗi xảy ra vui lòng kiểm tra: " + error)

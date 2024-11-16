@@ -137,12 +137,7 @@ const Create = () => {
                             {/* Mô tả Sản phẩm  */}
                             <div className='m-2 gap-2 font-normal '>
                                 <h6 className=''>Mô tả sản phẩm:</h6>
-                                {/* <textarea
-                                    placeholder='Nhập mô tả sản phẩm'
-                                    value={productDescription}
-                                    onChange={(e) => setProductDescription(e.target.value)}
-                                    className='border-2 w-full rounded-md p-1'
-                                ></textarea> */}
+
                                 <CKEditor
                                     editor={ClassicEditor}
 
@@ -152,7 +147,7 @@ const Create = () => {
                                         setProductDescription(data);
                                     }}
                                 />
-                               <div dangerouslySetInnerHTML={{ __html: productDescription }} />
+                               {/* <div dangerouslySetInnerHTML={{ __html: productDescription }} /> */}
                             </div>
                         </div>
                         <div className='w-[30%]'>
