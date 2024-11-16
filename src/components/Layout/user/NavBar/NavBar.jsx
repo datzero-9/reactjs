@@ -20,9 +20,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { MdCancel } from "react-icons/md";
 import Footer from '../Footer/Footer';
 
+
 const NavBar = () => {
-    // lấy thông tin đăng nhập từ loclstorage 
+    //lấy thông tin từ local storage
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user)
 
     const [inputValue, setInputValue] = useState('');
     const [item, setItem] = useState([])
@@ -33,7 +35,7 @@ const NavBar = () => {
     useEffect(() => {
         getListCategory()
         getItemSearch()
-        
+
     }, [inputValue])
     // lấy ra sản phẩm timf kiếm bằng keyword
     const getItemSearch = () => {
@@ -45,7 +47,7 @@ const NavBar = () => {
                 console.log('lỗiii', error)
             })
     }
-  
+
     //chọn sản phẩm sau khi tìm kiếm 
     const [loading, setLoading] = useState(false)
     const handleSearch = (id) => {
@@ -78,9 +80,8 @@ const NavBar = () => {
     // đăng xuất tài khoản 
     const navigate = useNavigate()
     const logout = () => {
-        // localStorage.removeItem('user');
-   
-        navigate('/user/info',{state:user});
+
+        navigate('/user/info', { state: user });
     }
 
     // lấy danh mục sản phẩm được click 

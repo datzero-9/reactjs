@@ -15,12 +15,11 @@ import axios from 'axios';
 //   total += item.price;
 // });
 const Cart = () => {
-
-  // lấy thông tin tuwf localstorage
+  //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
-  //xóa tất cả sản phẩm trong giỏ hàng
+  console.log(user)
+
   const deleteAllCart = () => {
-    // console.log('đã óa tất cả:' + user.id)
     try {
       axios.delete(`${api}/deleteAllCart/${user.id}`)
         .then((res) => {

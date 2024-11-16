@@ -3,10 +3,13 @@ import Items from '../Items/Items'
 import SlideProduct from '../Slide/SlideProduct';
 import axios from 'axios';
 import api from '../../../Helper/api'
+
 const Home = () => {
+    
     const [product, setProduct] = useState([]);
     useEffect(() => {
         getApi();
+       
     }, []);
     const getApi = () => {
 

@@ -10,9 +10,11 @@ import { Link } from "react-router-dom";
 import api from '../../../Helper/api'
 import BeatLoader from "react-spinners/BeatLoader";
 
+
 const Detail = () => {
-  // lấy thông tin đăng nhập từ loclstorage 
-  const user = JSON.parse(localStorage.getItem('user'));
+//lấy thông tin từ local storage
+const user = JSON.parse(localStorage.getItem('user'));
+console.log(user)
 
   // lấy cái id từ params 
   const location = useLocation();
@@ -214,13 +216,13 @@ const Detail = () => {
   const [imageZoom, setImageZoom] = useState('')
 
   const zoom = (image) => {
-    if(image !==''){
+    if (image !== '') {
       setImageZoom(image)
       setZoomComment(!zoomComment)
-    }else{
+    } else {
       alert('Click cái gì ?')
     }
-    
+
   }
   return (
     <div className='flex flex-col items-center px-2'>
@@ -406,7 +408,7 @@ const Detail = () => {
         <div className='p-2 bg-white'>
           <div className=' '>
             <h1 className='font-bold mb-1'>Tất cả đánh giá về sản phẩm</h1>
-            <div className={listFeedback.length ===0 ? '':'p-2'}>
+            <div className={listFeedback.length === 0 ? '' : 'p-2'}>
               {
                 listFeedback.map((data, index) => {
                   return (
@@ -432,7 +434,7 @@ const Detail = () => {
                       <div className='px-4'>
                         <h6 className='text-13'>{data.text}</h6>
                         <img
-                          onClick={()=>zoom(data.image)}
+                          onClick={() => zoom(data.image)}
                           src={data.image} alt="" className='h-[40px] cursor-pointer' />
                         {
                           zoomComment &&
@@ -446,10 +448,10 @@ const Detail = () => {
                 })
               }
 
-            </div>            
-              {               
-                listFeedback.length === 0 ?(<div>Hiện tại chưa có đánh giá nào về sản phẩm này</div>) : ''
-              }
+            </div>
+            {
+              listFeedback.length === 0 ? (<div>Hiện tại chưa có đánh giá nào về sản phẩm này</div>) : ''
+            }
           </div>
         </div>
       </div>

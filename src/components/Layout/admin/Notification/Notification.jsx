@@ -4,11 +4,14 @@ import api from '../../../Helper/api';
 import formatNumberWithCommas from '../../../Helper/formatPrice';
 import BeatLoader from "react-spinners/BeatLoader";
 import { useNavigate } from 'react-router-dom';
+// import { useUser } from "../../UserProvider/UserProvider";
 const Notification = () => {
-    // lấy thông tin tuwf localstorage
-    const user = JSON.parse(localStorage.getItem('user'));
+
 
     // lấy ra tất cá các  order tử user
+    // lấy thông tin tuwf localstorage
+    // const user = localStorage.getItem('admin');
+    // console.log(user)
     useEffect(() => {
         getHistories()
     }, [])

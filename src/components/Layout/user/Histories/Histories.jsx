@@ -7,9 +7,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TiTickOutline } from "react-icons/ti";
 import formatNumberWithCommas from '../../../Helper/formatPrice';
 import BeatLoader from "react-spinners/BeatLoader";
+
+
 const Histories = () => {
-    // lấy thông tin tuwf localstorage
-    const user = JSON.parse(localStorage.getItem('user'));
+   //lấy thông tin từ local storage
+   const user = JSON.parse(localStorage.getItem('user'));
+   console.log(user)
 
     // lấy ra tất cá các  order tử iduser name
     useEffect(() => {

@@ -7,8 +7,11 @@ import axios from 'axios';
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
 import BeatLoader from "react-spinners/BeatLoader";
-const InfoUser = () => {
 
+const InfoUser = () => {
+   //lấy thông tin từ local storage
+   const user = JSON.parse(localStorage.getItem('user'));
+   console.log(user)
     const [loading, setLoading] = useState(false)
     // lấy dữ liệu từ page navbar 
     const location = useLocation();
@@ -20,7 +23,7 @@ const InfoUser = () => {
         setTimeout(() => {
             alert('Đã đăng xuất tài khoản')
             setLoading(false)
-            localStorage.removeItem('user');
+            localStorage.removeItem('user'); // Xóa thông tin khỏi localStorage
             navigate('/')
         }, 3000);
 

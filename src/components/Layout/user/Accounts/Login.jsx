@@ -30,7 +30,14 @@ const Login = () => {
                         setTimeout(() => {
                             setLoading(false)
                             const userData = { id: res.data._id, name: res.data.name, role: res.data.role };
-                            localStorage.setItem('user', JSON.stringify(userData));
+                            // lưu thông tin vào localstorage 
+                            if (res.data.role === 'admin') {
+                                localStorage.setItem('admin', JSON.stringify(userData));
+                            } else {
+                                localStorage.setItem('user', JSON.stringify(userData));
+                            }
+                            // lấy thông tin luwu vafo useContext
+                            // setUser(userData);
 
                             if (res.data.role === 'admin') {
                                 navigate('/admin');
