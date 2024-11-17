@@ -15,7 +15,7 @@ const Adminpage = () => {
     const data = [
         { id: 1, title: 'Sản phẩm', path: 'products' },
         { id: 2, title: 'Danh mục', path: 'category' },
-        { id: 3, title: 'Báo cáo doanh thu', path: 'doanhthu' },
+        { id: 3, title: 'Báo cáo doanh thu', path: 'revenue' },
         { id: 4, title: 'Thông báo', path: 'notification' },
         { id: 5, title: 'Người dùng', path: 'manageruser' },
 

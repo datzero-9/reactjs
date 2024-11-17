@@ -32,6 +32,7 @@ const ManagerUser = () => {
                                 <th className='border'>Tên khách hàng</th>
                                 <th className='border'>Tài khoản email</th>
                                 <th className='border'>Mật khẩu</th>
+                                <th className='border'>Vai trò</th>
                                 <th className='border'>Action</th>
                             </tr>
                         </thead>
@@ -44,11 +45,12 @@ const ManagerUser = () => {
                                             <td className='border w-[25%] p-1 text-[11px]'>{data.name}</td>
                                             <td className='border text-[11px]  w-[25%] text-center p-1 font-medium'>{data.username}</td>
                                             <td className='border text-[11px] w-[25%] text-center p-1 font-medium'>**********</td>
+                                            <td className='border text-[11px]  w-[25%] text-center p-1 font-medium'>{data.role}</td>
 
 
                                             <td className='border p-1'>
                                                 <div className='flex justify-center gap-6 '>
-                                                    <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => {alert(data._id) }} />
+                                                    <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => {alert('Không thể xóa người dùng này : '+data._id) }} />
                                                 </div>
                                             </td>
                                         </tr>

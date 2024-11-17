@@ -23,6 +23,7 @@ import OrderDetailUser from './user/OrderDetailUser/OrderDetailUser';
 import OrderDetail from './admin/OrderDetail/OrderDetail';
 import InfoUser from './user/InfoUser/InfoUser';
 import ManagerUser from './admin/ManagerUser/ManagerUser';
+import Revenue from './admin/Revenue/Revenue';
 
 const Layout = () => {
 
@@ -53,6 +54,7 @@ const Layout = () => {
         <Route path="notification" element={<Notification />} />
         <Route path="orderdetail" element={<OrderDetail />} />
         <Route path="manageruser" element={<ManagerUser />} />
+        <Route path="revenue" element={<Revenue />} />
       </Route>
 
       {/* User Routes */}
