@@ -17,20 +17,26 @@ const Items = (props) => {
   return (
     <Link to={`/user/detail?id=${product._id}`}>
       <div className='border border-gray-200  p-1 h-auto rounded bg-slate-100 relative cursor-pointer hover:bg-slate-200 hover:border-red-400'>
-        <div className='absolute top-1 bg-red-500 left-0 p-1 rounded-r-lg'>
-          <p className='font-bold text-13'>Giảm 0%</p>
-        </div>
+        {
+          product.discount === 0
+            ? ""
+            :
+            <div className='absolute top-1 bg-red-500 left-0 p-1 rounded-r-lg'>
+              <p className='font-bold text-[11px]'>Giảm {product.discount}%</p>
+            </div>
+
+        }
         <div className='flex justify-center items-center'>
           <img src={product.image} alt="" className='  h-[100px] m-2' />
         </div>
-        <div className='font-medium text-13'>
-          <TextLimited text={product.name.length > 40 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={40} />
+        <div className='font-medium text-13 h-[45px]'>
+          <TextLimited text={product.name.length > 35 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={35} />
         </div>
         <div className=''>
           <del><p className='text-[10px]'> {formatNumberWithCommas(product.price)} đ</p></del>
         </div>
         <div className='mb-2'>
-          <p className='text-red-400 text-13'>Giá: {formatNumberWithCommas(product.price)} đ</p>
+          <p className='text-red-400 text-13'>Giá: {formatNumberWithCommas(product.realPrice)} đ</p>
         </div>
         <div className='bg-gray-200 rouneded  p-1 text-[11px] '>
           {/* <TextLimited text={product.description.length > 45 ? product.description : product.description + ' - Sản phẩm đang được bày bán với giá tốt..................'} max={45} /> */}

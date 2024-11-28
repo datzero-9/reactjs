@@ -82,8 +82,8 @@ const Histories = () => {
                                 <div className='border border-gray-400 m-2 p-2 rounded-md cursor-pointer hover:bg-gray-200 text-13'>
                                     <div className='flex justify-between'>
                                         <div className='flex gap-4'>
-                                            <h6 className='font-bold'>ID: {data._id}</h6>
-                                            <h6>Ngày đặt: {new Date(data.createdAt).toLocaleString('vi-VN', {
+                                            <h6 className='font-bold hidden md:block'>ID: {data._id}</h6>
+                                            <h6 className='font-bold '>Ngày đặt: {new Date(data.createdAt).toLocaleString('vi-VN', {
                                                 hour: '2-digit',
                                                 minute: '2-digit',
                                                 second: '2-digit',
@@ -93,7 +93,7 @@ const Histories = () => {
                                             })}</h6>
                                         </div>
                                         <div className='flex gap-2'>
-                                            <h6 className='font-bold'>Trạng thái đơn hàng:</h6>
+                                            <h6 className='font-bold hidden md:block'>Trạng thái đơn hàng:</h6>
                                             {
                                                 data.state === false
                                                     ?

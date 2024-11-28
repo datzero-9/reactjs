@@ -40,11 +40,11 @@ const Read = () => {
             console.log('Lỗi', error);
         }
     }
-// ẩn mô tar
-const [ hiddenDescription, setHiddenDescription] = useState(false)
-const hidden = ()=>{
+    // ẩn mô tar
+    const [hiddenDescription, setHiddenDescription] = useState(false)
+    const hidden = () => {
 
-}
+    }
     return (
         <div className='p-2  '>
             <div className='flex items-center justify-end gap-4 text-[14px]'>
@@ -73,8 +73,15 @@ const hidden = ()=>{
                                     <tr className='' key={index}>
                                         <th className='border text-center w-[5%] p-1'>{index + 1}</th>
                                         <td className='border w-[20%] p-1 text-[11px]'>{data.name}</td>
-                                        <td className='border text-[11px] w-[10%] text-center p-1 font-medium'>{data.category}</td>
-                                        <td className='border text-[11px] w-[10%] text-center p-1 font-medium'>{formatPrice(data.price)}đ</td>
+                                        <td className='border text-[11px] w-[10%]  p-1 font-medium'>
+                                            <h6>{data.category}</h6>
+                                            <h6 className='text-red-500'>Tồn kho: {data.warehouse}</h6>
+                                        </td>
+                                        <td className='border text-[11px] w-[10%]  p-1 font-medium'>
+                                            <h6>{formatPrice(data.price)}đ</h6>
+                                            <h6>Giảm {formatPrice(data.discount)}%</h6>
+                                            <h6 className='text-red-500'>Còn {formatPrice(data.realPrice)}đ</h6>
+                                        </td>
                                         <td className='border p-1 w-[15%] '>
                                             <div className='flex justify-center items-center'>
                                                 <img src={data.image} alt="" className='h-[100px] rounded-md ' />

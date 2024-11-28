@@ -161,12 +161,14 @@ const NavBar = () => {
                         <input value={inputValue} onChange={handleInputChange} style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
                         {
                             items < 1 ? '' :
-                                (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[350px] rounded-xl'>
+                                (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[300px] sm:w-[350px] rounded-xl'>
                                     {
                                         item.slice(0, 5).map((data, index) => {
                                             return (
-                                                <div key={index} className='flex gap-2 m-1 bg-gray-200 rounded-xl hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
+                                                <div key={index} className='flex gap-2 m-1 bg-gray-200  hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
+                                                    <div className='w-[100px] flex justify-center items-center'>
                                                     <img src={data.image} alt="" className='w-[50px] h-[50px]' />
+                                                    </div>
                                                     <TextLimited text={data.name} max={70} />
                                                 </div>
                                             )
@@ -257,7 +259,7 @@ const NavBar = () => {
 
             </ul>
 
-            <div className="overflow-y-auto pb-[80px] md:pb-0  " style={{ height: 'calc(100vh - 50px)' }}>
+            <div className="overflow-y-auto pb-[80px] md:pb-0  overflow-x-hidden" style={{ height: 'calc(100vh - 50px)' }}>
                 <Outlet context={{ category }} />
                 <Footer />
             </div>

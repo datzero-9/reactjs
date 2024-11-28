@@ -12,9 +12,9 @@ import BeatLoader from "react-spinners/BeatLoader";
 
 
 const Detail = () => {
-//lấy thông tin từ local storage
-const user = JSON.parse(localStorage.getItem('user'));
-console.log(user)
+  //lấy thông tin từ local storage
+  const user = JSON.parse(localStorage.getItem('user'));
+  console.log(user)
 
   // lấy cái id từ params 
   const location = useLocation();
@@ -103,8 +103,7 @@ console.log(user)
       name: productDetail.name,
       image: productDetail.image,
       quantity: quantity,
-      price: productDetail.price,
-      salePrice: productDetail.price,
+      realPrice: productDetail.realPrice,
     }
     try {
       axios.post(`${api}/addCart`, cart)
@@ -133,8 +132,7 @@ console.log(user)
       name: productDetail.name,
       image: productDetail.image,
       quantity: quantity,
-      price: productDetail.price,
-      salePrice: productDetail.price,
+      realPrice: productDetail.realPrice,
     }
     try {
       axios.post(`${api}/addCart`, cart)
@@ -165,7 +163,6 @@ console.log(user)
       idUser: user.id,
       idProduct: productDetail._id,
     }
-    // console.log(comment)
     setLoading(true)
     try {
       axios.post(`${api}/comment`, comment)
@@ -281,11 +278,15 @@ console.log(user)
               <FaStar className=' mr-1 text-yellow-500' />
               <p className=''>20 đánh giá</p>
             </div>
-
+            
             {/* giá sản phẩm  */}
             <div className='pb-3 flex items-center'>
-              <h3 className='text-red-600 font-bold mr-2'>{formatPrice(productDetail.price)}đ</h3>
+              <h3 className='text-red-600 font-bold mr-2'>{formatPrice(productDetail.realPrice)}đ</h3>
               <h3 className='text-gray-400 font-medium mr-2 text-13'><del>{formatPrice(productDetail.price)}đ</del></h3>
+            </div>
+            {/* hàng còn trong kho  */}
+            <div className='pb-3 flex items-center'>
+              <h3 className=' font-medium text-13'>Kho: {formatPrice(productDetail.warehouse)} sản phẩm</h3>            
             </div>
 
             {/* số lượng sản phẩm ? */}
@@ -302,8 +303,8 @@ console.log(user)
                 {
                   data.map((data) => {
                     return <div onClick={() => handleSelect(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-red-200 ${select === data.id ? 'border-red-600 bg-red-200' : ''}`}>
-                      <p className='font-medium text-13'>5G 256GB - {data.id}</p>
-                      <p><h3 className='text-gray-500 font-medium mr-2 text-13'>{formatPrice(productDetail.price)}đ</h3></p>
+                      <p className='font-medium text-[11px]'>5G 256GB - {data.id}</p>
+                      <p><h3 className='text-gray-500 font-medium mr-2 text-[11px]'>{formatPrice(productDetail.price)}đ</h3></p>
 
                     </div>
                   })
@@ -336,7 +337,7 @@ console.log(user)
               </div>
               <div onClick={() => addCart()} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
                 <LiaCartPlusSolid className='text-[30px]' />
-                <p className='text-[10px]'>Thêm vào giỏ</p>
+                <p className='text-[10px] hidden sm:block'>Thêm vào giỏ</p>
               </div>
             </div>
           </div>
@@ -345,20 +346,19 @@ console.log(user)
 
 
         {/* thông số  của sản phẩm  */}
-        <div className='p-2'>
+        <div className=''>
 
           <div className=' '>
             <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
-            <div className=' p-3 bg-red-100 rounded-xl'>
-              <div className='flex grid grid-cols-2 gap-4  pb-4 '>
-                <div dangerouslySetInnerHTML={{ __html: productDetail.description }} />
+            <div className=' p-2 bg-red-100 rounded-xl'>
+              <div className='flex pb-4 '>
+                <div className='text-15 sm:text-13' dangerouslySetInnerHTML={{ __html: productDetail.description }} />
               </div>
             </div>
           </div>
 
         </div>
         <hr className='m-2' />
-
 
 
         {/* Đánh giá sản phẩm  */}
@@ -408,15 +408,15 @@ console.log(user)
         <div className='p-2 bg-white'>
           <div className=' '>
             <h1 className='font-bold mb-1'>Tất cả đánh giá về sản phẩm</h1>
-            <div className={listFeedback.length === 0 ? '' : 'p-2'}>
+            <div className={listFeedback.length === 0 ? '' : ''}>
               {
                 listFeedback.map((data, index) => {
                   return (
-                    <div key={index} className=' m-2 bg-red-100 p-2'>
+                    <div key={index} className='m-1 bg-red-100 p-2 rounded-md'>
                       <div className='flex items-center gap-2'>
                         <img
                           className='h-[40px] w-[40px] rounded-full cursor-pointer'
-                          src="https://techvccloud.mediacdn.vn/2020/7/4/photo-1-1593836540937553143466-crop-1593836942409133544446.jpg"
+                          src="data:image/png;base64,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"
                           alt="" />
                         <div className='text-13'>
                           <h6>{data.name}</h6>
@@ -430,8 +430,8 @@ console.log(user)
                           })}</h6>
                         </div>
                       </div>
-                      <hr className='border-black m-2' />
-                      <div className='px-4'>
+                      <hr className='border-black my-1' />
+                      <div className=''>
                         <h6 className='text-13'>{data.text}</h6>
                         <img
                           onClick={() => zoom(data.image)}
@@ -439,7 +439,7 @@ console.log(user)
                         {
                           zoomComment &&
                           <div onClick={zoom} className='flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0'>
-                            <img src={imageZoom} alt="" className='h-[500px] ' />
+                            <img src={imageZoom} alt="" className=' h-[300px] sm:h-[500px] ' />
                           </div>
                         }
                       </div>

@@ -49,7 +49,7 @@ const Cart = () => {
 
     }
   }
-  const total = listCart.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+  const total = listCart.reduce((acc, item) => acc + (item.quantity * item.realPrice), 0);
   const numberOfItems = listCart.length;
 
   const [handle, setHandle] = useState(false)
@@ -147,7 +147,7 @@ const Cart = () => {
                 <div className=' p-2 flex justify-between items-center '>
                   <div>
                     <div className=' '>
-                      <p>Tổng thanh toán: </p>
+                      <p>Tổng tiền: </p>
                       <p className='font-semibold text-red-500'> đ{formatPrice(total)}</p>
                     </div>
                   </div>

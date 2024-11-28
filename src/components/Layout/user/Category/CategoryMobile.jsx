@@ -50,19 +50,19 @@ const CategoryMobile = () => {
             <div className='m-2'>
                 {listCategory.map((category, index) => (
                     <div key={index} className='my-4'>
-                        <h2 className='text-[20px] font-bold my-2'>Danh sách sản phẩm: {category.name}</h2>
+                        <h2 className='text-[16px] font-bold my-2'>Danh sách sản phẩm: {category.name}</h2>
 
                         <div className='product-slider'>
                             {productsByCategory[category.name] && productsByCategory[category.name].length > 0 ? (
                                 <Swiper
                                     modules={[Navigation, Pagination]}
                                     spaceBetween={10}
-                                    slidesPerView={3}
+                                    slidesPerView={2}
                                     navigation
                                     pagination={{ clickable: true }}
                                     style={{
                                         position: 'relative',
-                                        padding: '0 40px' // Khoảng cách hai bên để chứa các nút điều hướng
+                                        padding: '0 0px' // Khoảng cách hai bên để chứa các nút điều hướng
                                     }}
                                 >
                                     {productsByCategory[category.name].map((product, productIndex) => (

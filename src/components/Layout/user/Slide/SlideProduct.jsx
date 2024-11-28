@@ -46,10 +46,7 @@ const SlideProduct = () => {
             })
 
     }
-    // nổi bật category
-    // const { category } = useOutletContext();
-
-    // lấy ra list danh mục ( category)
+    // lấy ra list danh mục
     const [listCategory, setListCategory] = useState([])
     const getListCategory = () => {
 
@@ -64,9 +61,7 @@ const SlideProduct = () => {
     // xét số lượng item category sẽ hiển thị ra
     const lengthCate = listCategory.length;
     const [itemCate, setItemCate] = useState(4)
-    // console.log(`length : ${lengthCate} -- item: ${itemCate}`)
     const handleAddCate = () => {
-
         if (lengthCate > itemCate) {
             setItemCate(itemCate + 1);
         } else {
@@ -93,7 +88,7 @@ const SlideProduct = () => {
         }
     }
     return (
-        <div className=' flex flex-col items-center bg-gray-100 '>
+        <div className=' flex flex-col items-center bg-gray-100 p-1'>
             <div className='flex md:gap-2 pb-2  container '>
                 {
                     loading &&
@@ -130,7 +125,10 @@ const SlideProduct = () => {
                             <img className=' w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg" alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/Mo-ban-Galaxy-Tab-S10-Series-home.png" alt="" />
+                            <img className='w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/samsung-s24-ultra-home-20-11.png" alt="" />
+                        </div>
+                        <div className='bg-slate-100'>
+                            <img className='w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/home-oppo-find-x8-gia-moi-20-11.jpg" alt="" />
                         </div>
                     </Slider>
                 </div>

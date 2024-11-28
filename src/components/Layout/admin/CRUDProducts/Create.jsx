@@ -10,7 +10,9 @@ const Create = () => {
     const navigate = useNavigate()
     const [imageUrl, setImageUrl] = useState('');
     const [productName, setProductName] = useState('');
-    const [productPrice, setproductPrice] = useState('');
+    const [productPrice, setproductPrice] = useState(1);
+    const [discount, setDiscount] = useState(0);
+    const [warehouse, setWarehouse] = useState(100);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [productDescription, setProductDescription] = useState('');
 
@@ -35,7 +37,6 @@ const Create = () => {
                 console.error('Error uploading image:', error);
             });
     };
-
     const handleImageChange = (e) => {
         const selectedImage = e.target.files[0];
         if (selectedImage) {
@@ -60,10 +61,18 @@ const Create = () => {
     // lấy thông tin từ form
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        if(discount > 99){
+            alert('không thể giảm hơn 99% được');
+            return;
+        }
+        const realPrice = productPrice * (1 - (discount / 100)); // Giá sau giảm
+        const roundedPrice = Math.round(realPrice); // Làm tròn giá trị
         const productData = {
             name: productName,
             price: productPrice,
+            discount: discount,
+            warehouse: warehouse,
+            realPrice: roundedPrice,
             category: selectedCategory,
             description: productDescription,
             image: imageUrl ? imageUrl : 'https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/logo.png'
@@ -114,7 +123,12 @@ const Create = () => {
                                     type="number"
                                     placeholder='Nhập giá sản phẩm...'
                                     value={productPrice}
-                                    onChange={(e) => setproductPrice(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setproductPrice(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
                                     className='border-2 w-full rounded-md p-1'
                                     required
                                 />
@@ -147,10 +161,45 @@ const Create = () => {
                                         setProductDescription(data);
                                     }}
                                 />
-                               {/* <div dangerouslySetInnerHTML={{ __html: productDescription }} /> */}
+                                {/* <div dangerouslySetInnerHTML={{ __html: productDescription }} /> */}
                             </div>
                         </div>
                         <div className='w-[30%]'>
+                            {/* Giảm giá  */}
+                            <div className='m-2 gap-2 '>
+                                <h6 className=''>Giảm giá %:</h6>
+                                <input
+                                    type="number"
+                                    placeholder='Bạn muốn giảm giá mấy % ? '
+                                    value={discount}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setDiscount(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
+                                    className='border-2 w-full rounded-md p-1'
+                                    required
+                                />
+                            </div>
+                            {/* Kho hàng  */}
+                            <div className='m-2 gap-2 '>
+                                <h6 className=''>Lưu kho:</h6>
+                                <input
+                                    type="number"
+                                    placeholder='Sản phẩm có sẵn'
+                                    value={warehouse}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setWarehouse(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
+                                    className='border-2 w-full rounded-md p-1'
+                                    required
+                                />
+                            </div>
+                            {/* hình ảnh  */}
                             <div className='m-2 gap-2'>
                                 <h6 className=''>Hình ảnh sản phẩm:</h6>
                                 <input
@@ -158,7 +207,7 @@ const Create = () => {
                                     accept="image/*"
                                     onChange={handleImageChange}
                                     className='cursor-pointer my-2'
-                                    require
+                                    required
                                 />
                                 <div className='w-[40%]'>
                                     {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />}

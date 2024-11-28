@@ -14,10 +14,11 @@ const Update = () => {
 
     const [imageUrl, setImageUrl] = useState('');
     const [productName, setProductName] = useState('');
-    const [productPrice, setProductPrice] = useState(0);
+    const [productPrice, setProductPrice] = useState(1);
+    const [discount, setDiscount] = useState(0);
+    const [warehouse, setWarehouse] = useState(100);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [productDescription, setProductDescription] = useState('');
-
     // lấy cái id từ params 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -36,6 +37,8 @@ const Update = () => {
                 .then((res) => {
                     setProductName(res.data.name)
                     setProductPrice(res.data.price)
+                    setWarehouse(res.data.warehouse)
+                    setDiscount(res.data.discount)
                     setSelectedCategory(res.data.category)
                     setProductDescription(res.data.description)
                     setImageUrl(res.data.image)
@@ -91,10 +94,18 @@ const Update = () => {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        if (discount > 99) {
+            alert('không thể giảm hơn 99% được');
+            return;
+        }
+        const realPrice = productPrice * (1 - (discount / 100)); // Giá sau giảm
+        const roundedPrice = Math.round(realPrice); // Làm tròn giá trị
         const productData = {
             name: productName,
             price: productPrice,
+            discount: discount,
+            warehouse: warehouse,
+            realPrice: roundedPrice,
             category: selectedCategory,
             description: productDescription,
             image: imageUrl ? imageUrl : 'https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/logo.png'
@@ -145,7 +156,12 @@ const Update = () => {
                                     type="number"
                                     placeholder='Nhập giá sản phẩm...'
                                     value={productPrice}
-                                    onChange={(e) => setProductPrice(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setProductPrice(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
                                     className='border-2 w-full rounded-md p-1'
                                     required
                                 />
@@ -168,7 +184,7 @@ const Update = () => {
                             {/* Mô tả Sản phẩm  */}
                             <div className='m-2 gap-2 font-normal'>
                                 <h6 className=''>Mô tả sản phẩm:</h6>
-                                
+
                                 <CKEditor
                                     editor={ClassicEditor}
 
@@ -181,6 +197,40 @@ const Update = () => {
                             </div>
                         </div>
                         <div className='w-[50%]'>
+                            {/* Giảm giá  */}
+                            <div className='m-2 gap-2 '>
+                                <h6 className=''>Giảm giá %:</h6>
+                                <input
+                                    type="number"
+                                    placeholder='Bạn muốn giảm giá mấy % ? '
+                                    value={discount}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setDiscount(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
+                                    className='border-2 w-full rounded-md p-1'
+                                    required
+                                />
+                            </div>
+                            {/* Kho hàng  */}
+                            <div className='m-2 gap-2 '>
+                                <h6 className=''>Lưu kho:</h6>
+                                <input
+                                    type="number"
+                                    placeholder='Sản phẩm có sẵn'
+                                    value={warehouse}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10); // Chuyển đổi thành số nguyên
+                                        if (value >= 0 || e.target.value === '') {
+                                            setWarehouse(e.target.value); // Chỉ cập nhật nếu giá trị >= 0
+                                        }
+                                    }}
+                                    className='border-2 w-full rounded-md p-1'
+                                    required
+                                />
+                            </div>
                             {/* Lựa Chọn hình ảnh  */}
                             <div className='m-2 gap-2'>
                                 <h6 className=''>Hình ảnh sản phẩm:</h6>

@@ -6,8 +6,10 @@ import Items from '../Items/Items';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { LiaFacebookMessenger } from "react-icons/lia";
 const Category = () => {
+
     const location = useLocation();
     const { listProduct, name } = location.state || {};
+
     return (
         <div className=' flex flex-col items-center'>
             <div className='container'>
@@ -25,7 +27,7 @@ const Category = () => {
                     </div>
                 </div>
                 <div className='m-2'>
-                    <h2 className='text-[20px] font-bold my-2'>Danh sách sản phẩm: {name}</h2>
+                    <h2 className='text-[16px] font-bold my-2'>Danh sách sản phẩm: {name}</h2>
                     {
                         listProduct.length !== 0 ?
                             (<div className='grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'>
