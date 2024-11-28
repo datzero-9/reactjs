@@ -43,9 +43,9 @@ const OrderDetailUser = () => {
                                             <div className='pl-3'>
                                                 <h3 className='text-[12px] font-medium'>{data.name}</h3>
                                                 <div className='flex gap-2'>
-                                                    <h3 className='text-red-600 text-[12px]'>{formatPrice(data.price)} đ</h3>
+                                                    <h3 className='text-red-600 text-[12px]'>{formatPrice(data.realPrice)} đ</h3>
                                                     <h3 className='text-[12px]'>x {data.quantity}   </h3>
-                                                    <h3 className='text-[12px] text-red-600 '>= {formatPrice(data.price * data.quantity)} đ</h3>
+                                                    <h3 className='text-[12px] text-red-600 '>= {formatPrice(data.realPrice * data.quantity)} đ</h3>
                                                 </div>
                                             </div>
                                         </div>
