@@ -42,11 +42,11 @@ const ItemCart = (props) => {
           onClick={() => setNotice(false)}
           className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0"
         >
-          <div className='border border-black p-2 rounded-md w-[200px] bg-gray-200'>
+          <div className='border border-black p-2 rounded-md w-[250px] bg-gray-200'>
             <div className='text-center font-bold border-b p-1 border-black'>
               Thông báo
             </div>
-            <h6 className=' text-13  p-1 '>Bạn muốn xóa sản phẩm này</h6>
+            <h6 className=' text-13  p-1 py-2 text-center '>Bạn muốn xóa sản phẩm này</h6>
             <div className='flex justify-end gap-2'>
               <button className='p-1 bg-yellow-300 rounded-md px-2 font-medium' onClick={() => setNotice(false)}>Hủy</button>
               <button className='p-1 bg-red-400 rounded-md px-2 font-medium' onClick={() => deleteCart(data._id)}>Xóa</button>

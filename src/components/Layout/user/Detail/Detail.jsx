@@ -97,6 +97,7 @@ const Detail = () => {
   };
   // thêm sản phẩm vào giỏ hàng
   const addCart = () => {
+    setLoading(true)
     const cart = {
       idUser: user.id,
       idProduct: productDetail._id,
@@ -109,6 +110,7 @@ const Detail = () => {
       axios.post(`${api}/addCart`, cart)
         .then((res) => {
           if (res.data.status) {
+            setLoading(false)
             alert("Sản phẩm đã được thêm vào giỏ hàng")
             return;
           }
@@ -278,7 +280,7 @@ const Detail = () => {
               <FaStar className=' mr-1 text-yellow-500' />
               <p className=''>20 đánh giá</p>
             </div>
-            
+
             {/* giá sản phẩm  */}
             <div className='pb-3 flex items-center'>
               <h3 className='text-red-600 font-bold mr-2'>{formatPrice(productDetail.realPrice)}đ</h3>
@@ -286,7 +288,7 @@ const Detail = () => {
             </div>
             {/* hàng còn trong kho  */}
             <div className='pb-3 flex items-center'>
-              <h3 className=' font-medium text-13'>Kho: {formatPrice(productDetail.warehouse)} sản phẩm</h3>            
+              <h3 className=' font-medium text-13'>Kho: {formatPrice(productDetail.warehouse)} sản phẩm</h3>
             </div>
 
             {/* số lượng sản phẩm ? */}
@@ -335,7 +337,7 @@ const Detail = () => {
                 <h3 className='text-[18px] font-bold'>Mua ngay</h3>
                 <h3 className='text-[11px]'>(Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)</h3>
               </div>
-              <div onClick={() => addCart()} className=' text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
+              <div onClick={() => addCart()} className='cursor-pointer text-red-600 w-[25%] md:w-[20%] border border-red-600  flex flex-col justify-center items-center p-2 rounded-xl hover:bg-gray-200'>
                 <LiaCartPlusSolid className='text-[30px]' />
                 <p className='text-[10px] hidden sm:block'>Thêm vào giỏ</p>
               </div>

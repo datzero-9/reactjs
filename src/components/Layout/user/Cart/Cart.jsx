@@ -16,7 +16,8 @@ const Cart = () => {
   //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
 
-
+  //xóa tất cả sản phẩm
+  const [notice, setNotice] = useState(false)
   const deleteAllCart = () => {
     try {
       axios.delete(`${api}/deleteAllCart/${user.id}`)
@@ -41,7 +42,7 @@ const Cart = () => {
       axios.post(`${api}/getCart`, { idUser: user.id })
         .then((res) => {
           setListCart(res.data)
-          if(res.data){
+          if (res.data) {
             setLoading(false)
           }
         })
@@ -71,7 +72,24 @@ const Cart = () => {
           />
         </div>
       }
-
+      {
+        notice &&
+        <div
+          onClick={() => setNotice(false)}
+          className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0"
+        >
+          <div className='border border-black p-2 rounded-md w-[250px] bg-gray-200'>
+            <div className='text-center font-bold border-b p-1 border-black'>
+              Thông báo
+            </div>
+            <h6 className=' text-13  p-1 py-2 text-center '>Bạn muốn xóa tất cả sản phẩm trong giỏ hàng?</h6>
+            <div className='flex justify-end gap-2'>
+              <button className='p-1 bg-yellow-300 rounded-md px-2 font-medium' onClick={() => setNotice(false)}>Hủy</button>
+              <button className='p-1 bg-red-400 rounded-md px-2 font-medium' onClick={() => deleteAllCart()}>Xóa</button>
+            </div>
+          </div>
+        </div>
+      }
       <div className='container'>
         {/* trờ lại trang home  */}
         <div className='flex bg-gray-200 p-2 justify-between'>
@@ -152,7 +170,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <div className='flex gap-2'>
-                    <div className='bg-yellow-500 p-3 hover:bg-yellow-400  cursor-pointer' onClick={deleteAllCart}>
+                    <div className='bg-yellow-500 p-3 hover:bg-yellow-400  cursor-pointer' onClick={()=>setNotice(true)}>
                       <p className='text-white font-semibold '>Xóa tất cả ({numberOfItems})</p>
                     </div>
                     <Link
