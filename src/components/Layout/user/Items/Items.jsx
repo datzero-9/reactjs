@@ -29,14 +29,14 @@ const Items = (props) => {
         <div className='flex justify-center items-center'>
           <img src={product.image} alt="" className='  h-[100px] m-2' />
         </div>
-        <div className='font-medium text-13 h-[45px]'>
-          <TextLimited text={product.name.length > 35 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={35} />
+        <div className='font-medium text-[12px] h-[45px]'>
+          <TextLimited text={product.name.length > 40 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
         </div>
         <div className=''>
           <del><p className='text-[10px]'> {formatNumberWithCommas(product.price)} đ</p></del>
         </div>
         <div className='mb-2'>
-          <p className='text-red-400 text-13'>Giá: {formatNumberWithCommas(product.realPrice)} đ</p>
+          <p className='text-red-400 text-[12px]'>Giá: {formatNumberWithCommas(product.realPrice)} đ</p>
         </div>
         <div className='bg-gray-200 rouneded  p-1 text-[11px] '>
           {/* <TextLimited text={product.description.length > 45 ? product.description : product.description + ' - Sản phẩm đang được bày bán với giá tốt..................'} max={45} /> */}

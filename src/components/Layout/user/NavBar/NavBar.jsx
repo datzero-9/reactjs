@@ -165,11 +165,11 @@ const NavBar = () => {
                                     {
                                         item.slice(0, 5).map((data, index) => {
                                             return (
-                                                <div key={index} className='flex gap-2 m-1 bg-gray-200  hover:bg-gray-300 text-13' onClick={() => { handleSearch(data._id) }}>
+                                                <div key={index} className='flex gap-2 m-1 bg-gray-200  hover:bg-gray-300 text-[12px]' onClick={() => { handleSearch(data._id) }}>
                                                     <div className='w-[100px] flex justify-center items-center'>
                                                     <img src={data.image} alt="" className='w-[50px] h-[50px]' />
                                                     </div>
-                                                    <TextLimited text={data.name} max={70} />
+                                                    <TextLimited text={data.name} max={60} />
                                                 </div>
                                             )
                                         })

@@ -80,8 +80,8 @@ const Histories = () => {
                             <div key={index} onClick={() => { getOrderDetail(data._id) }}>
 
                                 <div className='border border-gray-400 m-2 p-2 rounded-md cursor-pointer hover:bg-gray-200 text-13'>
-                                    <div className='flex justify-between'>
-                                        <div className='flex gap-4'>
+                                    <div className='flex justify-between text-[11px]'>
+                                        <div className='flex gap-4 '>
                                             <h6 className='font-bold hidden md:block'>ID: {data._id}</h6>
                                             <h6 className='font-bold '>Ngày đặt: {new Date(data.createdAt).toLocaleString('vi-VN', {
                                                 hour: '2-digit',
@@ -105,7 +105,7 @@ const Histories = () => {
                                         </div>
                                     </div>
                                     <hr />
-                                    <div>
+                                    <div className='text-[11px]'>
                                         <h6>Địa chỉ giao: {data.address}</h6>
                                         <h6>Điện thoại: {data.phone}</h6>
                                         <h6>Ghi chú: {data.note}</h6>
