@@ -17,7 +17,8 @@ const Adminpage = () => {
         { id: 2, title: 'Danh mục', path: 'category' },
         { id: 3, title: 'Báo cáo doanh thu', path: 'revenue' },
         { id: 4, title: 'Thông báo', path: 'notification' },
-        { id: 5, title: 'Người dùng', path: 'manageruser' },
+        { id: 5, title: 'Kho hàng', path: 'warehouse' },
+        { id: 6, title: 'Người dùng', path: 'manageruser' },
 
     ]
     // lấy thông tin tuwf localstorage

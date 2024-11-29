@@ -24,6 +24,8 @@ import OrderDetail from './admin/OrderDetail/OrderDetail';
 import InfoUser from './user/InfoUser/InfoUser';
 import ManagerUser from './admin/ManagerUser/ManagerUser';
 import Revenue from './admin/Revenue/Revenue';
+import Warehouse from './admin/Warehouse/Warehouse';
+import DetailW from './admin/Warehouse/Detail';
 
 const Layout = () => {
 
@@ -55,6 +57,8 @@ const Layout = () => {
         <Route path="orderdetail" element={<OrderDetail />} />
         <Route path="manageruser" element={<ManagerUser />} />
         <Route path="revenue" element={<Revenue />} />
+        <Route path="warehouse" element={<Warehouse />} />
+        <Route path="detailwarehouse" element={<DetailW />} />
       </Route>
 
       {/* User Routes */}
