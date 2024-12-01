@@ -14,9 +14,7 @@ module.exports = {
         23: "23px",
         25: "25px",
         27: "27px",
-      }
-    },
-    extend: {
+      },
       keyframes: {
         move: {
           '0%, 100%': { transform: 'translateX(0)' }, // Vị trí ban đầu và cuối

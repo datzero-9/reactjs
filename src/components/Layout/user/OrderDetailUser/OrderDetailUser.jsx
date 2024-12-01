@@ -29,7 +29,7 @@ const OrderDetailUser = () => {
                     {
                         data.map((data, index) => {
                             return (
-                                <div key={index} className='p-1 w-full sm:w-[550px] md:w-[700px]  xl:w-[1024px]'>
+                                <div key={index} className=' w-full sm:w-[550px] md:w-[700px]  xl:w-[1024px]'>
 
                                     <div className='border border-gray-400 p-2 m-1 rounded-xl'>
                                         <div className='flex items-center justify-between p-1 border-b border-gray-300'>

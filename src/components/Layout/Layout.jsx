@@ -26,6 +26,7 @@ import ManagerUser from './admin/ManagerUser/ManagerUser';
 import Revenue from './admin/Revenue/Revenue';
 import Warehouse from './admin/Warehouse/Warehouse';
 import DetailW from './admin/Warehouse/Detail';
+import NotFound from './NotFound/NotFound';
 
 const Layout = () => {
 
@@ -35,6 +36,7 @@ const Layout = () => {
     <Routes>
       {/* Đặt trang login làm trang chính */}
       <Route path="/" element={<Navigate to="/account/login" />} />
+      <Route path="/:id" element={<NotFound />} />
 
       {/* Account Routes */}
       <Route path="/account" element={<Account />}>
@@ -42,6 +44,9 @@ const Layout = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>
+      <Route path="/account/:id" element={<NotFound />} />
+      <Route path="/account/:id/:id" element={<NotFound />} />
+
 
       {/* Điều hướng theo role sau khi đăng nhập */}
       <Route path="/redirect" element={isAdmin ? (<Navigate to="/admin" />) : (<Navigate to="/user" />)} />
@@ -60,6 +65,8 @@ const Layout = () => {
         <Route path="warehouse" element={<Warehouse />} />
         <Route path="detailwarehouse" element={<DetailW />} />
       </Route>
+      <Route path="/admin/:id" element={<NotFound />} />
+      <Route path="/admin/:id/:id" element={<NotFound />} />
 
       {/* User Routes */}
       <Route path="/user" element={<NavBar />}>
@@ -76,6 +83,10 @@ const Layout = () => {
         <Route path="orderdetailuser" element={<OrderDetailUser />} />
         <Route path="payment" element={<PaymentResult />} />
       </Route>
+      <Route path="user/:id" element={<NotFound />} />
+      <Route path="/user/:id/:id" element={<NotFound />} />
+
+
     </Routes>
 
   )
