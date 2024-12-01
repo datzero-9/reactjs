@@ -27,10 +27,12 @@ import Revenue from './admin/Revenue/Revenue';
 import Warehouse from './admin/Warehouse/Warehouse';
 import DetailW from './admin/Warehouse/Detail';
 import NotFound from './NotFound/NotFound';
+import ProtectedRouteUser from './ProtectedRoute/ProtectedRouteUser';
+import ProtectedRouteAdmin from './ProtectedRoute/ProtectedRouteAdmin';
 
 const Layout = () => {
 
-  const isAdmin = 0;
+  // const isAdmin = 0;
   return (
 
     <Routes>
@@ -49,42 +51,43 @@ const Layout = () => {
 
 
       {/* Điều hướng theo role sau khi đăng nhập */}
-      <Route path="/redirect" element={isAdmin ? (<Navigate to="/admin" />) : (<Navigate to="/user" />)} />
+      {/* <Route path="/redirect" element={isAdmin ? (<Navigate to="/admin" />) : (<Navigate to="/user" />)} /> */}
 
-      {/* Admin Routes */}
-      <Route path="/admin" element={<Adminpage />}>
+      <Route path="/admin" element={<ProtectedRouteAdmin><Adminpage /></ProtectedRouteAdmin>}>
         <Route index element={<Notification />} />
-        <Route path="products" element={<Read />} />
-        <Route path="category" element={<Category />} />
-        <Route path="create" element={<Create />} />
-        <Route path="updateProduct" element={<Update />} />
-        <Route path="notification" element={<Notification />} />
-        <Route path="orderdetail" element={<OrderDetail />} />
-        <Route path="manageruser" element={<ManagerUser />} />
-        <Route path="revenue" element={<Revenue />} />
-        <Route path="warehouse" element={<Warehouse />} />
-        <Route path="detailwarehouse" element={<DetailW />} />
+        <Route path="products" element={<ProtectedRouteAdmin><Read /></ProtectedRouteAdmin>} />
+        <Route path="category" element={<ProtectedRouteAdmin><Category /></ProtectedRouteAdmin>} />
+        <Route path="create" element={<ProtectedRouteAdmin><Create /></ProtectedRouteAdmin>} />
+        <Route path="updateProduct" element={<ProtectedRouteAdmin><Update /></ProtectedRouteAdmin>} />
+        <Route path="notification" element={<ProtectedRouteAdmin><Notification /></ProtectedRouteAdmin>} />
+        <Route path="orderdetail" element={<ProtectedRouteAdmin><OrderDetail /></ProtectedRouteAdmin>} />
+        <Route path="manageruser" element={<ProtectedRouteAdmin><ManagerUser /></ProtectedRouteAdmin>} />
+        <Route path="revenue" element={<ProtectedRouteAdmin><Revenue /></ProtectedRouteAdmin>} />
+        <Route path="warehouse" element={<ProtectedRouteAdmin><Warehouse /></ProtectedRouteAdmin>} />
+        <Route path="detailwarehouse" element={<ProtectedRouteAdmin><DetailW /></ProtectedRouteAdmin>} />
       </Route>
+
+      {/* User Routes - Bảo vệ user */}
+      <Route path="/user" element={<ProtectedRouteUser><NavBar /></ProtectedRouteUser>}>
+        <Route index element={<ProtectedRouteUser><Home /></ProtectedRouteUser>} />
+        <Route path="home" element={<ProtectedRouteUser><Home /></ProtectedRouteUser>} />
+        <Route path="info" element={<ProtectedRouteUser><InfoUser /></ProtectedRouteUser>} />
+        <Route path="category" element={<ProtectedRouteUser><CategoryUser /></ProtectedRouteUser>} />
+        <Route path="categorymobile" element={<ProtectedRouteUser><CategoryMobile /></ProtectedRouteUser>} />
+        <Route path="notice" element={<ProtectedRouteUser><Notice /></ProtectedRouteUser>} />
+        <Route path="detail" element={<ProtectedRouteUser><Detail /></ProtectedRouteUser>} />
+        <Route path="checkout" element={<ProtectedRouteUser><Checkout /></ProtectedRouteUser>} />
+        <Route path="cart" element={<ProtectedRouteUser><Cart /></ProtectedRouteUser>} />
+        <Route path="histories" element={<ProtectedRouteUser><Histories /></ProtectedRouteUser>} />
+        <Route path="orderdetailuser" element={<ProtectedRouteUser><OrderDetailUser /></ProtectedRouteUser>} />
+        <Route path="payment" element={<ProtectedRouteUser><PaymentResult /></ProtectedRouteUser>} />
+      </Route>
+
+      {/* 404 Not Found */}
+      <Route path="/:id" element={<NotFound />} />
+      <Route path="/user/:id" element={<NotFound />} />
       <Route path="/admin/:id" element={<NotFound />} />
       <Route path="/admin/:id/:id" element={<NotFound />} />
-
-      {/* User Routes */}
-      <Route path="/user" element={<NavBar />}>
-        <Route index element={<Home />} />
-        <Route path="home" element={<Home />} />
-        <Route path="info" element={<InfoUser />} />
-        <Route path="category" element={<CategoryUser />} />
-        <Route path="categorymobile" element={<CategoryMobile />} />
-        <Route path="notice" element={<Notice />} />
-        <Route path="detail" element={<Detail />} />
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="histories" element={<Histories />} />
-        <Route path="orderdetailuser" element={<OrderDetailUser />} />
-        <Route path="payment" element={<PaymentResult />} />
-      </Route>
-      <Route path="user/:id" element={<NotFound />} />
-      <Route path="/user/:id/:id" element={<NotFound />} />
 
 
     </Routes>
