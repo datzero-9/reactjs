@@ -16,8 +16,12 @@ const Read = () => {
         getListProducts()
     }, [])
     const getListProducts = () => {
+        const selec = {
+            category: [],
+            price: []
+        }
         try {
-            axios.get(`${api}`)
+            axios.post(`${api}`,{selec})
                 .then((res) => {
                     setListItems(res.data)
                     console.log(res.data)

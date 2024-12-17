@@ -33,7 +33,7 @@ const Items = (props) => {
           <TextLimited text={product.name.length > 40 ? product.name : product.name + ' - Sản phẩm đang được bày bán với giá tốt'} max={45} />
         </div>
         <div className=''>
-          <del><p className='text-[10px]'> {formatNumberWithCommas(product.price)} đ</p></del>
+          <del><p className='text-[10px] pt-2 '> {formatNumberWithCommas(product.price)} đ</p></del>
         </div>
         <div className='mb-2'>
           <p className='text-red-400 text-[12px]'>Giá: {formatNumberWithCommas(product.realPrice)} đ</p>

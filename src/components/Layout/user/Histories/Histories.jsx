@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TiTickOutline } from "react-icons/ti";
 import formatNumberWithCommas from '../../../Helper/formatPrice';
 import BeatLoader from "react-spinners/BeatLoader";
-
+import scrollToTop from '../../../Helper/scroll';
 
 const Histories = () => {
     const [loading, setLoading] = useState(true)
@@ -18,6 +18,7 @@ const Histories = () => {
     // lấy ra tất cá các  order tử iduser name
     useEffect(() => {
         getHistories()
+        scrollToTop();
     }, [])
     const [listOrder, setListOrder] = useState([])
     const getHistories = () => {

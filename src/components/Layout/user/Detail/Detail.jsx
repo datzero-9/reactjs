@@ -9,12 +9,15 @@ import { CiCircleMinus } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import api from '../../../Helper/api'
 import BeatLoader from "react-spinners/BeatLoader";
+import scrollToTop from '../../../Helper/scroll';
 
 
 const Detail = () => {
   //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user)
+  useEffect(()=>{
+    scrollToTop()
+  },[])
 
   // lấy cái id từ params 
   const location = useLocation();
@@ -89,7 +92,7 @@ const Detail = () => {
     axios.post(`${api}/getComment`, { id: id })
       .then((response) => {
         setListFeedback(response.data);
-        // console.log(response.data)
+        console.log(response.data)
       })
       .catch((error) => {
         console.log('lỗi', error);

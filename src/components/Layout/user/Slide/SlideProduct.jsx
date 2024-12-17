@@ -6,6 +6,11 @@ import api from '../../../Helper/api';
 import { Link, useNavigate } from 'react-router-dom';
 import BeatLoader from "react-spinners/BeatLoader";
 // import { useOutletContext } from 'react-router-dom';
+import slide1 from '../../../../images/slide1.webp';
+import slide2 from '../../../../images/slide2.webp';
+import slide3 from '../../../../images/slide3.webp';
+import slide4 from '../../../../images/slide4.webp';
+import slide5 from '../../../../images/slide5.webp';
 const SlideProduct = () => {
     var settings = {
         dots: true,
@@ -36,8 +41,11 @@ const SlideProduct = () => {
     //Lấy ra sản phẩm mới nhất
     const [product, setProduct] = useState([]);
     const getApi = () => {
-
-        axios.get(`${api}`)
+        const selec = {
+            category: [],
+            price: []
+        }
+        axios.post(`${api}`, selec)
             .then((res) => {
                 setProduct(res.data)
             })
@@ -81,8 +89,11 @@ const SlideProduct = () => {
                     setTimeout(() => {
                         setLoading(false)
                         navigate('/user/category', { state: { listProduct: res.data, name } });
+                        // console.log(res.data)
+
                     }, 2000)
                 })
+        
         } catch (error) {
             console.log(error)
         }
@@ -119,27 +130,30 @@ const SlideProduct = () => {
                 <div className='md:w-[70%] lg:w-[50%] w-full '>
                     <Slider {...settings} className=''>
                         <div className='bg-slate-100 '>
-                            <img className='w-full rounded-md  border border-gray-500 ' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/thu-cu-banner-390-home.jpg" alt="" />
+                            <img className='w-full rounded-md  border border-gray-500 ' src={slide1} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className=' w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/sliding-home-iphone-16-pro-km-moi.jpg" alt="" />
+                            <img className='w-full rounded-md  border border-gray-500 ' src={slide2} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/samsung-s24-ultra-home-20-11.png" alt="" />
+                            <img className='w-full rounded-md  border border-gray-500 ' src={slide3} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md border border-gray-500' src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/home-oppo-find-x8-gia-moi-20-11.jpg" alt="" />
+                            <img className='w-full rounded-md  border border-gray-500 ' src={slide4} alt="" />
+                        </div>
+                        <div className='bg-slate-100'>
+                            <img className='w-full rounded-md  border border-gray-500 ' src={slide5} alt="" />
                         </div>
                     </Slider>
                 </div>
                 <div className='lg:w-[25%] hidden lg:block gap-2'>
-                    <h6 className='font-bold  text-center'>Sản phẩm mới nhất</h6>
+                    <h6 className='font-bold text-center'>Sản phẩm mới nhất </h6>
                     {
                         product.slice(0, 2).map((data, index) => {
                             return (
                                 <Link to={`/user/detail?id=${data._id}`}>
                                     <div key={index} className='m-2 p-2 flex justify-center hover:bg-gray-100 rounded-md cursor-pointer'>
-                                        <img src={data.image} alt="Ảnh bị lỗi" className='w-[70%] h-[80px] xl:h-[110px] rounded-md bg-red-200' />
+                                        <img src={data.image} alt="Ảnh bị lỗi " className='w-[70%] h-[80px] xl:h-[110px] rounded-md bg-red-200' />
                                     </div>
                                 </Link>
                             )

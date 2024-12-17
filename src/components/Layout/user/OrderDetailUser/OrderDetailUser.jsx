@@ -4,6 +4,7 @@ import { CiShop } from "react-icons/ci";
 import formatPrice from '../../../Helper/formatPrice';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { LiaFacebookMessenger } from "react-icons/lia";
+import scrollToTop from '../../../Helper/scroll';
 const OrderDetailUser = () => {
     const location = useLocation();
     const navigate = useNavigate();

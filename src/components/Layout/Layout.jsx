@@ -86,6 +86,7 @@ const Layout = () => {
       {/* 404 Not Found */}
       <Route path="/:id" element={<NotFound />} />
       <Route path="/user/:id" element={<NotFound />} />
+      <Route path="/user/:id/:id" element={<NotFound />} />
       <Route path="/admin/:id" element={<NotFound />} />
       <Route path="/admin/:id/:id" element={<NotFound />} />
 

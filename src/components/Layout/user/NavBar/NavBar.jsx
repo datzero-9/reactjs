@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { BiSolidCategoryAlt } from "react-icons/bi";
@@ -19,13 +18,13 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import ClipLoader from "react-spinners/ClipLoader";
 import { MdCancel } from "react-icons/md";
 import Footer from '../Footer/Footer';
+import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 
 
 const NavBar = () => {
+
     //lấy thông tin từ local storage
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user)
-
     const [inputValue, setInputValue] = useState('');
     const [item, setItem] = useState([])
     const handleInputChange = (event) => {
@@ -102,6 +101,7 @@ const NavBar = () => {
     }
     return (
         <>
+            <ScrollToTopButton />
             {
                 loading &&
                 <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
@@ -111,12 +111,12 @@ const NavBar = () => {
                         loading={loading}
                         size={20}
                         aria-label="Loading Spinner"
-                        data-testid="loader"
+                        data-testid="loader loiloi"
                     />
                 </div>
             }
 
-            <div class="  bg-red-600 flex flex-col items-center  ">
+            <div class="  bg-red-600 flex flex-col items-center fixed top-0 right-0 left-0 z-10">
                 <div className='flex  bg-red-600 p-2 gap-3 text-white  container'>
                     {/* logo  */}
                     <div className=' basis-1/12 md:basis-3/12 xl:basis-2/12 '>
@@ -167,7 +167,7 @@ const NavBar = () => {
                                             return (
                                                 <div key={index} className='flex gap-2 m-1 bg-gray-200  hover:bg-gray-300 text-[12px]' onClick={() => { handleSearch(data._id) }}>
                                                     <div className='w-[100px] flex justify-center items-center'>
-                                                    <img src={data.image} alt="" className='w-[50px] h-[50px]' />
+                                                        <img src={data.image} alt="" className='w-[50px] h-[50px]' />
                                                     </div>
                                                     <TextLimited text={data.name} max={60} />
                                                 </div>
@@ -259,9 +259,11 @@ const NavBar = () => {
 
             </ul>
 
-            <div className="overflow-y-auto pb-[80px] md:pb-0  overflow-x-hidden" style={{ height: 'calc(100vh - 50px)' }}>
+            {/* <div className="overflow-y-auto pb-[80px] md:pb-0  overflow-x-hidden" style={{ height: 'calc(100vh - 50px)' }}> */}
+            <div className='mt-[60px]'>
                 <Outlet context={{ category }} />
                 <Footer />
+
             </div>
 
 
