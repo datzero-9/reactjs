@@ -67,7 +67,7 @@ const Cart = () => {
             color={'#DB142C'}
             loading={loading}
             size={10}
-            aria-label="Loading Spinner"
+            aria-label="Loading Spinner"z
             data-testid="loader"
           />
         </div>

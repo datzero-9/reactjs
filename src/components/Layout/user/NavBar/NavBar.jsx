@@ -157,13 +157,13 @@ const NavBar = () => {
                     {/* Tìm kiếm sản phảma  */}
                     <div className='flex justify-center items-center basis-7/12 md:basis-6/12 lg:basis-5/12  relative text-black'>
                         <FaSearch className='absolute  left-1 text-gray-400' size={20} />
-                        {inputValue.length > 0 ? <MdCancel className='absolute  right-1 text-gray-400 cursor-pointer' size={20} onClick={() => { setInputValue('') }} /> : ''}
+                        {inputValue.length > 0 ? <MdCancel className='absolute  right-1 text-gray-400 cursor-pointer' size={20} onClick={() => { setInputValue(''); }} /> : ''}
                         <input value={inputValue} onChange={handleInputChange} style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
                         {
                             items < 1 ? '' :
                                 (<div className=' p-1 absolute bg-red-400 top-11 left-0 z-10 cursor-pointer w-[300px] sm:w-[350px] rounded-xl'>
                                     {
-                                        item.slice(0, 5).map((data, index) => {
+                                        item.slice(0,5).map((data, index) => {
                                             return (
                                                 <div key={index} className='flex gap-2 m-1 bg-gray-200  hover:bg-gray-300 text-[12px]' onClick={() => { handleSearch(data._id) }}>
                                                     <div className='w-[100px] flex justify-center items-center'>

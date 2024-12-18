@@ -63,11 +63,11 @@ const Home = () => {
     };
     // mức giá lựa chọn sản phẩm
     const Price = [
-        { id: 1, price: 'Dưới 1.000.000 VND ', },
-        { id: 2, price: 'Từ 1.000.000 VND - 2.000.000 VND ' },
-        { id: 3, price: 'Từ 2.0000.000 VND - 3.000.000 VND ' },
-        { id: 4, price: 'Từ 3.000.000 VND - 4.000.000 VND  ' },
-        { id: 5, price: 'Trên 4.000.000 VND' },
+        { id: 1, price: 'Dưới 1 triệu VND ', },
+        { id: 2, price: 'Từ 1 triệu VND - 2 triệu VND ' },
+        { id: 3, price: 'Từ 2 triệu VND - 3 triệu VND ' },
+        { id: 4, price: 'Từ 3 triệu VND - 4 triệu VND  ' },
+        { id: 5, price: 'Trên 4 triệu VND' },
     ]
     const [selectedPrice, setSelectedPrice] = useState([]);
     const handleCheckboxPrice = (data) => {
@@ -85,7 +85,6 @@ const Home = () => {
 
     useEffect(() => {
         getProduct();
-
     }, [selectedCategories, selectedPrice]);
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CiShop } from "react-icons/ci";
 import { AiTwotoneDelete } from "react-icons/ai";
@@ -11,6 +11,7 @@ import { FaAngleDoubleUp } from "react-icons/fa";
 const Checkout = () => {
     // dữ liệu được lấy từ component Cart
     const location = useLocation();
+    const navigate = useNavigate()
     const { listCart, total } = location.state || {};
 
 
@@ -19,7 +20,6 @@ const Checkout = () => {
 
     // Lâý thông tin khách hàng từ form để đặt hàng
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
     const [paymentMethod, setPaymentMethod] = useState('bank');
     const handleChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -27,6 +27,99 @@ const Checkout = () => {
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState()
     const [note, setNote] = useState('Không có ghi chú')
+
+
+
+    //lấy thông tin tỉnh, quận huyện, phường xã, 
+    const [provinces, setProvinces] = useState([])
+    const [tinhTP, setTinhTP] = useState('Tỉnh/TP')
+    const getProvinces = () => {
+        try {
+            axios.get(`https://open.oapi.vn/location/provinces?page=0&size=70`)
+                .then((res) => {
+                    setProvinces(res.data.data)
+                })
+        } catch (err) {
+            console.log("lỗi:" + err)
+        }
+    }
+    // lay thong tin cua quan, huyen
+    const [districts, setDistrics] = useState([])
+    const [quanHuyen, setQuanhuyen] = useState('Quận/Huyện')
+    const getDistricts = (data) => {
+        console.log(data)
+        try {
+            axios.get(`https://open.oapi.vn/location/districts/${data}?page=0&size=70`)
+                .then((res) => {
+                    setDistrics(res.data.data)
+                })
+        } catch (err) {
+            console.log("lỗi:" + err)
+        }
+    }
+    // lay thong tin cua quan, huyen
+    const [wards, setWards] = useState([])
+    const [phuongXa, setPhuongXa] = useState('Phường/Xã')
+    const getWards = (data) => {
+        console.log(data)
+        try {
+            axios.get(`https://open.oapi.vn/location/wards/${data}?page=0&size=70`)
+                .then((res) => {
+                    setWards(res.data.data)
+                })
+        } catch (err) {
+            console.log("lỗi:" + err)
+        }
+    }
+
+
+    // const [provinces, setProvinces] = useState([])
+    // const getProvinces = () => {
+    //     try {
+    //         axios.get(`https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`)
+    //             .then((res) => {
+    //                 setProvinces(res.data.data.data)
+    //             })
+    //     } catch (err) {
+    //         console.log("lỗi:" + err)
+    //     }
+    // }
+    // // lay thong tin cua quan, huyen
+    // const [districts, setDistrics] = useState([])
+    // const getDistricts = (data) => {
+    //     console.log(data)
+    //     try {
+    //         axios.get(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${data}&limit=-1`)
+    //             .then((res) => {
+    //                 setDistrics(res.data.data.data)
+    //             })
+    //     } catch (err) {
+    //         console.log("lỗi:" + err)
+    //     }
+    // }
+    // // lay thong tin cua quan, huyen
+    // const [wards, setWards] = useState([])
+    // const getWards = (data) => {
+    //     console.log(data)
+    //     try {
+    //         axios.get(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${data}&limit=-1`)
+    //             .then((res) => {
+    //                 setWards(res.data.data.data)
+    //             })
+    //     } catch (err) {
+    //         console.log("lỗi:" + err)
+    //     }
+    // }
+    const [info, setInfo] = useState('')
+    const comfirmAddress = () => {
+        setInfo(`${address} - ${phuongXa} - ${quanHuyen} - ${tinhTP}`)
+    }
+    useEffect(() => {
+        comfirmAddress()
+    }, [phuongXa,address])
+    useEffect(() => {
+        getProvinces()
+    }, [])
     // xóa hết tất cả sản phẩm trong giỏ hàng saui khi đătj hàng 
     const deleteAllCart = () => {
         try {
@@ -41,7 +134,6 @@ const Checkout = () => {
 
     //Hiển thị list sản phẩm sẽ mua
     const items = listCart.length;
-
     const [allCheckout, setAllCheckout] = useState(2)
     const [icon, setIcon] = useState(true)
     const handleDisplay = () => {
@@ -54,9 +146,11 @@ const Checkout = () => {
     }
     //Thao tác thanh toán online hoặc nhận hàng mới thanh toán
     const handleBuyProduct = (e) => {
-
-       
         e.preventDefault();
+        if (tinhTP ==='Tỉnh/TP' || quanHuyen==='Quận/Huyện' || phuongXa==='Phường/Xã') {
+            alert('Vui lòng điền đầy đủ thông tin địa chỉ');
+            return;
+        }
         if (phone < 0) {
             alert('sai định dạng số điện thoại');
             return;
@@ -65,10 +159,11 @@ const Checkout = () => {
             alert('Số điện thoại này không tồn tại');
             return;
         }
+        
         setLoading(true)
         const checkout = {
             idUser: user.id,
-            address: address,
+            address: info,
             phone: phone,
             note: note,
             payment: paymentMethod,
@@ -76,9 +171,7 @@ const Checkout = () => {
             total: total,
             state: false
         }
-
         try {
-
             if (checkout.payment === 'cod') {
                 // Thanh tóan khi nhận hàng
                 axios.post(`${api}/checkout`, checkout)
@@ -90,7 +183,6 @@ const Checkout = () => {
                             navigate('/user/histories')
                         }, 3000)
                     })
-
             } else {
                 // Thanh toán online
                 axios.post(`${api}/payment`, checkout)
@@ -102,11 +194,11 @@ const Checkout = () => {
                         }, 3000)
                     })
             }
-
         } catch (error) {
             console.log("lỗi:" + error)
         }
     }
+
     return (
         <div className='p-3 flex justify-center'>
             {
@@ -129,19 +221,77 @@ const Checkout = () => {
                         <div className='md:flex '>
                             {/* form nhập thông tin  */}
                             <div className='md:w-[50%]'>
+                                <div className='p-2 flex gap-2 '>
+                                    <div>
+                                        <h6 className='font-semibold '>Tỉnh/Thành phố:</h6>
+                                        <select
+                                            onChange={(e) => {
+                                                const selectedId = e.target.value;
+                                                const selectedProvince = provinces.find(province => province.id === selectedId); // Tìm tỉnh
+                                                setTinhTP(selectedProvince ? selectedProvince.name : ""); // Lưu tên tỉnh
+                                                getDistricts(selectedId); // Lấy danh sách huyện
+                                            }}
+                                            name=""
+                                            id=""
+                                            className='outline-none border border-black'
+                                        >
+                                            <option value="">Chọn Tỉnh</option>
+                                            {
+                                                provinces.map((data, index) => (
+                                                    <option key={index} value={data.id}>{data.name}</option>
+                                                ))
+                                            }
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <h6 className='font-semibold '>Quận/Huyện:</h6>
+                                        <select onChange={(e) => {
+                                            const selectedId = e.target.value;
+                                            const selectedDistricts = districts.find((districts) => { return districts.id === selectedId }); // Tìm tỉnh
+                                            setQuanhuyen(selectedDistricts ? selectedDistricts.name : "");
+                                            getWards(e.target.value)
+                                        }} name="" id="" className='outline-none border border-black '>
+                                            <option value="">Chọn Quận/Huyện </option>
+                                            {
+                                                districts.map((data, index) => {
+                                                    return (
+                                                        <option key={index} value={data.id}>{data.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <h6 className='font-semibold '>Phường/Xã:</h6>
+                                        <select onChange={(e) => {
+                                            const selectedId = e.target.value;
+                                            const selectedWards = wards.find((wards) => { return wards.id === selectedId }); // Tìm tỉnh
+                                            setPhuongXa(selectedWards ? selectedWards.name : "");
 
+                                        }} className='outline-none border border-black '>
+                                            <option value="">Chọn Phường/Xã </option>
+                                            {
+                                                wards.map((data, index) => {
+                                                    return (
+                                                        <option key={index} value={data.id}>{data.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
                                 <div className='p-2'>
-                                    <h5 className='text-17 font-semibold pb-2'>Địa chỉ giao hàng:</h5>
+                                    <h5 className='text-17 font-semibold pb-2'>Địa chỉ giao hàng cụ thể:</h5>
                                     <input
                                         type="text"
                                         value={address}
                                         onChange={(e) => { setAddress(e.target.value) }}
-                                        placeholder='Nhập thông tin địa chỉ'
+                                        placeholder='Thôn, tổ, khu phố, số nhà , tên đường ....'
                                         className=' p-1 border border-gray-400 rouned-xl w-full'
                                         required
                                     />
+                                    <h6>{ address !== '' ? info : ''}</h6>
                                 </div>
-
                                 <div className='p-2'>
                                     <h5 className='text-17 font-semibold pb-2'>Số điện thoại:</h5>
                                     <input
@@ -153,7 +303,6 @@ const Checkout = () => {
                                         className=' p-1 border border-gray-400 rouned-xl w-full'
                                     />
                                 </div>
-
                                 <div className='p-2'>
                                     <h5 className='text-17 font-semibold pb-2'>Ghi chú:</h5>
                                     <textarea
