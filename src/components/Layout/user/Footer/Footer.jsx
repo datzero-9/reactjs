@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 
 const Footer = () => {
+    
+
     return (
         <div className="bg-gray-100 py-10">
+            
+
             <div className="container mx-auto px-5 grid grid-cols-1 md:grid-cols-4 gap-6">
                 {/* Chăm sóc khách hàng */}
                 <div>

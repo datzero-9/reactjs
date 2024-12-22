@@ -13,8 +13,6 @@ const Histories = () => {
     const [loading, setLoading] = useState(true)
     //lấy thông tin từ local storage
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user)
-
     // lấy ra tất cá các  order tử iduser name
     useEffect(() => {
         getHistories()

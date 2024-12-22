@@ -4,7 +4,9 @@ import SlideProduct from '../Slide/SlideProduct';
 import axios from 'axios';
 import api from '../../../Helper/api'
 import BeatLoader from "react-spinners/BeatLoader";
+import './Home.css';
 import scrollToTop from '../../../Helper/scroll';
+import Loader from '../../Loader/Loader';
 const Home = () => {
     const [loading, setLoading] = useState(true)
     const [product, setProduct] = useState([]);
@@ -14,7 +16,7 @@ const Home = () => {
         scrollToTop()
     }, []);
 
-  
+
     // lssay ra danh sách sản phẩm 
     const getProduct = () => {
         setLoading(true)
@@ -80,98 +82,105 @@ const Home = () => {
         });
 
     };
-
     // thực hiện lọc sản phẩmphẩm
-
     useEffect(() => {
         getProduct();
     }, [selectedCategories, selectedPrice]);
 
+    const [hidden, setHidden] = useState(false)
     return (
         <div className='m-2  flex justify-center  '>
 
             {
-                loading &&
-                <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
-                    <BeatLoader
-                        color={'#DB142C'}
-                        loading={loading}
-                        size={10}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    />
-                </div>
+                loading && <Loader />
             }
             <div className='container'>
                 <SlideProduct />
                 <hr />
 
-                <div className='flex gap-2'>
+                <div className='flex flex-col '>
                     {/* lựa chọn của khách hàng  */}
-                    <div className='w-[20%]'>
-                        <h6 className='text-[16px] font-bold'>Lựa chọn của bạn </h6>
-                        <div className='my-2 '>
-                            <h6 className='text-[13px] font-medium'>Danh mục sản phẩm </h6>
-                            <div className='grid grid-cols-3 gap-2 '>
-                                {
-                                    listCategory.map((data, index) => {
-                                        return (
-                                            <div key={index} className='flex text-[12px] gap-1 '>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={() => handleCheckboxCategory(data)}
-                                                    checked={selectedCategories.includes(data.name)} />
-                                                <h6>{data.name}</h6>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                    {
+                        hidden ?
+                            <div className="">
+                                <h6 className='text-[16px] font-bold'>Lựa chọn của bạn </h6>
+                                <div className='my-2 '>
+                                    <h6 className='text-[13px] font-medium'>Danh mục sản phẩm </h6>
+                                    <div className='flex gap-3 ' >
+                                        {
+                                            listCategory.map((data, index) => {
+                                                return (
+                                                    <div key={index} className='flex text-[12px] gap-1 '>
+                                                        <input
+                                                            type="checkbox"
+                                                            onChange={() => handleCheckboxCategory(data)}
+                                                            checked={selectedCategories.includes(data.name)} />
+                                                        <h6 className='font-semibold '>{data.name}</h6>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
 
-                        <div className='my-2 '>
-                            <h6 className='text-[13px] font-medium'>Mức giá </h6>
-                            <div className='grid grid-cols-1 gap-2 '>
-                                {
-                                    Price.map((data, index) => {
-                                        return (
-                                            <div key={index} className='flex text-[12px] gap-1 '>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={() => handleCheckboxPrice(data)}
-                                                    checked={selectedPrice.includes(data.id)} />
-                                                <h6>{data.price}</h6>
-                                            </div>
-                                        )
-                                    })
-                                }
+                                <div className='my-2 '>
+                                    <h6 className='text-[13px] font-medium'>Mức giá </h6>
+                                    <div className='flex gap-2 '>
+                                        {
+                                            Price.map((data, index) => {
+                                                return (
+                                                    <div key={index} className='flex text-[12px] gap-1 '>
+                                                        <input
+                                                            type="checkbox"
+                                                            onChange={() => handleCheckboxPrice(data)}
+                                                            checked={selectedPrice.includes(data.id)} />
+                                                        <h6 className='font-semibold'>{data.price}</h6>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                                <div className='my-2 '>
+                                    <div className='flex gap-1 text-13'>
+                                        <button className='boder p-1 bg-gray-200 hover:bg-gray-300  font-medium '
+                                            onClick={() => {
+                                                setHidden(false)
+                                            }}>
+                                            Rút gọn
+                                        </button>
+                                        <button className='boder p-1 bg-red-500 hover:bg-red-200  font-medium '
+                                            onClick={() => {
+                                                setSelectedCategories([])
+                                                setSelectedPrice([])
+                                            }}>
+                                            Làm mới
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className='my-2 '>
-                            <div className='flex gap-1 justify-end text-13'>
-
-                                <button className='boder p-1 bg-red-500 hover:bg-red-200  font-medium '
-                                    onClick={() => {
-                                        setSelectedCategories([])
-                                        setSelectedPrice([])
-                                    }}>
-                                    Làm mới
+                            :
+                            <div className='flex justify-center'>
+                                <button className=' font-medium m-1 p-1 bg-red-500 text-white' onClick={() => setHidden(true)}>
+                                    Lọc sản phẩm
                                 </button>
                             </div>
-                        </div>
-                    </div>
+                    }
+
                     {/* list sản phẩm  */}
-                    <div className='w-[80%]'>
+                    <div className=''>
                         <h3 className='text-[16px] font-bold'>Danh sách sản phẩm </h3>
-                        {product.length === 0
+                        {/* {product.length === 0
                             && <div className='w-full'>Xin lỗi, sản phẩm lọc theo yêu cầu của bạn không tồn tại !!! </div>
-                        }
+                        } */}
                         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 bg-gray-50 p-2 rounded-md'>
 
                             {product.length !== 0
-                                && product.map((product) => (
+                                ? product.map((product) => (
                                     <Items key={product._id} product={product} />
                                 ))
+                                :
+                                <div className='w-full'>Xin lỗi, sản phẩm lọc theo yêu cầu của bạn không tồn tại !!! </div>
                             }
                         </div>
                     </div>

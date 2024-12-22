@@ -16,6 +16,7 @@ import Update from './admin/CRUDProducts/Update';
 import Login from './user/Accounts/Login';
 import Register from './user/Accounts/Register';
 import Account from './user/Accounts/Account';
+import Address from './user/Address/Address';
 import Histories from "./user/Histories/Histories";
 import Notification from './admin/Notification/Notification';
 import PaymentResult from './user/Payment/PaymentResult';
@@ -81,6 +82,7 @@ const Layout = () => {
         <Route path="histories" element={<ProtectedRouteUser><Histories /></ProtectedRouteUser>} />
         <Route path="orderdetailuser" element={<ProtectedRouteUser><OrderDetailUser /></ProtectedRouteUser>} />
         <Route path="payment" element={<ProtectedRouteUser><PaymentResult /></ProtectedRouteUser>} />
+        <Route path="address" element={<ProtectedRouteUser><Address /></ProtectedRouteUser>} />
       </Route>
 
       {/* 404 Not Found */}

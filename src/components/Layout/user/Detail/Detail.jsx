@@ -15,9 +15,9 @@ import scrollToTop from '../../../Helper/scroll';
 const Detail = () => {
   //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
-  useEffect(()=>{
+  useEffect(() => {
     scrollToTop()
-  },[])
+  }, [])
 
   // lấy cái id từ params 
   const location = useLocation();
@@ -461,6 +461,9 @@ const Detail = () => {
         </div>
       </div>
       <hr className='m-2' />
+      <div>
+      
+      </div>
     </div >
 
   );

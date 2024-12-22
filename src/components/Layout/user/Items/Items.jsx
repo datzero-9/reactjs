@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import TextLimited from '../../../Helper/sliceText'
 import formatNumberWithCommas from '../../../Helper/formatPrice'
+import './items.css';
 const Items = (props) => {
   const { product } = props;
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setWindowWidth(window.innerWidth);
+  //   };
+  //   window.addEventListener('resize', handleResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
   return (
     <Link to={`/user/detail?id=${product._id}`}>
-      <div className='border border-gray-200  p-1 h-auto rounded bg-slate-100 relative cursor-pointer hover:bg-slate-200 hover:border-red-400'>
+      <div className='transition border border-gray-200 p-1 hover:p-0 h-auto rounded bg-slate-100 relative cursor-pointer hover:bg-slate-200 hover:border-red-400'>
         {
           product.discount === 0
             ? ""

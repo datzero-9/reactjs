@@ -11,7 +11,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 const InfoUser = () => {
    //lấy thông tin từ local storage
    const user = JSON.parse(localStorage.getItem('user'));
-   console.log(user)
+
     const [loading, setLoading] = useState(false)
     // lấy dữ liệu từ page navbar 
     const location = useLocation();
