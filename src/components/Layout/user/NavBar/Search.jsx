@@ -16,7 +16,7 @@ const Search = () => {
 
     const items = item.length;
 
-// lấy đc giá trị từ input 
+    // lấy đc giá trị từ input 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
@@ -49,17 +49,49 @@ const Search = () => {
     const handleVoiceSearch = (query) => {
         console.log("Tìm kiếm:", query);
         setInputValue(query)
-        // Gửi query lên server hoặc tìm kiếm trong dữ liệu local
+        setLoading(true)
+        axios.post(`${api}/search`, { text: query })
+            .then((response) => {
+                setTimeout(() => {
+                    setLoading(false)
+                    navigate('/user/search', {
+                        state: {
+                            listProduct: response.data, 
+                            name: query,   
+                        },
+                    });
+                    setInputValue('')
+                }, 3000)
+
+            })
+            .catch((error) => {
+                console.log('lỗiii', error)
+            })
     };
+    const Search = () => {
+        if (inputValue.length === 0) {
+            alert('Vui lòng nhập tên sản phẩm');
+            return;
+        }
+
+        // Truyền dữ liệu đúng cách vào navigate
+        navigate('/user/search', {
+            state: {
+                listProduct: item, // item hoặc listProduct được truyền từ prop hoặc state
+                name: inputValue,   // inputValue là giá trị bạn đã nhập
+            },
+        });
+        setInputValue('')
+    }
     return (
         <div className='flex justify-center items-center basis-7/12 md:basis-6/12 lg:basis-5/12  relative text-black'>
             {loading && <Loader loading={loading} />}
-            <FaSearch className='absolute  left-1 text-gray-400' size={20} />
+            <FaSearch className='absolute  left-1 text-gray-400' size={20} onClick={Search} />
             <input value={inputValue} onChange={handleInputChange} style={{ outline: 'none' }} className='h-4/5 w-full rounded-md pl-7' type="text" placeholder='Bạn cần tìm gì ?' />
 
             <div className='absolute right-1 text-gray-400 cursor-pointer'>
                 {inputValue.length > 0
-                    ? <MdCancel  size={20} onClick={() => { setInputValue(''); }} />
+                    ? <MdCancel size={20} onClick={() => { setInputValue(''); }} />
                     : <VoiceSearch onSearch={handleVoiceSearch} />}
             </div>
 

@@ -42,17 +42,19 @@ const NavBar = () => {
         <>
             <ScrollToTopButton />
 
-            <df-messenger
-                intent="WELCOME"
-                chat-title="ChatboxAI"
-                agent-id="73daf731-fc51-4b0c-9c4d-c5d1781c51e7"
-                language-code="en"
-            ></df-messenger>
+            <div className='hidden md:block'>
+                <df-messenger
+                    intent="WELCOME"
+                    chat-title="ChatboxAI"
+                    agent-id="73daf731-fc51-4b0c-9c4d-c5d1781c51e7"
+                    language-code="en"
+                ></df-messenger>
+            </div>
 
             <div class="  bg-red-600 flex flex-col items-center fixed top-0 right-0 left-0 z-10">
                 <div className='flex  bg-red-600 p-2 gap-3 text-white  container'>
 
-                    
+
                     {/* logo  */}
                     <div className=' basis-1/12 md:basis-3/12 xl:basis-2/12 '>
                         <Link to="home">

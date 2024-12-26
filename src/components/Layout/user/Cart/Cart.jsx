@@ -11,6 +11,7 @@ import formatPrice from '../../../Helper/formatPrice'
 import api from '../../../Helper/api';
 import axios from 'axios';
 import BeatLoader from "react-spinners/BeatLoader";
+import scrollToTop from '../../../Helper/scroll';
 const Cart = () => {
   const [loading, setLoading] = useState(true)
   //lấy thông tin từ local storage
@@ -35,6 +36,7 @@ const Cart = () => {
   // lấy ra danh sách giỏ hàng bằng id của người dùng
   const [listCart, setListCart] = useState([])
   useEffect(() => {
+    scrollToTop()
     getListCart()
   }, [])
   const getListCart = () => {

@@ -3,13 +3,17 @@ import { IoIosAddCircle } from "react-icons/io";
 import { PiRecycleBold } from "react-icons/pi";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import axios from 'axios';
 import api from '../../../Helper/api';
 import formatPrice from '../../../Helper/formatPrice';
 
 import './Style.css'
 const Read = () => {
+
+    const location = useLocation();
+    const { item, text } = location.state || {};
+
     //Lấy ra danh sách sản phẩm
     const [listItems, setListItems] = useState([])
     useEffect(() => {
@@ -21,7 +25,7 @@ const Read = () => {
             price: []
         }
         try {
-            axios.post(`${api}`,{selec})
+            axios.post(`${api}`, { selec })
                 .then((res) => {
                     setListItems(res.data)
                     console.log(res.data)
@@ -72,7 +76,7 @@ const Read = () => {
                     </thead>
                     <tbody>
                         {
-                            listItems.map((data, index) => {
+                            (text.length > 0 ? item : listItems).map((data, index) => {
                                 return (
                                     <tr className='' key={index}>
                                         <th className='border text-center w-[5%] p-1'>{index + 1}</th>
@@ -106,6 +110,7 @@ const Read = () => {
                                                 <Link to={`/admin/updateProduct/?id=${data._id}`}>
                                                     <FaEdit className='text-yellow-200 cursor-pointer' />
                                                 </Link>
+
                                                 <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => { deleteProduct(data._id) }} />
                                             </div>
                                         </td>

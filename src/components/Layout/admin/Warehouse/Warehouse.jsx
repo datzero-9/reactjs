@@ -53,9 +53,9 @@ const Warehouse = () => {
                                 }}
                                 className="flex items-center gap-2 border rounded-md border-black p-2 hover:bg-gray-200 cursor-pointer"
                             >
-                                <h6 className="font-bold">{data.name}</h6>
-                                <FaAnglesRight className="animate-move" />
-                                <h6 className="text-green-400 ml-[10px]">xem chi tiết</h6>
+                                <h6 className="font-bold w-[90px]">{data.name}</h6>
+                                <FaAnglesRight className="animate-move " />
+                                <h6 className="text-green-400 ml-[20px]">xem chi tiết</h6>
                             </div>
                         )
                     })

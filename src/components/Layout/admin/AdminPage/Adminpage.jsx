@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { Image } from '@cloudinary/react';
 import axios from 'axios';
 import { BiLogOut } from "react-icons/bi";
 import { FaRegDotCircle } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import { MdCancel, MdOutlineAdminPanelSettings } from "react-icons/md";
 import { PiPhoneCallFill } from "react-icons/pi";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, Navigate } from "react-router-dom";
+import api from '../../../Helper/api';
 
 
 const Adminpage = () => {
@@ -22,6 +23,24 @@ const Adminpage = () => {
         { id: 6, title: 'Người dùng', path: 'manageruser' },
 
     ]
+
+    const [key, setKey] = useState('')
+    useEffect(() => {
+        getItemSearch()
+    }, [key])
+
+
+    const getItemSearch = () => {
+        axios.post(`${api}/search`, { text: key })
+            .then((response) => {
+                console.log(response.data)
+                navigate('/admin/products', { state: { item: response.data, text: key } });
+            })
+            .catch((error) => {
+                console.log('lỗiii', error)
+            })
+    }
+
     // lấy thông tin tuwf localstorage
     const user = JSON.parse(localStorage.getItem('admin'));
     const navigate = useNavigate();
@@ -66,12 +85,17 @@ const Adminpage = () => {
             <div className='w-[75%] '>
                 {/* Tìm kiếm sản phẩm  */}
                 <div className='m-2 relative flex items-center gap-4'>
-                    <IoSearch className='absolute text-[25px] cursor-pointer top-[10px] left-[5px]' />
+                    {
+                        key.length > 0
+                            ? <MdCancel onClick={() => setKey('')} className='absolute text-[23px] cursor-pointer top-[10px] left-[5px]  text-gray-300 hover:text-gray-500' />
+                            : <IoSearch className='absolute text-[23px] cursor-pointer top-[10px] left-[5px]' />
+                    }
                     <input
                         style={{ outline: 'none' }}
-                        type="text"
+                        type="text" 
+                        value={key}
                         placeholder='Bạn muốn tìm gì ?'
-                        className=' pl-[30px] border border-gray-400 rounded-md w-full h-[40px] text-[16px]' />
+                        className=' pl-[30px] border border-gray-400 rounded-md w-full h-[40px] text-[15px]' onChange={(e) => setKey(e.target.value)} />
                     <MdOutlineAdminPanelSettings className='text-[25px] cursor-pointer hover:text-red-500' />
                     <PiPhoneCallFill className='text-[25px] cursor-pointer hover:text-red-500' />
                 </div>

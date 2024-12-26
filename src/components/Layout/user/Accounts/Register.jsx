@@ -28,7 +28,7 @@ const Register = () => {
     const isValidEmail = emailRegex.test(email);
     if (isValidEmail) {
       if (password.length < 6) {
-        alert('Mật khẩu bé hơn 8 ký tự');
+        alert('Mật khẩu từ 6 ký tự trở lên');
         setLoading(false)
         return;
       }

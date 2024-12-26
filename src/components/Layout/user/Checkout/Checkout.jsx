@@ -72,44 +72,6 @@ const Checkout = () => {
         }
     }
 
-
-    // const [provinces, setProvinces] = useState([])
-    // const getProvinces = () => {
-    //     try {
-    //         axios.get(`https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1`)
-    //             .then((res) => {
-    //                 setProvinces(res.data.data.data)
-    //             })
-    //     } catch (err) {
-    //         console.log("lỗi:" + err)
-    //     }
-    // }
-    // // lay thong tin cua quan, huyen
-    // const [districts, setDistrics] = useState([])
-    // const getDistricts = (data) => {
-    //     console.log(data)
-    //     try {
-    //         axios.get(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${data}&limit=-1`)
-    //             .then((res) => {
-    //                 setDistrics(res.data.data.data)
-    //             })
-    //     } catch (err) {
-    //         console.log("lỗi:" + err)
-    //     }
-    // }
-    // // lay thong tin cua quan, huyen
-    // const [wards, setWards] = useState([])
-    // const getWards = (data) => {
-    //     console.log(data)
-    //     try {
-    //         axios.get(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${data}&limit=-1`)
-    //             .then((res) => {
-    //                 setWards(res.data.data.data)
-    //             })
-    //     } catch (err) {
-    //         console.log("lỗi:" + err)
-    //     }
-    // }
     const [info, setInfo] = useState('')
     const comfirmAddress = () => {
         setInfo(`${address} - ${phuongXa} - ${quanHuyen} - ${tinhTP}`)
@@ -138,7 +100,7 @@ const Checkout = () => {
     const [icon, setIcon] = useState(true)
     const handleDisplay = () => {
         setIcon(!icon)
-        if (items == allCheckout) {
+        if (items === allCheckout) {
             setAllCheckout(2)
         } else {
             setAllCheckout(items)
@@ -221,7 +183,7 @@ const Checkout = () => {
                         <div className='md:flex '>
                             {/* form nhập thông tin  */}
                             <div className='md:w-[50%]'>
-                                <div className='p-2 flex gap-2 '>
+                                <div className='p-2 flex gap-2 flex-wrap '>
                                     <div>
                                         <h6 className='font-semibold '>Tỉnh/Thành phố:</h6>
                                         <select

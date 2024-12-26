@@ -13,6 +13,7 @@ import slide2 from '../../../../images/slide2.webp';
 import slide3 from '../../../../images/slide3.webp';
 import slide4 from '../../../../images/slide4.webp';
 import slide5 from '../../../../images/slide5.webp';
+import VideoPlayer from './VideoPlayer';
 const SlideProduct = () => {
     var settings = {
         dots: false,
@@ -25,7 +26,7 @@ const SlideProduct = () => {
     };
     useEffect(() => {
         getApi()
-        
+
     }, []);
 
     //Lấy ra sản phẩm mới nhất
@@ -47,7 +48,9 @@ const SlideProduct = () => {
 
     return (
         <div className=' flex flex-col items-center bg-gray-100 p-1'>
-            <div className='flex md:gap-6 pb-2  container justify-center items-center'>
+
+
+            <div className='flex md:gap-6 p-2  container justify-center items-center'>
                 {
                     loading &&
                     <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
@@ -60,48 +63,56 @@ const SlideProduct = () => {
                         />
                     </div>
                 }
+
+                {/* slide ảnh   */}
                 <div className='md:w-[100%] lg:w-[60%] w-full '>
                     <Slider {...settings} className=''>
                         <div className='bg-slate-100 '>
-                            <img className='w-full rounded-md  border border-gray-500 ' src={slide1} alt="" />
+                            <img className='w-full rounded-md ' src={slide1} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md  border border-gray-500 ' src={slide2} alt="" />
+                            <img className='w-full rounded-md ' src={slide2} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md  border border-gray-500 ' src={slide3} alt="" />
+                            <img className='w-full rounded-md ' src={slide3} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md  border border-gray-500 ' src={slide4} alt="" />
+                            <img className='w-full rounded-md ' src={slide4} alt="" />
                         </div>
                         <div className='bg-slate-100'>
-                            <img className='w-full rounded-md  border border-gray-500 ' src={slide5} alt="" />
+                            <img className='w-full rounded-md ' src={slide5} alt="" />
                         </div>
                     </Slider>
                 </div>
-                <div className=' lg:w-[35%] hidden lg:block gap-2 border border-gray-400 rounded-md p-3'>
-                    <h6 className='font-bold text-center'>Sản phẩm mới nhất </h6>
+
+                {/* Sản phẩm nổi bật  */}
+                <div className=' lg:w-[35%] hidden lg:block gap-2 rounded-md border xl:border-black p-2'>
+                    <h6 className='font-bold text-center'>Sản phẩm nổi bật  </h6>
                     <div className=''>
-                            <Swiper
-                                modules={[Navigation, Pagination]}
-                                spaceBetween={10}
-                                slidesPerView={2}
-                                navigation
-                                pagination={{ clickable: true }}
-                                style={{
-                                    position: 'relative',
-                                    padding: '0 0px' // Khoảng cách hai bên để chứa các nút điều hướng
-                                }}
-                            >
-                                {product.slice(5,20).map((product, productIndex) => (
-                                    <SwiperSlide key={productIndex}>
-                                        <Items product={product} />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
-                       
+                        <Swiper
+                            modules={[Navigation, Pagination]}
+                            spaceBetween={10}
+                            slidesPerView={2}
+                            navigation
+                            pagination={{ clickable: true }}
+                            style={{
+                                position: 'relative',
+                                padding: '0 0px' // Khoảng cách hai bên để chứa các nút điều hướng
+                            }}
+                        >
+                            {product.slice(5, 20).map((product, productIndex) => (
+                                <SwiperSlide key={productIndex}>
+                                    <Items product={product} />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+
                     </div>
                 </div>
+            </div>
+
+            <div className='p-1 '>
+                <VideoPlayer />
             </div>
         </div>
     )

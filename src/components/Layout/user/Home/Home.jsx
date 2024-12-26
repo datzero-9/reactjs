@@ -106,7 +106,7 @@ const Home = () => {
                                 <h6 className='text-[16px] font-bold'>Lựa chọn của bạn </h6>
                                 <div className='my-2 '>
                                     <h6 className='text-[13px] font-medium'>Danh mục sản phẩm </h6>
-                                    <div className='flex gap-3 ' >
+                                    <div className='grid grid-cols-3 md:flex gap-3' >
                                         {
                                             listCategory.map((data, index) => {
                                                 return (
@@ -125,7 +125,7 @@ const Home = () => {
 
                                 <div className='my-2 '>
                                     <h6 className='text-[13px] font-medium'>Mức giá </h6>
-                                    <div className='flex gap-2 '>
+                                    <div className='grid grid-cols-2 md:flex gap-3 '>
                                         {
                                             Price.map((data, index) => {
                                                 return (
@@ -170,9 +170,6 @@ const Home = () => {
                     {/* list sản phẩm  */}
                     <div className=''>
                         <h3 className='text-[16px] font-bold'>Danh sách sản phẩm </h3>
-                        {/* {product.length === 0
-                            && <div className='w-full'>Xin lỗi, sản phẩm lọc theo yêu cầu của bạn không tồn tại !!! </div>
-                        } */}
                         <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 bg-gray-50 p-2 rounded-md'>
 
                             {product.length !== 0

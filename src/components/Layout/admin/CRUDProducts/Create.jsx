@@ -43,6 +43,44 @@ const Create = () => {
             uploadImg(selectedImage);
         }
     };
+
+
+    const [imageUrls, setImageUrls] = useState([]); // Lưu danh sách URL ảnh đã tải lên
+
+    // Tải một hình ảnh lên Cloudinary
+    const uploadImgs = (selectedImage) => {
+        const formData = new FormData();
+        formData.append('file', selectedImage);
+        formData.append('upload_preset', 'nxl7uozr'); // Thay bằng upload_preset của bạn
+
+        return axios.post("https://api.cloudinary.com/v1_1/dfv0n3vas/image/upload", formData)
+            .then((res) => res.data.secure_url)
+            .catch((error) => {
+                console.error('Error uploading image:', error);
+                throw error;
+            });
+    };
+
+    // Xử lý chọn nhiều ảnh
+    const handleImageChanges = async (e) => {
+        const selectedImages = Array.from(e.target.files); // Lấy tất cả file được chọn
+        if (selectedImages.length > 0) {
+            setImageUrls([]); // Reset danh sách URL trước khi thêm ảnh mới
+            try {
+                const uploadedUrls = await Promise.all(
+                    selectedImages.map((image) => uploadImgs(image))
+                );
+                setImageUrls(uploadedUrls); // Ghi đè danh sách URL với ảnh mới
+            } catch (error) {
+                console.error('Error uploading one or more images:', error);
+            }
+        }
+    };
+
+    useEffect(() => {
+        console.log(imageUrls)
+    }, [imageUrls])
+
     //Lấy ra danh mục sản phẩm từ api
     const [listCategory, setListCategory] = useState([])
     useEffect(() => {
@@ -61,7 +99,7 @@ const Create = () => {
     // lấy thông tin từ form
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(discount > 99){
+        if (discount > 99) {
             alert('không thể giảm hơn 99% được');
             return;
         }
@@ -75,7 +113,8 @@ const Create = () => {
             realPrice: roundedPrice,
             category: selectedCategory,
             description: productDescription,
-            image: imageUrl ? imageUrl : 'https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/logo.png'
+            image: imageUrl ? imageUrl : 'https://res.cloudinary.com/dfv0n3vas/image/upload/v1728919650/samples/logo.png',
+            images: imageUrls
         };
         axios.post(`${api}/createProduct`, productData)
             .then((res) => {
@@ -211,6 +250,29 @@ const Create = () => {
                                 />
                                 <div className='w-[40%]'>
                                     {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />}
+                                </div>
+                            </div>
+
+                            {/* hình anh chi tiết  */}
+                            <div className='m-2 gap-2'>
+                                <h6>Hình ảnh chi tiết:</h6>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    multiple // Cho phép chọn nhiều ảnh
+                                    onChange={handleImageChanges}
+                                    className="cursor-pointer my-2"
+                                />
+                                <div className="w-full flex gap-2 flex-wrap">
+                                    {imageUrls.map((url, index) => (
+                                        <img
+                                            className='border border-black h-[60px] '
+                                            key={index}
+                                            src={url}
+                                            alt={`Uploaded ${index}`}
+                                            
+                                        />
+                                    ))}
                                 </div>
                             </div>
                             {/* submit  */}

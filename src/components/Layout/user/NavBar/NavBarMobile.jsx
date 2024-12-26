@@ -1,11 +1,11 @@
 import React from 'react'
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { IoHomeOutline } from "react-icons/io5";
+import { IoCall, IoHomeOutline } from "react-icons/io5";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { CiShop } from "react-icons/ci";
 import { MdNotificationsActive } from "react-icons/md";
 import { CiDeliveryTruck } from "react-icons/ci";
-const NavBarMobile = ({listCategory }) => {
+const NavBarMobile = ({ listCategory }) => {
     return (
 
         <ul className='md:hidden  rounded-t-lg flex flex-row gap-1 text-center  bg-gray-200 fixed bottom-0 w-full p-2 z-10 text-[10px]'>
@@ -18,7 +18,7 @@ const NavBarMobile = ({listCategory }) => {
 
             </li>
             <li className='basis-1/5 flex flex-col items-center py-2'>
-                <Link to="categorymobile" state={{listCategory}}>
+                <Link to="categorymobile" state={{ listCategory }}>
                     <BiSolidCategoryAlt size={25} />
                 </Link>
                 <p className=' font-bold'>Danh mục</p>
@@ -39,10 +39,10 @@ const NavBarMobile = ({listCategory }) => {
             </li>
             <li className='basis-1/5 flex flex-col items-center py-2'>
 
-                <Link to="notice">
-                    <MdNotificationsActive size={25} />
-                </Link>
-                <p className=' font-bold'>Thông báo</p>
+                <a href="https://www.facebook.com/datZeroNicekine">
+                    <IoCall size={25} />
+                </a>
+                <p className=' font-bold'>Liên hệ </p>
             </li>
 
         </ul>

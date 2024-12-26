@@ -15,9 +15,6 @@ import scrollToTop from '../../../Helper/scroll';
 const Detail = () => {
   //lấy thông tin từ local storage
   const user = JSON.parse(localStorage.getItem('user'));
-  useEffect(() => {
-    scrollToTop()
-  }, [])
 
   // lấy cái id từ params 
   const location = useLocation();
@@ -38,6 +35,7 @@ const Detail = () => {
       alert('không thể giảm số lượng nữa')
     }
   }
+
   // sử lý lựa chọn phiên bản
   const [select, setSelect] = useState(null)
   const handleSelect = (id) => {
@@ -48,6 +46,8 @@ const Detail = () => {
   const handleSelectColor = (id) => {
     setSelectColor(id)
   }
+
+
   //fake data
   const data = [
 
@@ -67,18 +67,23 @@ const Detail = () => {
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBSmEOVnXQMwqa9TCOAlbXUejDj95aMOXoXg&s',
     }
   ]
+
   // thực hiện ngày khi gọi tới trang này 
   useEffect(() => {
     if (id) {
+      scrollToTop();
       getProductDetail(id);
       getComment(id)
     }
   }, [id]);
+
   const [productDetail, setProductDetail] = useState([]);
+  const [listImages, setListImages] = useState([]);
   const getProductDetail = (id) => {
     axios.post(`${api}/detail`, { id: id })
       .then((response) => {
-        setProductDetail(response.data);
+        setProductDetail(response.data[0]);
+        setListImages(response.data[1]);
 
       })
       .catch((error) => {
@@ -86,18 +91,6 @@ const Detail = () => {
       });
   };
 
-  //lấy ra tất cả các bình luận về sản phẩm
-  const [listFeedback, setListFeedback] = useState([]);
-  const getComment = (id) => {
-    axios.post(`${api}/getComment`, { id: id })
-      .then((response) => {
-        setListFeedback(response.data);
-        console.log(response.data)
-      })
-      .catch((error) => {
-        console.log('lỗi', error);
-      });
-  };
   // thêm sản phẩm vào giỏ hàng
   const addCart = () => {
     setLoading(true)
@@ -157,12 +150,43 @@ const Detail = () => {
   const loadImg = (img) => {
     setImageAvt(img)
   }
+
+
+
+
+
+
+
+
+  //lấy ra tất cả các bình luận về sản phẩm
+  const [listFeedback, setListFeedback] = useState([]);
+  const getComment = (id) => {
+    axios.post(`${api}/getComment`, { id: id })
+      .then((response) => {
+        setListFeedback(response.data);
+      })
+      .catch((error) => {
+        console.log('lỗi', error);
+      });
+  };
+
+
+  //tính số sao trung bình
+  const star = listFeedback.reduce((total, item) => (total + item.star), 0)
+  // console.log(star / listFeedback.length)
+
   //Lấy lấy dữ liệu của user khi comment sau đó thêm vào database
   const [feedback, setFeedback] = useState('')
   const handleComment = (e) => {
+
     e.preventDefault();
+    if (selectedStar === 0) {
+      alert('Vui lòng chọn số sao ');
+      return;
+    }
     const comment = {
       text: feedback,
+      star: selectedStar,
       name: user.name,
       image: imageUrl,
       idUser: user.id,
@@ -176,6 +200,7 @@ const Detail = () => {
             alert('Đánh giá của bạn đã được ghi nhận')
             setLoading(false)
             setFeedback('')
+            setSelectedStar('')
             setImageUrl('')
             getComment(comment.idProduct)
           }, 3000)
@@ -184,6 +209,9 @@ const Detail = () => {
       console.log(error)
     }
   }
+
+
+
   //chọn hình ảnh
   const [imageUrl, setImageUrl] = useState('');
   const uploadImg = (selectedImage) => {
@@ -211,7 +239,8 @@ const Detail = () => {
 
   };
 
-
+  const [selectedStar, setSelectedStar] = useState(0); // Lưu trữ số sao được chọn
+  const starArray = [1, 2, 3, 4, 5];
 
   //phóng to hình anhr của đánh giá
   const [zoomComment, setZoomComment] = useState(false)
@@ -226,6 +255,8 @@ const Detail = () => {
     }
 
   }
+
+
   return (
     <div className='flex flex-col items-center px-2'>
       {/* Load khi có sự kiện xảy ra  */}
@@ -256,7 +287,7 @@ const Detail = () => {
                 <img src={productDetail.image} alt="" className='h-[40px] rounded-md md:h-[60px] lg:h-[80px]  border' />
               </div>
               {
-                data.map((data, index) => {
+                (listImages.length > 0 ? listImages : data).map((data, index) => {
                   return (
                     <div onClick={() => { loadImg(data.image) }}>
                       <img key={index} src={data.image} alt="" className='h-[40px] rounded-md md:h-[60px] lg:h-[80px] border' />
@@ -264,8 +295,6 @@ const Detail = () => {
                   )
                 })
               }
-
-
             </div>
           </div>
 
@@ -276,12 +305,10 @@ const Detail = () => {
             <h3 className='font-semibold pb-3 md:text-[18px] '>{productDetail.name}</h3>
 
             <div className='flex items-center pb-3 text-[12px] md:text-[14px] lg:text-[18px]'>
-              <FaStar className=' mr-1 text-yellow-500' />
-              <FaStar className=' mr-1 text-yellow-500' />
-              <FaStar className=' mr-1 text-yellow-500' />
-              <FaStar className=' mr-1 text-yellow-500' />
-              <FaStar className=' mr-1 text-yellow-500' />
-              <p className=''>20 đánh giá</p>
+              {
+                starArray.map((data, index) => <FaStar className={`mr-1 cursor-pointer ${data <= Math.round(star / listFeedback.length) ? 'text-yellow-500' : 'text-gray-200'}`} />)
+              }
+              <p className='text-13'>{listFeedback.length} đánh giá</p>
             </div>
 
             {/* giá sản phẩm  */}
@@ -297,7 +324,7 @@ const Detail = () => {
             {/* số lượng sản phẩm ? */}
             <div className='flex  items-center my-2'>
               <CiCircleMinus size={25} onClick={handleMinus} />
-              <input type="" value={quantity} className='text-center text-19 w-[50px] px-3' />
+              <input type="" value={quantity} className='text-center text-19 w-[50px] px-3 rounded-md ' />
               <CiCirclePlus size={25} onClick={handlePlus} />
             </div>
             {/* lựa chọn phiên bản */}
@@ -309,8 +336,7 @@ const Detail = () => {
                   data.map((data) => {
                     return <div onClick={() => handleSelect(data.id)} className={`text-center p-2 border border-gray-400 rounded-xl hover:bg-red-200 ${select === data.id ? 'border-red-600 bg-red-200' : ''}`}>
                       <p className='font-medium text-[11px]'>5G 256GB - {data.id}</p>
-                      <p><h3 className='text-gray-500 font-medium mr-2 text-[11px]'>{formatPrice(productDetail.price)}đ</h3></p>
-
+                      {/* <p><h3 className='text-gray-500 font-medium mr-2 text-[11px]'>{formatPrice(productDetail.price)}đ</h3></p> */}
                     </div>
                   })
                 }
@@ -351,67 +377,73 @@ const Detail = () => {
 
 
         {/* thông số  của sản phẩm  */}
-        <div className=''>
+        <div className=' '>
+          <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
+          <div className=' p-2 bg-red-100 rounded-xl'>
+            <div className='flex pb-4 '>
+              <div className='text-15 sm:text-13' dangerouslySetInnerHTML={{ __html: productDetail.description }} />
+            </div>
+          </div>
+        </div>
+        <hr className='m-2' />
 
-          <div className=' '>
-            <h1 className='font-bold mb-1'>Thông tin sản phẩm</h1>
-            <div className=' p-2 bg-red-100 rounded-xl'>
-              <div className='flex pb-4 '>
-                <div className='text-15 sm:text-13' dangerouslySetInnerHTML={{ __html: productDetail.description }} />
+        <div>
+          {/* Đánh giá sản phẩm  */}
+          <div className='p-2 bg-white'>
+            <div className=' '>
+              <div className='flex gap-2 items-center'>
+                <h1 className='font-bold mb-1'>Đánh giá sản phẩm</h1>
+                <div className="flex">
+                  {starArray.map((star, index) => (
+                    <FaStar
+                      key={index}
+                      className={`mr-1 cursor-pointer ${star <= selectedStar ? 'text-yellow-500' : 'text-gray-200'}`}
+                      onClick={() => setSelectedStar(star)} // Cập nhật số sao được chọn
+                    />
+                  ))}
+                </div>
+              </div>
+              <div className='p-3'>
+
+                <form onSubmit={(e) => handleComment(e)}>
+                  {/* text  */}
+                  <div className=''>
+                    <textarea
+                      value={feedback}
+                      onChange={(e) => setFeedback(e.target.value)}
+                      style={{ outline: 'none' }}
+                      className='border w-full p-2'
+                      placeholder='Nhập đánh giá của bạn tại đây...'
+                      required>
+
+                    </textarea>
+                  </div>
+                  {/* hình ảnh  */}
+                  <div className=''>
+                    <h6 className='font-bold'>Hình ảnh sản phẩm:</h6>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className=' my-2'
+                    />
+                    <div className='w-[40%]'>
+                      {imageUrl && <img src={imageUrl} alt="Uploaded" className='h-[100px]' />}
+                    </div>
+                  </div>
+                  <div className='flex justify-end'>
+                    <button type="submit" className='p-2 bg-red-400 rounded-md font-bold'>Bình luận</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
 
-        </div>
-        <hr className='m-2' />
+          <hr className='m-2 ' />
 
+          {/* Tất cả các đánh giá về sản phẩm  */}
+          <div className='p-2 bg-white'>
 
-        {/* Đánh giá sản phẩm  */}
-        <div className='p-2 bg-white'>
-          <div className=' '>
-            <h1 className='font-bold mb-1'>Đánh giá sản phẩm</h1>
-            <div className='p-3'>
-
-              <form onSubmit={(e) => handleComment(e)}>
-                {/* text  */}
-                <div className=''>
-                  <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    style={{ outline: 'none' }}
-                    className='border w-full p-2'
-                    placeholder='Nhập đánh giá của bạn tại đây...'
-                    required>
-
-                  </textarea>
-                </div>
-                {/* hình ảnh  */}
-                <div className=''>
-                  <h6 className='font-bold'>Hình ảnh sản phẩm:</h6>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className=' my-2'
-                  />
-                  <div className='w-[40%]'>
-                    {imageUrl && <img src={imageUrl} alt="Uploaded" className='h-[100px]' />}
-                  </div>
-                </div>
-                <div className='flex justify-end'>
-                  <button type="submit" className='p-2 bg-red-400 rounded-md font-bold'>Bình luận</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <hr className='m-2 ' />
-
-
-
-        {/* Tất cả các đánh giá về sản phẩm  */}
-        <div className='p-2 bg-white'>
-          <div className=' '>
             <h1 className='font-bold mb-1'>Tất cả đánh giá về sản phẩm</h1>
             <div className={listFeedback.length === 0 ? '' : ''}>
               {
@@ -437,10 +469,18 @@ const Detail = () => {
                       </div>
                       <hr className='border-black my-1' />
                       <div className=''>
+                        <div className="flex">
+                          {starArray.slice(0, data.star).map((star, index) => (
+                            <FaStar size={13} key={index} className={`mr-1 cursor-pointer ${data.star ? 'text-yellow-500' : 'text-gray-200'}`}
+                            />
+                          ))}
+                        </div>
                         <h6 className='text-13'>{data.text}</h6>
-                        <img
-                          onClick={() => zoom(data.image)}
-                          src={data.image} alt="" className='h-[40px] cursor-pointer' />
+                        {data.image &&
+                          <img
+                            onClick={() => zoom(data.image)}
+                            src={data.image} alt="" className='h-[40px] cursor-pointer' />
+                        }
                         {
                           zoomComment &&
                           <div onClick={zoom} className='flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0'>
@@ -459,10 +499,7 @@ const Detail = () => {
             }
           </div>
         </div>
-      </div>
-      <hr className='m-2' />
-      <div>
-      
+
       </div>
     </div >
 

@@ -12,6 +12,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Adminpage from './admin/AdminPage/Adminpage';
 import Create from './admin/CRUDProducts/Create'
 import Read from './admin/CRUDProducts/Read'
+import ItemSearch from './user/ItemSearch/ItemSearch'
 import Update from './admin/CRUDProducts/Update';
 import Login from './user/Accounts/Login';
 import Register from './user/Accounts/Register';
@@ -83,6 +84,7 @@ const Layout = () => {
         <Route path="orderdetailuser" element={<ProtectedRouteUser><OrderDetailUser /></ProtectedRouteUser>} />
         <Route path="payment" element={<ProtectedRouteUser><PaymentResult /></ProtectedRouteUser>} />
         <Route path="address" element={<ProtectedRouteUser><Address /></ProtectedRouteUser>} />
+        <Route path="search" element={<ProtectedRouteUser><ItemSearch /></ProtectedRouteUser>} />
       </Route>
 
       {/* 404 Not Found */}

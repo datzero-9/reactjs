@@ -35,13 +35,13 @@ const Update = () => {
         try {
             axios.get(`${api}/getProduct/${id}`)
                 .then((res) => {
-                    setProductName(res.data.name)
-                    setProductPrice(res.data.price)
-                    setWarehouse(res.data.warehouse)
-                    setDiscount(res.data.discount)
-                    setSelectedCategory(res.data.category)
-                    setProductDescription(res.data.description)
-                    setImageUrl(res.data.image)
+                    setProductName(res.data[0].name)
+                    setProductPrice(res.data[0].price)
+                    setWarehouse(res.data[0].warehouse)
+                    setDiscount(res.data[0].discount)
+                    setSelectedCategory(res.data[0].category)
+                    setProductDescription(res.data[0].description)
+                    setImageUrl(res.data[0].image)                   
                 })
         } catch (error) {
             console.log("lỗi:" + error)
@@ -75,6 +75,10 @@ const Update = () => {
             uploadImg(selectedImage);
         }
     };
+
+ 
+
+   
     //Lấy ra danh mục sản phẩm từ api
     const [listCategory, setListCategory] = useState([])
     useEffect(() => {
@@ -245,6 +249,8 @@ const Update = () => {
                                     {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%' }} />}
                                 </div>
                             </div>
+
+                           
                             {/* submit  */}
                             <div className='m-2 gap-2 '>
                                 <button
