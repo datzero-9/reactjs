@@ -18,6 +18,7 @@ const VoiceSearch = ({ onSearch }) => {
     recognition.onend = () => setListening(false);
 
     recognition.onresult = (event) => {
+      // console.log(event)
       const transcript = event.results[0][0].transcript;
       console.log("Bạn đã nói:", transcript);
       onSearch(transcript); // Gửi kết quả tìm kiếm
@@ -33,7 +34,11 @@ const VoiceSearch = ({ onSearch }) => {
   return (
     <div>
       <div>
-        <MdKeyboardVoice onClick={handleVoiceSearch} disabled={listening}  size={20}/>
+        <MdKeyboardVoice
+          onClick={!listening ? handleVoiceSearch : undefined} 
+          size={20}
+          style={{ color: listening ? "gray" : "black", cursor: listening ? "not-allowed" : "pointer" }}
+        />
       </div>
 
     </div>
