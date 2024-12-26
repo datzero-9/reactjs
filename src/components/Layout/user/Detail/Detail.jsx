@@ -112,6 +112,7 @@ const Detail = () => {
           }
           else {
             alert("Sản phẩm đã Có trong giỏ hàng");
+            setLoading(false)
           }
 
         })

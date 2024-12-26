@@ -12,7 +12,7 @@ import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import NavBarMobile from './NavBarMobile';
 import Search from './Search';
 import Category from './Category';
-
+import { MdMapsHomeWork } from "react-icons/md";
 
 const NavBar = () => {
     //lấy thông tin từ local storage
@@ -45,9 +45,9 @@ const NavBar = () => {
             <div className='hidden md:block'>
                 <df-messenger
                     intent="WELCOME"
-                    chat-title="ChatboxAI"
-                    agent-id="73daf731-fc51-4b0c-9c4d-c5d1781c51e7"
-                    language-code="en"
+                    chat-title="ChatBox"
+                    agent-id="ba03a7f4-bd7e-4fc5-8a8e-efdfc1f15afe"
+                    language-code="vi"
                 ></df-messenger>
             </div>
 
@@ -77,8 +77,8 @@ const NavBar = () => {
 
                         <Link to="address">
                             <div className='flex flex-col justify-center items-center h-full'>
-                                <h6 className='xl:text-[20px] text-[15px]'><IoCall /></h6>
-                                <h6 className='text-[10px]  '>0356.031.160 </h6>
+                                <h6 className='xl:text-[20px] text-[15px]'><MdMapsHomeWork /></h6>
+                                <h6 className='text-[10px]  '>Cửa hàng</h6>
                             </div>
                         </Link>
                     </div>

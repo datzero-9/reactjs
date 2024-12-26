@@ -37,7 +37,7 @@ const Notification = () => {
             axios.post(`${api}/updateState`, { idOrder, state })
                 .then((res) => {
                     setLoading(false)
-                    alert('Đã xác nhận đon hàng')
+                    alert('Đã xác nhận đơn hàng')
                     getHistories()
                 })
         }, 3000)

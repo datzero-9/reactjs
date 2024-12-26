@@ -114,17 +114,17 @@ const Category = () => {
             {
                 confirm &&
                     <div className='absolute bg-gray-50 w-full h-[90vh] flex justify-center  bg-opacity-50'>
-                        <div className=' bg-gray-50 border border-black p-2 my-10 w-[400px] h-[180px] rounded-md m-4'>
-                            <div className='font-bold text-25'>
+                        <div className=' bg-gray-50 border border-black p-2 my-10 w-[300px] h-[150px] rounded-md m-4'>
+                            <div className='font-bold text-17'>
                                 <h1 className='text-center'>Thông báo</h1>
                             </div>
                             <hr className='border border-black' />
-                            <div className='p-2 text-21 py-5'>
+                            <div className='p-2 text-13 py-5'>
                                 <h1 className='text-center'>Bạn có muốn xóa danh mục này ?</h1>
                             </div>
                             <hr className='border border-black' />
 
-                            <div className='gap-4 p-3 flex justify-end items-center'>
+                            <div className='gap-4 p-3 flex justify-end items-center text-13'>
                                 <button className='border p-2 rounded-md font-bold bg-red-500 ' onClick={Cancel}>Cancel</button>
                                 <button className='border p-2 rounded-md font-bold bg-gray-200 ' onClick={deleteCategory}>Xác nhận</button>
                             </div>

@@ -28,19 +28,39 @@ const Read = () => {
             axios.post(`${api}`, { selec })
                 .then((res) => {
                     setListItems(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
         } catch (error) {
             console.log('Lỗi :' + error)
         }
     }
+    if (!item || !text) {
+        var product = listItems;
+    } else {
+        var product = item;
+    }
     // //delete Product
-    const deleteProduct = async (id) => {
+
+    // ẩn mô tar
+    //delete danh mục
+    const [confirm, setConfirm] = useState(false)
+    const [idItem, setidItem] = useState('')
+
+
+    const confirmDelete = (id) => {
+        setidItem(id)
+        setConfirm(true)
+    }
+    const Cancel = () => {
+        setConfirm(false)
+    }
+    const deleteProduct = async () => {
         try {
-            await axios.delete(`${api}/deleteProduct/${id}`)
+            await axios.delete(`${api}/deleteProduct/${idItem}`)
                 .then((res) => {
                     console.log(res.data)
                     getListProducts()
+                    setConfirm(false)
                     alert('Xóa sản phẩm thành công');
                 })
 
@@ -48,13 +68,29 @@ const Read = () => {
             console.log('Lỗi', error);
         }
     }
-    // ẩn mô tar
-    const [hiddenDescription, setHiddenDescription] = useState(false)
-    const hidden = () => {
-
-    }
     return (
-        <div className='p-2  '>
+        <div className='p-2  relative'>
+            {
+                confirm &&
+                <div className='absolute bg-gray-50 w-full h-[90vh]  flex justify-center bg-opacity-50'>
+                    <div className=' bg-gray-50 border border-black p-2 my-10 w-[300px] h-[150px] rounded-md m-4'>
+                        <div className='font-bold text-17'>
+                            <h1 className='text-center'>Thông báo</h1>
+                        </div>
+                        <hr className='border border-black' />
+                        <div className='p-2 text-13 py-5'>
+                            <h1 className='text-center'>Bạn có muốn xóa sản phẩm này ?</h1>
+                        </div>
+                        <hr className='border border-black' />
+
+                        <div className='gap-4 p-3 flex justify-end items-center text-13'>
+                            <button className='border p-2 rounded-md font-bold bg-red-500 ' onClick={Cancel}>Cancel</button>
+                            <button className='border p-2 rounded-md font-bold bg-gray-200 ' onClick={deleteProduct}>Xác nhận</button>
+                        </div>
+                    </div>
+                </div>
+
+            }
             <div className='flex items-center justify-end gap-4 text-[14px]'>
                 <Link to="/admin/create">
                     <div className='hover:bg-gray-100 cursor-pointer flex items-center border border-green-300 p-1 rounded-md gap-2 text-green-500'>Thêm <IoIosAddCircle /> </div>
@@ -76,7 +112,7 @@ const Read = () => {
                     </thead>
                     <tbody>
                         {
-                            (text.length > 0 ? item : listItems).map((data, index) => {
+                            product.map((data, index) => {
                                 return (
                                     <tr className='' key={index}>
                                         <th className='border text-center w-[5%] p-1'>{index + 1}</th>
@@ -111,7 +147,7 @@ const Read = () => {
                                                     <FaEdit className='text-yellow-200 cursor-pointer' />
                                                 </Link>
 
-                                                <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => { deleteProduct(data._id) }} />
+                                                <RiDeleteBinLine className='text-red-300 cursor-pointer' onClick={() => { confirmDelete(data._id) }} />
                                             </div>
                                         </td>
                                     </tr>
