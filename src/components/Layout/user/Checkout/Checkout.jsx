@@ -78,7 +78,7 @@ const Checkout = () => {
     }
     useEffect(() => {
         comfirmAddress()
-    }, [phuongXa,address])
+    }, [phuongXa, address])
     useEffect(() => {
         getProvinces()
     }, [])
@@ -109,7 +109,7 @@ const Checkout = () => {
     //Thao tác thanh toán online hoặc nhận hàng mới thanh toán
     const handleBuyProduct = (e) => {
         e.preventDefault();
-        if (tinhTP ==='Tỉnh/TP' || quanHuyen==='Quận/Huyện' || phuongXa==='Phường/Xã') {
+        if (tinhTP === 'Tỉnh/TP' || quanHuyen === 'Quận/Huyện' || phuongXa === 'Phường/Xã') {
             alert('Vui lòng điền đầy đủ thông tin địa chỉ');
             return;
         }
@@ -121,7 +121,7 @@ const Checkout = () => {
             alert('Số điện thoại này không tồn tại');
             return;
         }
-        
+
         setLoading(true)
         const checkout = {
             idUser: user.id,
@@ -139,12 +139,18 @@ const Checkout = () => {
                 axios.post(`${api}/checkout`, checkout)
                     .then((res) => {
                         setTimeout(() => {
+                            //webhook
+                            axios.post(`https://a9aa-116-110-94-16.ngrok-free.app/webhook/comfirm-order`, {})
+                                .then((res) => {
+                                    console.log('gọi đến webhook thành công')
+                                })
                             setLoading(false)
                             alert('Đặt hàng thành công, theo dõi sdt để nhận được thông báo mới nhất')
                             deleteAllCart();
                             navigate('/user/histories')
                         }, 3000)
                     })
+
             } else {
                 // Thanh toán online
                 axios.post(`${api}/payment`, checkout)
@@ -252,7 +258,7 @@ const Checkout = () => {
                                         className=' p-1 border border-gray-400 rouned-xl w-full'
                                         required
                                     />
-                                    <h6>{ address !== '' ? info : ''}</h6>
+                                    <h6>{address !== '' ? info : ''}</h6>
                                 </div>
                                 <div className='p-2'>
                                     <h5 className='text-17 font-semibold pb-2'>Số điện thoại:</h5>
