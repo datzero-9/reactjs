@@ -139,11 +139,6 @@ const Checkout = () => {
                 axios.post(`${api}/checkout`, checkout)
                     .then((res) => {
                         setTimeout(() => {
-                            //webhook
-                            axios.post(`https://a9aa-116-110-94-16.ngrok-free.app/webhook/comfirm-order`, {})
-                                .then((res) => {
-                                    console.log('gọi đến webhook thành công')
-                                })
                             setLoading(false)
                             alert('Đặt hàng thành công, theo dõi sdt để nhận được thông báo mới nhất')
                             deleteAllCart();
