@@ -41,7 +41,7 @@ const Register = () => {
             axios.post(`${api}/comfirmAccount`, register)
               .then((res) => {
                 setLoading(false)
-                console.log(res.data.status)
+                
                 if (res.data.status) {
                   alert('Tạo tài khoản thành công')
                   navigate('/')
@@ -86,9 +86,6 @@ const Register = () => {
       password: 'zxcvbnm',
       code: code, // Gán giá trị code cho register.code
     };
-
-    console.log(register);
-
     // validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(email);
@@ -96,11 +93,10 @@ const Register = () => {
     if (isValidEmail) {
       try {
         axios.post(`${api}/register`, register).then((res) => {
-          console.log(res.data.status);
           if (res.data.status) {
             alert('Kiểm tra email để lấy mã xác nhận');
           } else {
-            alert('Tài khoản đã tồn tại trên hệ thống');
+            alert('Đã gửi mã xác nhận lên hệ thống');
           }
         });
       } catch (error) {
