@@ -61,7 +61,7 @@ const Login = () => {
 
 
     return (
-        <div className="border p-3 bg-[rgba(255,255,255,0.8)] w-[250px] flex flex-col items-center rounded-md">
+        <div className="border p-3 bg-[rgba(255,255,255,0.8)] w-[350px] flex flex-col items-center rounded-md">
             {
                 loading &&
                 <div className="flex justify-center items-center w-[100vw] h-[100vh] fixed bg-gray-50 bg-opacity-50 z-20 left-0 top-0 bottom-0 right-0">
